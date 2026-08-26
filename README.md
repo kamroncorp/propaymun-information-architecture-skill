@@ -1,50 +1,54 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-0.1.0-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.2.0-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-Apache--2.0-2E7D32)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-compatible-19172B)](SKILL.md)
 
-An evidence-aware Agent Skill that helps product managers, product designers, researchers, founders, and product teams create professional information architecture with AI.
+An IA-only Agent Skill that acts as an experienced information architect: it guides people from an initial product brief and high-impact questions to a professional, evidence-aware information architecture.
 
-**ProPaymun** comes from the Persian word «پروپیمان»: full, complete, and generously filled. The project aims to produce IA that is complete enough to act on without pretending that unknowns are known.
+**ProPaymun** comes from the Persian word «پروپیمان»: full, complete, and generously filled. Completeness here means decision-ready—not unnecessarily long.
 
 [فارسی](README.fa.md)
 
 ## What it does
 
-The skill supports greenfield design, redesign, and focused IA work for any digital product. It can produce a complete IA or only the artifact requested by the user:
+- guides people who do not already understand IA;
+- asks consequential questions before committing to a complete architecture;
+- models objects/content, relationships, organization, taxonomy, labels, navigation, search, access, lifecycle, and governance;
+- distinguishes supplied evidence, observation, inference, proposal, confirmation, and unknowns;
+- adapts language and depth for product, design, research, content, engineering, or cross-functional readers;
+- works chat-first, then offers supported reusable formats only after the user accepts them;
+- supports greenfield IA, redesign, audits, and focused IA components.
 
-- IA brief and audit
-- domain/object model
-- taxonomy and labeling system
-- navigation and search model
-- roles, permissions, and visibility
-- architecture alternatives and decision rationale
-- validation plan, metrics, and governance
-- semantic JSON, Mermaid, Draw.io/Excalidraw guidance, HTML, or image-ready output
+The skill stays within information architecture. Separate mapping disciplines belong to their own dedicated skills.
 
-It offers two default working modes:
+## Default experience
 
-- **Guided:** compact discovery rounds and human checkpoints.
-- **Quick Draft:** a useful provisional architecture with assumptions and unknowns clearly marked.
+For complete IA work, the skill normally:
 
-Users can override the process, order, depth, checkpoints, and output format at any time.
+1. reflects the brief and existing evidence;
+2. asks a compact set of architecture-changing questions;
+3. progresses through human checkpoints;
+4. delivers a concise decision-ready result in chat;
+5. offers supported file or visual formats only after the architecture is stable.
+
+A detailed brief does not silently trigger a full draft when important access, lifecycle, role, or domain decisions remain unresolved. A compact provisional answer is available when the user explicitly asks for speed or work without questions.
 
 ## Quick start
 
 ### Universal installer
 
-If your agent supports the Agent Skills installer:
-
 ```bash
 npx skills add https://github.com/kamroncorp/propaymun-information-architecture-skill
 ```
 
-Then ask:
+Then ask naturally:
 
 ```text
-Use propaymun-information-architecture to design the IA for my product.
+Help me design the information architecture for my product. Here is the brief...
 ```
+
+The user does not need to choose or understand an internal mode.
 
 ### Claude Code
 
@@ -54,17 +58,17 @@ Clone or copy this repository to:
 ~/.claude/skills/propaymun-information-architecture/
 ```
 
-Claude Code discovers the root `SKILL.md`. The repository can also be packaged as a zip and uploaded as a custom Skill where Claude supports skill uploads.
+The repository can also be packaged as a zip and uploaded as a custom Skill where Claude supports skill uploads.
 
 ### Codex / ChatGPT
 
-For Codex, place the repository at:
+Place the repository at:
 
 ```text
 ~/.codex/skills/propaymun-information-architecture/
 ```
 
-For OpenAI API Skills, upload the skill directory or a release zip using the Skills API. The included [`agents/openai.yaml`](agents/openai.yaml) provides Codex/ChatGPT-facing metadata.
+For OpenAI API Skills, upload the skill directory or a release zip. The included [`agents/openai.yaml`](agents/openai.yaml) provides UI metadata.
 
 ### Gemini CLI
 
@@ -72,115 +76,52 @@ For OpenAI API Skills, upload the skill directory or a release zip using the Ski
 gemini skills install https://github.com/kamroncorp/propaymun-information-architecture-skill
 ```
 
-Alternatively, link a local checkout while developing:
-
-```bash
-gemini skills link /path/to/propaymun-information-architecture-skill
-```
-
 ### Figma agent and Figma Make
 
-Figma custom skill uploads accept one Markdown file and do not load supporting directories. Upload:
+Upload the generated single-file adapter:
 
 ```text
 adapters/figma-make/propaymun-information-architecture.md
 ```
 
-Invoke it with:
+## Outputs
 
-```text
-/propaymun-information-architecture
-```
+The default output is concise chat text. After confirmation, the skill may offer Markdown, document, PDF, HTML, image, or structured data only when the current environment can actually create it.
 
-## Example requests
+IA diagrams are optional. A portable textual representation is always available; Mermaid, HTML/SVG, or another installed diagram capability may be used when requested and supported.
 
-```text
-Create a complete information architecture for a multi-role education platform. Use Guided mode.
-```
+### Optional diagram companions
 
-```text
-Here is our current navigation and search log summary. Audit the IA and propose two alternatives.
-```
+These are not required and are never installed without explicit user authorization:
 
-```text
-Only create a taxonomy and labeling system for this content inventory. Return Markdown and Mermaid.
-```
+- [Draw.io Skill](https://github.com/Agents365-ai/drawio-skill) — precise editable geometry and formal handoff
+- [Excalidraw Diagram Skill](https://github.com/coleam00/excalidraw-diagram-skill) — workshops and conceptual explanation
 
-```text
-Build a quick provisional IA from this brief, mark every assumption, and generate a standalone HTML view.
-```
+## Portable semantic model
 
-## Default output behavior
-
-When no format is requested, the skill produces a concise Markdown report and a Mermaid diagram. It can also create or guide delivery in Draw.io, Excalidraw, standalone HTML, SVG, PNG, or PDF when the environment supports those formats.
-
-Visuals should always preserve an editable source and include a textual equivalent of essential information.
-
-## Repository structure
-
-```text
-SKILL.md                         Canonical skill entrypoint
-agents/openai.yaml               OpenAI UI and invocation metadata
-references/                      Progressive-disclosure IA guidance
-assets/semantic-ia.schema.json   Portable semantic model schema
-scripts/                         Validation, HTML, and Figma packaging tools
-adapters/figma-make/             Generated single-file Figma adapter
-evals/                           Behavioral test cases and rubric
-tests/                           Deterministic script tests
-```
-
-## Semantic IA model
-
-The skill can represent IA independently of a rendering tool. This prevents meaning from becoming locked into Mermaid syntax, Draw.io XML, or canvas coordinates.
-
-Validate a model:
+When structured reuse is requested, the skill can produce a renderer-independent IA JSON model. Environments with Python can validate or render it:
 
 ```bash
 python scripts/validate_ia_model.py path/to/ia.json
-```
-
-Render standalone HTML:
-
-```bash
 python scripts/render_ia_html.py path/to/ia.json -o ia.html
 ```
 
-Rebuild the Figma single-file adapter:
+Chat-only environments return the requested semantic source directly and do not pretend these scripts ran.
+
+## Development and validation
 
 ```bash
 python scripts/package_figma.py
-```
-
-## Quality and evidence policy
-
-The skill distinguishes `Provided`, `Observed`, `Confirmed`, `Inferred`, `Proposed`, and `Unknown`. It does not call synthetic AI groupings user research, does not claim an untested structure is validated, and rejects universal click-count, menu-size, and hierarchy-depth rules.
-
-## Development
-
-Run deterministic tests:
-
-```bash
 python -m unittest discover -s tests -v
-```
-
-Run the Agent Skill structure validator:
-
-```bash
 python /path/to/skill-creator/scripts/quick_validate.py .
 ```
 
-Behavioral cases live in [`evals/cases.yaml`](evals/cases.yaml). Evaluate observable decisions and artifacts rather than exact phrasing.
+Behavioral cases cover natural Persian intake, chat-only capability limits, explicit quick work, audience-neutral delivery, artifact consent, and RTL diagram fallback. See [`evals/cases.yaml`](evals/cases.yaml).
 
-## Versioning
+## Quality policy
 
-This project uses semantic versioning. GitHub Releases provide installable snapshots. See [CHANGELOG.md](CHANGELOG.md).
+The skill does not invent research or universal success thresholds, call an untested structure validated, create unsolicited artifacts, or use hidden high-impact assumptions to select an architecture.
 
-## Contributing
+## Versioning and license
 
-Focused improvements are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
-
-## License
-
-Apache License 2.0. See [LICENSE](LICENSE).
-
-
+The project uses Semantic Versioning and Apache License 2.0. See [CHANGELOG.md](CHANGELOG.md) and [LICENSE](LICENSE).

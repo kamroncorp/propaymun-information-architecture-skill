@@ -17,10 +17,8 @@ Evaluate it in the intersection of:
 - **Information architecture** is the overall findability and meaning system.
 - **Taxonomy** is a controlled classification and vocabulary.
 - **Content model** defines content types, fields, relationships, rules, and lifecycle.
-- **Sitemap** is a representation of page or destination structure.
 - **Navigation** is the interface that exposes paths through the architecture.
 - **Search** supports direct retrieval and discovery.
-- **User flow** represents a path through states and decisions to accomplish a task.
 - **Content strategy** governs why, by whom, and through what lifecycle content is created and maintained.
 
 Do not use these terms interchangeably.
@@ -86,4 +84,3 @@ Record owners, change authority, review cadence, naming rules, lifecycle, versio
 ## Principles as heuristics
 
 Use the principles of objects, choices, disclosure, exemplars, front doors, multiple classification, focused navigation, and growth as review prompts. Do not turn them into rigid requirements.
-

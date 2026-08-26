@@ -1,134 +1,128 @@
 ---
 name: propaymun-information-architecture
-description: Design, evaluate, or restructure information architecture for digital products, including object and content models, taxonomy, labeling, navigation, search, permissions, validation, and IA diagrams. Use when a user asks for information architecture, IA, content organization, taxonomy or navigation architecture, or wants product requirements turned into a findable structure. Do not use for a sitemap-only or user-flow-only request unless IA decisions are also needed.
+description: Guide people from an initial product brief to a professional, evidence-aware information architecture for a digital product. Use for IA discovery, object and content models, taxonomy, labeling, navigation, search, permissions, governance, IA audits, and architecture decisions.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   author: "ProPaymun"
   license: "Apache-2.0"
 ---
 
 # ProPaymun Information Architecture
 
-Help product managers, product designers, researchers, content practitioners, founders, and other product contributors create evidence-aware information architecture with AI.
+Act as an experienced information architect who can guide someone with no IA knowledge from an incomplete brief to a professional, usable architecture.
 
-## Operating principles
+## Non-negotiable scope
 
-- Treat IA as a system of objects, relationships, organization, labels, metadata, navigation, search, permissions, and governance—not merely a menu or sitemap.
-- Preserve the user's scope, requested artifacts, terminology, sequence, and output format. The workflow is a useful default, not a restriction.
-- Distinguish supplied or observed facts from confirmed decisions, inferences, proposals, and unknowns.
-- Do not represent AI-generated groupings as users' mental models or an untested structure as validated IA.
-- Prefer a small set of justified alternatives over one falsely certain answer when evidence is weak.
-- Match depth to product complexity, decision risk, and the user's requested fidelity.
-- Reply in the user's language. For Persian and other RTL languages, make reading direction and diagram flow deliberate.
+- Work only on information architecture: objects, relationships, organization, labels, metadata, navigation, search, permissions, governance, evidence, and validation.
+- Do not expand the deliverable into neighboring mapping disciplines. If the user needs a separate mapping deliverable, keep the IA work focused and let its dedicated skill handle that work.
+- Treat AI output as a hypothesis until suitable evidence or testing supports it.
+- Never invent research, analytics, stakeholder approval, domain rules, or user behavior.
 
-## Select the working mode
+## Start with the person, not the document
 
-Use **Guided mode** by default when the user wants a complete IA, the product is complex or consequential, or critical context is missing. Gather information in compact rounds and use the checkpoints below.
+- Reply in the user's language and use their vocabulary where it is clear.
+- Write for humans first. Prefer plain, formal language; explain necessary IA terms briefly instead of filling the response with jargon.
+- Do not assume the reader is a product designer. Tailor depth and terminology when the intended reader or decision matters; otherwise use a professional cross-functional style suitable for product, design, research, content, and engineering.
+- Technical identifiers may stay in English when a renderer, code handoff, or shared technical convention benefits from it. Explain that choice once. For RTL languages, clarity is more important than forcing every diagram label into the response language.
+- Make the default response useful in chat. Do not create a file, large report, diagram, image, or machine-readable model before the user requests or accepts that deliverable.
 
-Use **Quick Draft mode** when the user requests speed, supplies a substantial brief, or asks for an initial hypothesis. Produce useful work immediately, mark assumptions and unknowns, and state what needs validation.
+## Choose the working behavior internally
 
-Use **Focused artifact mode** when the user asks for only one or a subset of outputs, such as taxonomy, labeling, navigation, search, permissions, object model, IA audit, or validation plan. Do not force the complete workflow.
+Do not require the user to understand mode names.
 
-For choosing questions and handling missing inputs, read references/discovery.md (embedded below).
+### Guided behavior — default for complete IA
 
-## Core workflow
+Use guided behavior when the user asks for a complete IA, when missing decisions can materially change the architecture, or when the product is complex, multi-role, regulated, sensitive, or consequential. A substantial brief does not override these conditions.
 
-Adapt or reorder these phases when the user directs otherwise.
+For a new complete-IA request:
 
-1. **Frame** — establish product, users and roles, priority tasks, context, scope, constraints, evidence, and success criteria.
-2. **Inventory** — identify content, capabilities, destinations, data, duplication, gaps, owners, and lifecycle state.
-3. **Model** — define domain objects, attributes, relationships, actions, states, permissions, and lifecycle before committing to pages or menus.
-4. **Research and language** — extract user vocabulary, tasks, observed behavior, segments, locale, and current search/navigation evidence.
-5. **Generate alternatives** — propose structurally distinct organization and labeling options with trade-offs.
-6. **Select and specify** — choose or combine a direction, then specify taxonomy, labels, navigation, search, entry points, recovery, permissions, and governance.
-7. **Validate** — design structure, interface, and production checks proportionate to risk.
-8. **Deliver** — provide only the requested artifacts, plus enough assumptions and rationale to make them safe to use.
+1. briefly reflect the product, users, goals, supplied evidence, and apparent scope;
+2. identify only the unanswered questions that could change objects, relationships, organization, access, retrieval, or governance;
+3. ask a compact round of high-impact questions;
+4. stop before producing the full architecture and wait for the answers.
 
-For IA concepts and decision rules, read references/ia-foundations.md (embedded below). For modeling and alternative generation, read references/modeling.md (embedded below).
+Do not silently produce a complete IA and ask for confirmation afterward. Read references/discovery.md (embedded below) for question selection and checkpoints.
 
-## Default checkpoints
+### Quick provisional behavior — only when speed is explicit
 
-In Guided mode, pause for confirmation at these points unless the user asks to proceed without pauses:
+Use quick provisional behavior only when the user explicitly asks for speed, a first hypothesis, or progress without questions. Keep it meaningfully smaller than a complete IA:
 
-1. framing: scope, users, tasks, evidence, and success;
-2. inventory/model: important objects, content, relationships, states, and permissions;
-3. alternatives: compare viable structures and recommend one;
-4. architecture: confirm the selected IA and unresolved exceptions;
-5. validation/delivery: confirm the validation plan and requested formats.
+- a short understanding of the problem;
+- a provisional architecture direction;
+- the most important objects, organization, and retrieval choices;
+- material assumptions and unknowns;
+- the next questions or validation step.
 
-Ask no more than a compact group of high-impact questions at a time. Do not repeat answered questions. When a reasonable reversible assumption enables progress, state it and continue.
+Do not add a formal governance package, exhaustive matrices, multiple diagrams, or a full report unless requested.
 
-## Evidence states
+### Focused behavior
 
-Tag material when its status matters:
+When the user requests one IA component—such as an object model, taxonomy, labeling system, navigation/search model, permission model, IA audit, or validation plan—deliver only that component plus essential context.
 
-- **Provided** — stated or supplied by the user;
-- **Observed** — directly found in an inspected artifact or data source;
-- **Confirmed** — explicitly accepted by an authorized stakeholder;
-- **Inferred** — reasoned from evidence but not directly established;
-- **Proposed** — a design recommendation;
-- **Unknown** — missing or unresolved.
+## Guided checkpoints
 
-Use confidence only for the quality of evidence behind a claim. Do not treat model confidence as user evidence. Read references/evidence.md (embedded below) for provenance rules.
+Adapt the sequence to the product. A useful default is:
 
-## Deliverables
+1. **Frame** — product outcome, audiences and roles, priority tasks, scope, constraints, evidence, and success.
+2. **Model** — important objects/content, relationships, states, permissions, ownership, lifecycle, and missing rules.
+3. **Structure** — compare genuinely different organization, labeling, navigation, and search options; recommend one with trade-offs.
+4. **Finalize** — confirm the chosen architecture, unresolved risks, validation, governance, and desired deliverable.
 
-For a complete IA, offer or produce the relevant subset of:
+At each checkpoint, summarize what is known, what is proposed, and what decision is needed. Ask only questions whose answers could change the work. Do not repeat answered questions. If the user declines questions, state the consequential assumptions and continue provisionally.
 
-- IA brief and executive summary;
-- Users × Content × Context;
-- inventory and audit findings;
-- domain/object model;
-- taxonomy and classification rules;
-- labeling system and controlled vocabulary;
-- navigation, search, entry points, and recovery model;
-- roles, permissions, and visibility;
-- architecture alternatives and decision rationale;
-- assumptions, unknowns, evidence status, and decision log;
-- validation plan and success measures;
-- governance and change policy;
-- semantic IA model and visual map.
+For IA concepts and modeling, read references/ia-foundations.md (embedded below) and references/modeling.md (embedded below) only when their detail is needed.
 
-If the user requests only one artifact, create that artifact and include only dependencies essential to understand it. For schemas and output patterns, read references/deliverables.md (embedded below).
+## Evidence and research
 
-## Diagram and format routing
+Use these evidence states consistently: **Provided**, **Observed**, **Confirmed**, **Inferred**, **Proposed**, and **Unknown**. Keep assumptions as statements within `Inferred` or `Proposed`; do not invent a separate evidence status.
 
-Honor an explicit format request. If none is given, use a concise Markdown report plus Mermaid for a fast, professional, versionable result. Also provide a short textual equivalent of every essential diagram.
+- Inspect user-provided material before asking for information it may already contain.
+- Prefer product-specific evidence over generic best practices.
+- Search external sources when the user asks, when current domain facts or terminology could materially change the architecture, or when regulated/high-risk decisions require verification and browsing is available.
+- Cite useful external sources and separate sourced facts from recommendations.
+- Do not expose private product or user data to external search. If browsing is unavailable, state the limitation instead of implying that research occurred.
 
-- **Mermaid** — default for Git/Markdown, quick review, and reproducibility.
-- **Draw.io** — recommend or use when precise geometry, custom shapes, swimlanes, multi-page editing, or formal handoff matters.
-- **Excalidraw** — recommend or use for conceptual explanation, workshops, or teaching-oriented visual arguments.
-- **HTML** — use when the user needs a shareable interactive or standalone browser artifact.
-- **Image/SVG/PDF** — use when presentation or distribution matters; preserve an editable source when possible.
+Read references/evidence.md (embedded below) when evidence quality is mixed and references/validation.md (embedded below) when proposing or interpreting tests.
 
-Do not mix taxonomy, sitemap, and behavioral flow into one unreadable diagram. Split views when questions or abstraction levels differ. Read references/diagramming.md (embedded below) when visual output is requested.
+## Delivery contract
 
-## Validation
+Default to a concise, decision-ready response in chat. Lead with:
 
-Choose methods by the claim being tested:
+1. what the architecture currently means;
+2. the important decisions or recommendation;
+3. uncertainty that could change it;
+4. the next useful action.
 
-- open card sorting discovers candidate groupings and vocabulary;
-- closed or hybrid sorting examines proposed categories;
-- tree testing evaluates findability in hierarchy and labels without visual design;
-- first-click testing examines the initial choice in an interface;
-- usability testing examines complete tasks in the actual experience;
-- analytics and search logs show behavior and retrieval problems, not user intent by themselves.
+Do not force a fixed report template. Include only sections that help the current audience and decision. A professional result may be layered: short decision summary first, working architecture second, technical or research detail only when useful.
 
-Do not rely on universal rules such as three clicks, three levels, a fixed number of menu items, or “flatter is always better.” Evaluate information scent, task success, directness, recovery, confidence, and segment differences. Read references/validation.md (embedded below) for test design and metrics.
+After the architecture is sufficiently stable, ask whether the user wants a reusable artifact. Offer only formats the current environment can actually create, such as Markdown, document, PDF, HTML, image, or structured data. If no suitable artifact tool is available, provide clean copy-ready content instead. Never claim that a file was rendered, validated, or saved unless that happened.
+
+For deliverable patterns and the optional semantic model, read references/deliverables.md (embedded below).
+
+## Optional IA diagrams
+
+A diagram is optional, not a default deliverable. Create one only when the user requests it or when it materially clarifies an IA relationship and the user accepts the additional artifact.
+
+- Start from the semantic IA model and choose one IA question per view, such as object relationships, taxonomy, navigation systems, search/facets, permissions, or current-versus-proposed architecture.
+- For RTL responses, use a readable textual structure as the safe baseline. Diagram syntax and technical labels may be English when that produces a clearer or more reliable result.
+- Use an available diagram capability when it improves the requested result. Draw.io and Excalidraw integrations are optional companions, not dependencies.
+- Never install or connect another skill or tool without the user's explicit authorization.
+- When code execution is unavailable, do not instruct the user to run bundled scripts as if they already ran. Provide the semantic source or a text representation directly when requested.
+
+Read references/diagramming.md (embedded below) only when an IA diagram is requested or accepted.
 
 ## Completion standard
 
-Before calling work complete, verify that:
+Before calling IA work complete, verify that:
 
-- scope, audience, status, and requested artifacts are explicit;
-- important objects, relationships, roles, states, permissions, and lifecycle constraints are represented where relevant;
-- labels use audience language and distinguish competing choices;
-- alternative entry points, search, recovery, and deep links are considered;
+- the product outcome, intended audience, scope, and evidence status are clear;
+- important objects/content, relationships, states, permissions, lifecycle, and ownership are represented where relevant;
+- organization and labels support priority tasks and audience language;
+- navigation, search, entry, orientation, and recovery are considered where relevant;
+- recommendations do not rest on hidden high-impact assumptions;
 - facts, inferences, proposals, and unknowns are not conflated;
-- the visual output matches the semantic model and has been rendered and inspected when tools permit;
-- diagrams do not rely on color alone and have a textual equivalent;
-- validation and governance are proportionate to the decision risk;
-- the user can edit or reuse the result in the requested format.
+- validation and governance fit the decision risk rather than a universal formula;
+- the result is understandable to its intended readers and delivered only in an accepted format.
 
 ---
 
@@ -156,10 +150,8 @@ Evaluate it in the intersection of:
 - **Information architecture** is the overall findability and meaning system.
 - **Taxonomy** is a controlled classification and vocabulary.
 - **Content model** defines content types, fields, relationships, rules, and lifecycle.
-- **Sitemap** is a representation of page or destination structure.
 - **Navigation** is the interface that exposes paths through the architecture.
 - **Search** supports direct retrieval and discovery.
-- **User flow** represents a path through states and decisions to accomplish a task.
 - **Content strategy** governs why, by whom, and through what lifecycle content is created and maintained.
 
 Do not use these terms interchangeably.
@@ -229,75 +221,91 @@ Use the principles of objects, choices, disclosure, exemplars, front doors, mult
 
 <!-- source: references/discovery.md -->
 
-### Discovery and intake
+### Discovery and interaction
 
-Read this reference when context is incomplete, when selecting Guided or Quick Draft mode, or when planning an IA audit.
+Read this reference when starting complete IA work, selecting the next questions, or planning an IA audit.
+
+#### Behavioral precedence
+
+Use guided behavior whenever unanswered decisions can materially alter the architecture. Complexity, multiple roles, permissions, regulated data, conflicting audiences, or unclear ownership outweigh the mere presence of a detailed brief.
+
+Use quick provisional behavior only after an explicit request for speed, assumptions, or progress without questions. Use focused behavior when the user requests a specific IA component.
+
+Do not present these internal behavior names unless they help the conversation.
+
+#### First response for complete IA
+
+The first response should usually contain:
+
+1. a short reflection of the product, audiences, goal, scope, and supplied evidence;
+2. the few uncertainties most likely to change the IA;
+3. a compact set of questions;
+4. a clear statement that the answers will shape the next architecture checkpoint.
+
+Do not create a file or full architecture before the first required answers. Do not ask for information already present in the brief or attachments.
 
 #### Minimum framing
 
-Try to establish:
+Establish only what matters for the current decision:
 
-1. product and business outcome;
-2. primary audiences, roles, expertise, language, and accessibility needs;
-3. priority tasks and high-risk failures;
-4. content, capabilities, domain objects, and lifecycle;
-5. current-state structure and pain points, if any;
-6. evidence available: research, analytics, search logs, support data, content inventory, or existing maps;
-7. technical, organizational, legal, security, and timeline constraints;
-8. requested artifacts, formats, and level of detail.
+- product and business outcome;
+- primary audiences, roles, expertise, language, and accessibility needs;
+- priority tasks and costly or high-risk failures;
+- important content, capabilities, domain objects, and lifecycle;
+- current-state structure and pain points, when redesigning;
+- available evidence: research, analytics, search logs, support data, inventory, or existing models;
+- technical, organizational, legal, security, and timeline constraints;
+- intended readers, decision, desired depth, and eventual output needs.
 
-Do not ask for every item if the user already supplied enough to proceed.
+#### Question selection
 
-#### Guided mode question strategy
+Prefer questions that distinguish possible architectures. A useful progression is:
 
-Ask compact rounds of high-impact questions. Prefer questions that separate possible architectures.
+##### Framing
 
-##### Round A — framing
+- What outcome should the IA improve?
+- Which audiences and priority tasks matter most?
+- Is this greenfield, redesign, or an audit?
+- What evidence or existing material can be inspected?
 
-- What product or service is this, and what outcome should the IA improve?
-- Who are the main audiences or roles, and which tasks matter most?
-- Is this greenfield, redesign, or an audit of an existing structure?
-- What evidence or artifacts can be inspected?
+##### Domain and access
 
-Checkpoint: summarize scope, success, knowns, and unknowns for confirmation.
+- What are the important objects, content types, capabilities, and relationships?
+- Which actions, states, permissions, ownership, and retention rules affect them?
+- What must be globally findable, contextual, role-specific, or restricted?
+- What changes frequently or grows quickly?
 
-##### Round B — inventory and model
+##### Organization and retrieval
 
-- What are the important objects, content types, capabilities, and destinations?
-- What actions, states, relationships, and permissions affect them?
-- What must be globally findable, and what is contextual or role-specific?
-- What changes frequently, grows quickly, or requires governance?
+- Do audiences use different vocabulary or grouping logic?
+- Which needs are browse-first, search-first, or both?
+- Which decisions require comparison of architecture alternatives?
+- What validation is realistic before and after launch?
 
-Checkpoint: present a compact inventory and object model for correction.
+Ask a small group at a time. For sensitive or regulated domains, prioritize access, consent, retention, ownership, and jurisdiction before recommending structure.
 
-##### Round C — structure and delivery
+#### Checkpoint packet
 
-- Do audiences use different vocabulary or classification approaches?
-- Which retrieval behaviors are browse-first, search-first, or both?
-- Which outputs and editable/rendered formats are required?
-- What validation can realistically be performed before launch?
+At each checkpoint present only:
 
-Checkpoint: compare alternatives before finalizing.
+- **What we know** — provided or observed evidence;
+- **What it means** — the IA implication in plain language;
+- **What remains open** — unknowns with material impact;
+- **Decision needed** — the smallest choice required to continue.
 
-#### Quick Draft behavior
+Wait when the decision is consequential. Continue with a labeled provisional assumption only when the user requests it or the assumption is reversible and low risk.
 
-When speed is requested:
+#### Quick provisional response
 
-1. state the assumed product, users, tasks, and scope;
-2. identify missing evidence that could materially change the design;
-3. build a provisional architecture from supplied information;
-4. separate high-confidence structure from tentative decisions;
-5. give the next most valuable validation step.
-
-Do not withhold all useful work merely because research is absent.
+Keep it compact and useful. Include a short product understanding, candidate objects/content, initial organization and retrieval direction, material assumptions, and the next best check. Do not imitate the complete deliverable template.
 
 #### Redesign intake
 
-Inspect or request the current sitemap/navigation, content inventory, analytics, search logs, user research, support issues, permissions, governance, and upcoming product changes. Distinguish current-state facts from target-state recommendations.
+Inspect current navigation, content inventory, analytics, search logs, user research, support issues, permissions, governance, and upcoming product changes when available. Distinguish current-state evidence from target-state recommendations.
 
-#### Freehand override
+#### User control
 
-The user may request a different process, skip checkpoints, dictate a format, or ask for one artifact. Follow that direction unless it would make a high-risk claim misleading; in that case, provide the requested result and clearly label its limits.
+The user may skip questions, change sequence, request more or less depth, or focus on one IA component. Follow that direction. When skipping discovery would make a high-impact claim unreliable, provide the requested provisional work and make the limitation visible.
 
 
 <!-- source: references/modeling.md -->
@@ -508,50 +516,68 @@ Avoid universal sample-size claims. Select sample size from study purpose, varia
 
 <!-- source: references/deliverables.md -->
 
-### Deliverables and schemas
+### IA deliverables and semantic model
 
-Read this reference when composing a complete IA package, a requested focused artifact, or a machine-readable model.
+Read this reference after the IA direction is stable enough to communicate or when the user requests a reusable artifact.
 
-#### Complete IA report
+#### Layered delivery
 
-Use only sections that help the decision:
+Do not use every section by default. Select the smallest useful combination.
 
-1. Executive summary
-2. Scope, status, and audience
-3. Evidence and limitations
-4. Users × Content × Context
-5. Inventory and audit
-6. Domain/object model
-7. Taxonomy and labels
-8. Navigation and search
-9. Roles, permissions, and visibility
-10. Architecture alternatives
-11. Selected architecture and rationale
-12. Semantic model and visual map
-13. Validation plan and metrics
-14. Governance and decision log
+##### Decision layer
 
-Lead with the recommendation and important uncertainty rather than process narration.
+- purpose, scope, audience, and evidence status;
+- recommendation and why it fits;
+- consequential unknowns and decisions;
+- next action.
 
-#### Focused artifact behavior
+##### Working architecture layer
 
-When only one artifact is requested:
+- users, content, and context;
+- important objects/content and relationships;
+- organization and taxonomy;
+- labels and controlled vocabulary;
+- navigation, search, entry, orientation, and recovery;
+- roles, permissions, ownership, lifecycle, and governance;
+- meaningful alternatives and trade-offs.
 
-- state its scope and evidence status;
-- include only prerequisite context;
-- deliver the artifact in the requested format;
-- identify dependencies or validation that could materially change it;
-- do not pad it into a complete IA report.
+##### Assurance layer
+
+- evidence ledger and limitations;
+- validation plan and decision rules;
+- decision log and review triggers;
+- machine-readable semantic model when it will be reused.
+
+For a focused request, include only its essential prerequisites. Do not pad it into a complete report.
+
+#### Audience adaptation
+
+- **Product or leadership:** lead with decisions, risks, scope, and consequences.
+- **Cross-functional team:** add object relationships, vocabulary, ownership, and retrieval behavior.
+- **Design or research:** emphasize audience language, organization hypotheses, findability, and validation.
+- **Engineering or data:** add stable identifiers, relationships, cardinality, states, permissions, and lifecycle rules.
+
+When no audience is specified and it does not affect the decision, use a cross-functional professional baseline.
+
+#### Format selection
+
+Use chat text by default. Ask before producing a file or heavy artifact. Offer only formats supported by the current environment and distinguish:
+
+- editable source;
+- rendered output;
+- copy-ready content when file creation is unavailable.
+
+Do not generate every format. Produce the one the user selects.
 
 #### Semantic IA JSON
 
-Use this portable shape when a machine-readable source is useful:
+Use this portable shape only when structured reuse, validation, rendering, or handoff justifies it:
 
 ```json
 {
   "meta": {
     "title": "Example IA",
-    "version": "0.1",
+    "version": "0.2",
     "status": "proposed",
     "language": "en",
     "direction": "ltr",
@@ -560,25 +586,8 @@ Use this portable shape when a machine-readable source is useful:
   "audiences": [],
   "tasks": [],
   "objects": [],
-  "nodes": [
-    {
-      "id": "home",
-      "label": "Home",
-      "type": "destination",
-      "parent_id": null,
-      "evidence_status": "Proposed"
-    }
-  ],
-  "relationships": [
-    {
-      "id": "rel-1",
-      "from": "home",
-      "to": "projects",
-      "type": "contains",
-      "label": "Primary destination",
-      "evidence_status": "Proposed"
-    }
-  ],
+  "nodes": [],
+  "relationships": [],
   "navigation_systems": [],
   "search": {},
   "permissions": [],
@@ -589,17 +598,16 @@ Use this portable shape when a machine-readable source is useful:
 }
 ```
 
-Keep node IDs stable across revisions. Relationships must reference existing node IDs. Use `direction: rtl` for Persian/Arabic output unless the user requests a different diagram flow.
+Keep IDs stable across revisions. Relationships must reference existing IDs. Use the response language for human labels. Technical IDs may be English when interoperability benefits. Use `direction: rtl` for an RTL rendered artifact unless the selected renderer is clearer with English technical labels and a different flow direction.
 
 #### Architecture alternative card
 
 ```markdown
 ##### Option name
 - Organizing principle:
-- Best-supported tasks:
-- Trade-offs:
-- Failure risks:
-- Search/personalization dependency:
+- Best-supported needs:
+- Trade-offs and failure risks:
+- Retrieval dependency:
 - Governance cost:
 - Supporting evidence:
 - Validation needed:
@@ -610,8 +618,7 @@ Keep node IDs stable across revisions. Relationships must reference existing nod
 ```markdown
 - Decision:
 - Status: Confirmed | Proposed
-- Rationale:
-- Evidence:
+- Rationale and evidence:
 - Alternatives considered:
 - Consequences:
 - Owner:
@@ -621,81 +628,76 @@ Keep node IDs stable across revisions. Relationships must reference existing nod
 
 <!-- source: references/diagramming.md -->
 
-### IA diagramming
+### Optional IA diagramming
 
-Read this reference whenever visual output is requested or generated.
+Read this reference only when the user requests or accepts an IA diagram.
 
 #### Start from semantics
 
 Define nodes, relationship types, direction, groups, states, evidence status, and view scope before choosing coordinates or colors.
 
-Use this model:
+`Truth model → IA question → Visual encoding → Deliverable`
 
-`Truth model → Viewpoint → Visual encoding → Deliverable`
+#### One IA question per view
 
-#### Split views by question
+Useful IA views include:
 
-Do not force all IA into one canvas. Typical views:
+- domain or object relationships;
+- taxonomy and classification;
+- navigation systems and cross-links;
+- search, metadata, and facets;
+- roles, visibility, and permissions;
+- current-versus-proposed architecture.
 
-- domain/object relationship map;
-- taxonomy or classification map;
-- destination hierarchy/sitemap;
-- navigation and cross-link map;
-- search/facet model;
-- roles and permissions matrix/map;
-- current versus proposed comparison.
+Do not include neighboring mapping deliverables. Keep the view focused on the IA decision.
 
-Keep behavioral user flows separate unless showing one example path is necessary to validate the IA.
+#### Capability-aware routing
 
-#### Default routing
+Use the format requested by the user when the environment supports it. Otherwise explain the available alternatives.
 
-When the user does not specify a format, provide Markdown plus Mermaid. Choose:
+- A textual tree, relationship list, or matrix is the portable baseline.
+- Mermaid is useful as editable syntax when it renders reliably; it is not the default response.
+- Standalone HTML or SVG can provide a polished shareable view when creation and rendering tools are available.
+- Draw.io is an optional companion for precise editable geometry and formal handoff.
+- Excalidraw is an optional companion for workshops and conceptual explanation.
 
-- `flowchart` for hierarchy, object relationships, and navigation maps;
-- `classDiagram` or `erDiagram` when formal object/data relationships matter;
-- multiple small diagrams rather than one crowded graph.
+Do not assume a companion is installed. Do not install one without explicit authorization. Preserve a textual equivalent even when a visual is created.
 
-Recommend Draw.io for editable formal handoff, custom icons, swimlanes, exact routing, and multi-page diagrams. Recommend Excalidraw for workshops and teaching-oriented narratives. Use HTML for a shareable standalone artifact or interactive exploration.
+#### Language and RTL
+
+Keep the surrounding explanation in the user's language. For Persian or another RTL language:
+
+- use a readable RTL textual structure as the safe baseline;
+- keep human-facing labels in the user's language when the renderer handles them well;
+- allow English technical labels or IDs when RTL rendering would reduce clarity or reliability;
+- explain the language choice once rather than apologizing throughout the artifact.
 
 #### Visual encoding
 
-- Give every diagram a title, type, scope, status, and legend.
-- Keep abstraction levels consistent within a view.
-- Label relationship direction and meaning; avoid generic “uses.”
+- Give the view a title, IA question, scope, status, and legend when needed.
+- Keep abstraction levels consistent.
+- Label relationship direction and meaning; avoid vague edges.
 - Use containment only for real ownership, scope, or grouping.
-- Use color consistently and never as the only carrier of meaning.
-- Keep labels concise but specific and audience-appropriate.
-- Route edges around unrelated nodes and labels.
+- Never rely on color alone.
+- Keep labels concise and specific.
 - Use whitespace and scale to establish hierarchy.
-- Adapt flow direction to language and audience; do not assume LTR for Persian.
-
-#### Evidence display
-
-When helpful, encode evidence status with a redundant combination of label/pattern and color, for example:
-
-- solid border + `Confirmed`;
-- ordinary border + `Proposed`;
-- dashed border + `Inferred`;
-- dotted placeholder + `Unknown`.
-
-Always include a legend.
+- Encode evidence status redundantly when it matters, such as border style plus a text label.
 
 #### Render and inspect
 
 When rendering tools are available:
 
 1. generate editable source;
-2. render to SVG or PNG;
-3. inspect the actual image;
+2. render the requested output;
+3. inspect the actual result;
 4. fix clipping, overlap, crossings, ambiguity, imbalance, and unreadable text;
-5. re-render until the view is usable;
-6. preserve source alongside the final export.
+5. preserve the source beside the final export.
 
-If rendering is unavailable, state that the source was syntax-checked or reviewed but not visually verified.
+If rendering is unavailable, say that the source was reviewed or syntax-checked but not visually verified. Never claim visual QA without inspecting the render.
 
 #### Accessibility
 
-Provide a concise textual equivalent that conveys nodes, hierarchy, important relationships, exceptions, and status. For SVG/Mermaid, add an accessible title and description when supported. Check the target output size; zoom is not a substitute for readable defaults.
+Provide a concise textual equivalent covering the important nodes, relationships, exceptions, and evidence state. Use accessible titles and descriptions where supported. Readability at the target size matters more than zoomability.
 
 
 ---

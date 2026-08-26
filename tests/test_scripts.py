@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -58,6 +59,27 @@ class SkillScriptTests(unittest.TestCase):
             self.assertIn("Embedded references", packaged)
             self.assertIn("source: references/diagramming.md", packaged)
             self.assertNotIn("](references/", packaged)
+
+    def test_figma_adapter_is_current(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "figma.md"
+            result = self.run_script("package_figma.py", "--root", str(ROOT), "--output", str(output))
+            self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
+            committed = ROOT / "adapters" / "figma-make" / "propaymun-information-architecture.md"
+            self.assertEqual(output.read_bytes(), committed.read_bytes())
+
+    def test_release_version_is_consistent(self) -> None:
+        version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertEqual(version, "0.2.0")
+        self.assertIn(f'version: "{version}"', skill)
+        self.assertIn(f'version-{version}-', readme)
+
+    def test_core_scope_excludes_neighboring_map_deliverables(self) -> None:
+        paths = [ROOT / "SKILL.md", *sorted((ROOT / "references").glob("*.md"))]
+        combined = "\n".join(path.read_text(encoding="utf-8") for path in paths)
+        self.assertIsNone(re.search(r"site\s*map|user\s*flow", combined, flags=re.IGNORECASE))
 
 
 if __name__ == "__main__":

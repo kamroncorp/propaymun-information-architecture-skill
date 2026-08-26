@@ -1,70 +1,85 @@
-# Discovery and intake
+# Discovery and interaction
 
-Read this reference when context is incomplete, when selecting Guided or Quick Draft mode, or when planning an IA audit.
+Read this reference when starting complete IA work, selecting the next questions, or planning an IA audit.
+
+## Behavioral precedence
+
+Use guided behavior whenever unanswered decisions can materially alter the architecture. Complexity, multiple roles, permissions, regulated data, conflicting audiences, or unclear ownership outweigh the mere presence of a detailed brief.
+
+Use quick provisional behavior only after an explicit request for speed, assumptions, or progress without questions. Use focused behavior when the user requests a specific IA component.
+
+Do not present these internal behavior names unless they help the conversation.
+
+## First response for complete IA
+
+The first response should usually contain:
+
+1. a short reflection of the product, audiences, goal, scope, and supplied evidence;
+2. the few uncertainties most likely to change the IA;
+3. a compact set of questions;
+4. a clear statement that the answers will shape the next architecture checkpoint.
+
+Do not create a file or full architecture before the first required answers. Do not ask for information already present in the brief or attachments.
 
 ## Minimum framing
 
-Try to establish:
+Establish only what matters for the current decision:
 
-1. product and business outcome;
-2. primary audiences, roles, expertise, language, and accessibility needs;
-3. priority tasks and high-risk failures;
-4. content, capabilities, domain objects, and lifecycle;
-5. current-state structure and pain points, if any;
-6. evidence available: research, analytics, search logs, support data, content inventory, or existing maps;
-7. technical, organizational, legal, security, and timeline constraints;
-8. requested artifacts, formats, and level of detail.
+- product and business outcome;
+- primary audiences, roles, expertise, language, and accessibility needs;
+- priority tasks and costly or high-risk failures;
+- important content, capabilities, domain objects, and lifecycle;
+- current-state structure and pain points, when redesigning;
+- available evidence: research, analytics, search logs, support data, inventory, or existing models;
+- technical, organizational, legal, security, and timeline constraints;
+- intended readers, decision, desired depth, and eventual output needs.
 
-Do not ask for every item if the user already supplied enough to proceed.
+## Question selection
 
-## Guided mode question strategy
+Prefer questions that distinguish possible architectures. A useful progression is:
 
-Ask compact rounds of high-impact questions. Prefer questions that separate possible architectures.
+### Framing
 
-### Round A — framing
+- What outcome should the IA improve?
+- Which audiences and priority tasks matter most?
+- Is this greenfield, redesign, or an audit?
+- What evidence or existing material can be inspected?
 
-- What product or service is this, and what outcome should the IA improve?
-- Who are the main audiences or roles, and which tasks matter most?
-- Is this greenfield, redesign, or an audit of an existing structure?
-- What evidence or artifacts can be inspected?
+### Domain and access
 
-Checkpoint: summarize scope, success, knowns, and unknowns for confirmation.
+- What are the important objects, content types, capabilities, and relationships?
+- Which actions, states, permissions, ownership, and retention rules affect them?
+- What must be globally findable, contextual, role-specific, or restricted?
+- What changes frequently or grows quickly?
 
-### Round B — inventory and model
+### Organization and retrieval
 
-- What are the important objects, content types, capabilities, and destinations?
-- What actions, states, relationships, and permissions affect them?
-- What must be globally findable, and what is contextual or role-specific?
-- What changes frequently, grows quickly, or requires governance?
+- Do audiences use different vocabulary or grouping logic?
+- Which needs are browse-first, search-first, or both?
+- Which decisions require comparison of architecture alternatives?
+- What validation is realistic before and after launch?
 
-Checkpoint: present a compact inventory and object model for correction.
+Ask a small group at a time. For sensitive or regulated domains, prioritize access, consent, retention, ownership, and jurisdiction before recommending structure.
 
-### Round C — structure and delivery
+## Checkpoint packet
 
-- Do audiences use different vocabulary or classification approaches?
-- Which retrieval behaviors are browse-first, search-first, or both?
-- Which outputs and editable/rendered formats are required?
-- What validation can realistically be performed before launch?
+At each checkpoint present only:
 
-Checkpoint: compare alternatives before finalizing.
+- **What we know** — provided or observed evidence;
+- **What it means** — the IA implication in plain language;
+- **What remains open** — unknowns with material impact;
+- **Decision needed** — the smallest choice required to continue.
 
-## Quick Draft behavior
+Wait when the decision is consequential. Continue with a labeled provisional assumption only when the user requests it or the assumption is reversible and low risk.
 
-When speed is requested:
+## Quick provisional response
 
-1. state the assumed product, users, tasks, and scope;
-2. identify missing evidence that could materially change the design;
-3. build a provisional architecture from supplied information;
-4. separate high-confidence structure from tentative decisions;
-5. give the next most valuable validation step.
-
-Do not withhold all useful work merely because research is absent.
+Keep it compact and useful. Include a short product understanding, candidate objects/content, initial organization and retrieval direction, material assumptions, and the next best check. Do not imitate the complete deliverable template.
 
 ## Redesign intake
 
-Inspect or request the current sitemap/navigation, content inventory, analytics, search logs, user research, support issues, permissions, governance, and upcoming product changes. Distinguish current-state facts from target-state recommendations.
+Inspect current navigation, content inventory, analytics, search logs, user research, support issues, permissions, governance, and upcoming product changes when available. Distinguish current-state evidence from target-state recommendations.
 
-## Freehand override
+## User control
 
-The user may request a different process, skip checkpoints, dictate a format, or ask for one artifact. Follow that direction unless it would make a high-risk claim misleading; in that case, provide the requested result and clearly label its limits.
-
+The user may skip questions, change sequence, request more or less depth, or focus on one IA component. Follow that direction. When skipping discovery would make a high-impact claim unreliable, provide the requested provisional work and make the limitation visible.

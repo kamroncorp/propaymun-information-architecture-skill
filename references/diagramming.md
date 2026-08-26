@@ -1,76 +1,70 @@
-# IA diagramming
+# Optional IA diagramming
 
-Read this reference whenever visual output is requested or generated.
+Read this reference only when the user requests or accepts an IA diagram.
 
 ## Start from semantics
 
 Define nodes, relationship types, direction, groups, states, evidence status, and view scope before choosing coordinates or colors.
 
-Use this model:
+`Truth model → IA question → Visual encoding → Deliverable`
 
-`Truth model → Viewpoint → Visual encoding → Deliverable`
+## One IA question per view
 
-## Split views by question
+Useful IA views include:
 
-Do not force all IA into one canvas. Typical views:
+- domain or object relationships;
+- taxonomy and classification;
+- navigation systems and cross-links;
+- search, metadata, and facets;
+- roles, visibility, and permissions;
+- current-versus-proposed architecture.
 
-- domain/object relationship map;
-- taxonomy or classification map;
-- destination hierarchy/sitemap;
-- navigation and cross-link map;
-- search/facet model;
-- roles and permissions matrix/map;
-- current versus proposed comparison.
+Do not include neighboring mapping deliverables. Keep the view focused on the IA decision.
 
-Keep behavioral user flows separate unless showing one example path is necessary to validate the IA.
+## Capability-aware routing
 
-## Default routing
+Use the format requested by the user when the environment supports it. Otherwise explain the available alternatives.
 
-When the user does not specify a format, provide Markdown plus Mermaid. Choose:
+- A textual tree, relationship list, or matrix is the portable baseline.
+- Mermaid is useful as editable syntax when it renders reliably; it is not the default response.
+- Standalone HTML or SVG can provide a polished shareable view when creation and rendering tools are available.
+- Draw.io is an optional companion for precise editable geometry and formal handoff.
+- Excalidraw is an optional companion for workshops and conceptual explanation.
 
-- `flowchart` for hierarchy, object relationships, and navigation maps;
-- `classDiagram` or `erDiagram` when formal object/data relationships matter;
-- multiple small diagrams rather than one crowded graph.
+Do not assume a companion is installed. Do not install one without explicit authorization. Preserve a textual equivalent even when a visual is created.
 
-Recommend Draw.io for editable formal handoff, custom icons, swimlanes, exact routing, and multi-page diagrams. Recommend Excalidraw for workshops and teaching-oriented narratives. Use HTML for a shareable standalone artifact or interactive exploration.
+## Language and RTL
+
+Keep the surrounding explanation in the user's language. For Persian or another RTL language:
+
+- use a readable RTL textual structure as the safe baseline;
+- keep human-facing labels in the user's language when the renderer handles them well;
+- allow English technical labels or IDs when RTL rendering would reduce clarity or reliability;
+- explain the language choice once rather than apologizing throughout the artifact.
 
 ## Visual encoding
 
-- Give every diagram a title, type, scope, status, and legend.
-- Keep abstraction levels consistent within a view.
-- Label relationship direction and meaning; avoid generic “uses.”
+- Give the view a title, IA question, scope, status, and legend when needed.
+- Keep abstraction levels consistent.
+- Label relationship direction and meaning; avoid vague edges.
 - Use containment only for real ownership, scope, or grouping.
-- Use color consistently and never as the only carrier of meaning.
-- Keep labels concise but specific and audience-appropriate.
-- Route edges around unrelated nodes and labels.
+- Never rely on color alone.
+- Keep labels concise and specific.
 - Use whitespace and scale to establish hierarchy.
-- Adapt flow direction to language and audience; do not assume LTR for Persian.
-
-## Evidence display
-
-When helpful, encode evidence status with a redundant combination of label/pattern and color, for example:
-
-- solid border + `Confirmed`;
-- ordinary border + `Proposed`;
-- dashed border + `Inferred`;
-- dotted placeholder + `Unknown`.
-
-Always include a legend.
+- Encode evidence status redundantly when it matters, such as border style plus a text label.
 
 ## Render and inspect
 
 When rendering tools are available:
 
 1. generate editable source;
-2. render to SVG or PNG;
-3. inspect the actual image;
+2. render the requested output;
+3. inspect the actual result;
 4. fix clipping, overlap, crossings, ambiguity, imbalance, and unreadable text;
-5. re-render until the view is usable;
-6. preserve source alongside the final export.
+5. preserve the source beside the final export.
 
-If rendering is unavailable, state that the source was syntax-checked or reviewed but not visually verified.
+If rendering is unavailable, say that the source was reviewed or syntax-checked but not visually verified. Never claim visual QA without inspecting the render.
 
 ## Accessibility
 
-Provide a concise textual equivalent that conveys nodes, hierarchy, important relationships, exceptions, and status. For SVG/Mermaid, add an accessible title and description when supported. Check the target output size; zoom is not a substitute for readable defaults.
-
+Provide a concise textual equivalent covering the important nodes, relationships, exceptions, and evidence state. Use accessible titles and descriptions where supported. Readability at the target size matters more than zoomability.

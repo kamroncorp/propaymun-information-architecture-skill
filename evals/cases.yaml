@@ -1,40 +1,78 @@
-version: 1
+version: 2
 skill: propaymun-information-architecture
 cases:
-  - id: content-site-focused-taxonomy
-    mode_expected: focused-artifact
+  - id: persian-medical-natural-brief
+    behavior_expected: guided
+    environment: chat-only, no diagram or code execution tools
+    prompt: |
+      ما یک پلتفرم وب رزرو نوبت پزشکی می‌سازیم. بیمار پزشک را بر اساس
+      تخصص و منطقه پیدا می‌کند، نوبت می‌گیرد، پرداخت می‌کند، چت و سابقه
+      پزشکی دارد. پزشک تقویم و بیمارانش را مدیریت می‌کند و ادمین کلینیک
+      پزشکان و گزارش‌ها را می‌بیند. فعلاً فقط نسخه وب را می‌سازیم.
+    invariants:
+      - Responds in clear, professional Persian without assuming IA knowledge.
+      - Reflects the brief and asks compact high-impact questions before producing a complete IA.
+      - Prioritizes multi-role identity, clinic model, health-data access, payment lifecycle, and evidence.
+      - Does not create or claim to create a file, diagram, or rendered artifact.
+      - Does not produce neighboring mapping deliverables.
+      - Does not select an architecture using hidden consequential assumptions.
+
+  - id: content-taxonomy-focused
+    behavior_expected: focused
     prompt: |
       We publish practical climate explainers for students, teachers, and parents.
       Create only a taxonomy and labeling system from the attached inventory.
-      Do not redesign our pages. Return Markdown and Mermaid.
+      Do not redesign our interface. Return the result in chat.
     invariants:
       - Delivers taxonomy and labels without padding into a complete IA report.
       - Identifies audience-language and cross-classification risks.
-      - Does not claim card-sorting or validation occurred.
-      - Honors Markdown and Mermaid.
+      - Does not claim card sorting or validation occurred.
+      - Honors chat delivery and does not create an unsolicited file or diagram.
 
-  - id: multirole-saas-guided
-    mode_expected: guided
+  - id: multirole-saas-complete
+    behavior_expected: guided
     prompt: |
-      Use Guided mode to design IA for a multi-role project operations SaaS.
+      Design the information architecture for a project operations SaaS.
       Roles are workspace admin, project manager, contributor, and external reviewer.
       Projects have tasks, files, approvals, reports, and archived states.
     invariants:
-      - Frames priority tasks and permissions before final navigation.
-      - Builds an object/state/relationship model before pages or menus.
+      - Frames priority tasks, role overlap, permissions, lifecycle, and evidence before final navigation.
+      - Asks questions before producing the full architecture.
+      - Does not require the user to choose or understand a named mode.
       - Uses compact checkpoints and does not repeat answered questions.
-      - Considers search, deep entry, recovery, and governance.
 
-  - id: ai-product-quick-draft
-    mode_expected: quick-draft
+  - id: ai-product-explicit-quick
+    behavior_expected: quick-provisional
     prompt: |
-      Quickly draft an IA for an AI research workspace with conversations,
-      sources, claims, generated reports, reusable agents, runs, and team spaces.
-      We have no user research yet. Give two structural alternatives and an HTML-ready model.
+      بدون سؤال و خیلی سریع یک فرضیه اولیه IA برای فضای پژوهش هوش مصنوعی بده.
+      اشیای اصلی مکالمه، منبع، ادعا، گزارش، عامل، اجرا و فضای تیمی هستند.
+      فعلاً فایل یا دیاگرام نساز.
     invariants:
-      - Produces useful work without fabricating research.
-      - Marks the architecture as provisional and separates inferred/proposed/unknown.
-      - Models provenance, permissions, lifecycle, and human review states.
-      - Provides two structurally different alternatives.
-      - Produces semantic JSON suitable for the HTML renderer.
+      - Produces a compact provisional response rather than a complete report.
+      - Does not fabricate research and clearly marks material assumptions.
+      - Models provenance, permissions, lifecycle, and human review only at useful initial depth.
+      - Honors the request not to ask questions or create artifacts.
 
+  - id: artifact-after-confirmation
+    behavior_expected: delivery
+    environment: PDF and HTML tools available, no Draw.io or Excalidraw companion
+    prompt: |
+      معماری اطلاعات را تأیید می‌کنم. حالا گزینه‌های خروجی حرفه‌ای را بگو،
+      ولی تا انتخاب نکرده‌ام هیچ فایلی نساز.
+    invariants:
+      - Offers only available formats and separates editable from rendered output.
+      - Does not create an artifact before the user selects one.
+      - Does not imply optional diagram companions are installed.
+      - Requires explicit authorization before installing or connecting another skill.
+
+  - id: rtl-diagram-request
+    behavior_expected: optional-diagram
+    environment: Mermaid only
+    prompt: |
+      برای مدل اشیای این معماری اطلاعات یک دیاگرام هم می‌خواهم. توضیح فارسی باشد،
+      اما اگر برای رندر بهتر است شناسه‌های فنی انگلیسی باشند مشکلی نیست.
+    invariants:
+      - Keeps the explanation Persian and may use English technical identifiers for reliable rendering.
+      - Produces only an IA relationship view.
+      - Includes a readable textual equivalent.
+      - Does not claim visual inspection unless a rendered result was actually inspected.
