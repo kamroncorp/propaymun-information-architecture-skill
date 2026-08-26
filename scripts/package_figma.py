@@ -18,6 +18,8 @@ REFERENCE_ORDER = [
     "diagramming.md",
 ]
 
+FIGMA_PROFILE = Path("adapters") / "figma-make" / "BEHAVIOR.md"
+
 
 def demote_headings(text: str) -> str:
     lines = []
@@ -48,7 +50,14 @@ def main() -> int:
     skill = rewrite_reference_links(
         (root / "SKILL.md").read_text(encoding="utf-8").rstrip()
     )
-    sections = [skill, "\n---\n\n# Embedded references\n"]
+    figma_profile = demote_headings(
+        (root / FIGMA_PROFILE).read_text(encoding="utf-8")
+    )
+    sections = [
+        skill,
+        f"\n---\n\n<!-- source: {FIGMA_PROFILE.as_posix()} -->\n\n{figma_profile}\n",
+        "\n---\n\n# Embedded references\n",
+    ]
     for name in REFERENCE_ORDER:
         path = root / "references" / name
         sections.append(f"\n<!-- source: references/{name} -->\n\n{demote_headings(path.read_text(encoding='utf-8'))}\n")

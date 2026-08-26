@@ -1,7 +1,7 @@
 interface:
   display_name: "ProPaymun Information Architecture"
-  short_description: "Guided, evidence-aware IA for digital products"
+  short_description: "Smart, evidence-aware IA from an ordinary product brief"
   brand_color: "#5B4BDB"
-  default_prompt: "Use $propaymun-information-architecture to guide me from my product brief to a professional information architecture. Start by understanding the brief and asking only the questions that could materially change the architecture."
+  default_prompt: "Use $propaymun-information-architecture for this product. I will describe the product naturally; decide what must be clarified, pause when a material answer is needed, and produce the best IA this environment supports."
 policy:
   allow_implicit_invocation: true

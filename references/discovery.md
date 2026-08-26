@@ -1,85 +1,111 @@
-# Discovery and interaction
+# Discovery and low-effort interaction
 
-Read this reference when starting complete IA work, selecting the next questions, or planning an IA audit.
+Read this reference when starting complete IA work, selecting questions, deciding whether to stop, or planning an IA audit.
 
-## Behavioral precedence
+## Principle
 
-Use guided behavior whenever unanswered decisions can materially alter the architecture. Complexity, multiple roles, permissions, regulated data, conflicting audiences, or unclear ownership outweigh the mere presence of a detailed brief.
+The agent carries the IA method. The user supplies product knowledge in ordinary language. Never transfer professional quality-control work to a user who may not know IA.
 
-Use quick provisional behavior only after an explicit request for speed, assumptions, or progress without questions. Use focused behavior when the user requests a specific IA component.
+Do not ask the user to choose Guided/Quick modes, approve jargon-heavy models, select a checkpoint, or restate “stop and wait.”
 
-Do not present these internal behavior names unless they help the conversation.
+## Sufficiency gate
 
-## First response for complete IA
+Before each consequential step, classify open issues:
 
-The first response should usually contain:
+- **Blocking:** proceeding could select a materially different architecture, expose sensitive information, or create an expensive mistake. Ask and stop.
+- **Important but assumable:** one default is defensible and reversible. State the assumption and continue.
+- **Detail:** it will not affect the current IA decision. Defer it.
 
-1. a short reflection of the product, audiences, goal, scope, and supplied evidence;
-2. the few uncertainties most likely to change the IA;
-3. a compact set of questions;
-4. a clear statement that the answers will shape the next architecture checkpoint.
+Do not use a numerical completeness score. Judge sufficiency against the decision being made.
 
-Do not create a file or full architecture before the first required answers. Do not ask for information already present in the brief or attachments.
+## First turn
 
-## Minimum framing
+### No usable brief
 
-Establish only what matters for the current decision:
+Ask a compact product-language round covering the minimum needed to begin:
 
-- product and business outcome;
-- primary audiences, roles, expertise, language, and accessibility needs;
-- priority tasks and costly or high-risk failures;
-- important content, capabilities, domain objects, and lifecycle;
-- current-state structure and pain points, when redesigning;
-- available evidence: research, analytics, search logs, support data, inventory, or existing models;
-- technical, organizational, legal, security, and timeline constraints;
-- intended readers, decision, desired depth, and eventual output needs.
+- What product or service is being designed?
+- Who mainly uses it and what are they trying to accomplish?
+- Is it new, a redesign, or an audit of an existing product?
+- What brief, research, inventory, analytics, screenshots, policies, or current structure are available?
 
-## Question selection
+Then stop. Do not create a placeholder architecture or artifact.
 
-Prefer questions that distinguish possible architectures. A useful progression is:
+### Partial or substantial brief
 
-### Framing
+First inspect all provided material. Reflect the product and scope in a few lines. Ask only questions that distinguish plausible architectures, normally no more than five. Then stop.
 
-- What outcome should the IA improve?
-- Which audiences and priority tasks matter most?
-- Is this greenfield, redesign, or an audit?
-- What evidence or existing material can be inspected?
+### Sufficient brief
 
-### Domain and access
+Proceed. Do not ask a ritual confirmation merely because a workflow template contains a checkpoint.
 
-- What are the important objects, content types, capabilities, and relationships?
-- Which actions, states, permissions, ownership, and retention rules affect them?
-- What must be globally findable, contextual, role-specific, or restricted?
-- What changes frequently or grows quickly?
+## High-impact question lenses
 
-### Organization and retrieval
+Use only the lenses relevant to the product:
 
-- Do audiences use different vocabulary or grouping logic?
-- Which needs are browse-first, search-first, or both?
-- Which decisions require comparison of architecture alternatives?
-- What validation is realistic before and after launch?
+- outcome, audience, priority tasks, scope, and costly failures;
+- core objects/content, relationships, states, and lifecycle;
+- independent versus organization-scoped identities and ownership;
+- visibility, permissions, consent, retention, and legal constraints;
+- global versus contextual findability;
+- audience vocabulary, organization logic, browse versus search needs;
+- scale, volatility, governance, and change authority;
+- evidence that can confirm or challenge the proposed structure.
 
-Ask a small group at a time. For sensitive or regulated domains, prioritize access, consent, retention, ownership, and jurisdiction before recommending structure.
+For sensitive or regulated domains, prioritize access, consent, retention, ownership, jurisdiction, and auditability before selecting architecture.
 
-## Checkpoint packet
+## Ask in product language
 
-At each checkpoint present only:
+Questions must describe consequences the user can recognize.
 
-- **What we know** — provided or observed evidence;
-- **What it means** — the IA implication in plain language;
-- **What remains open** — unknowns with material impact;
-- **Decision needed** — the smallest choice required to continue.
+Avoid:
 
-Wait when the decision is consequential. Continue with a labeled provisional assumption only when the user requests it or the assumption is reversible and low risk.
+> Is the role-context permission model correct?
 
-## Quick provisional response
+Prefer:
 
-Keep it compact and useful. Include a short product understanding, candidate objects/content, initial organization and retrieval direction, material assumptions, and the next best check. Do not imitate the complete deliverable template.
+> Can a doctor belong to more than one clinic, and should their access change depending on which clinic they are working in?
 
-## Redesign intake
+Avoid:
 
-Inspect current navigation, content inventory, analytics, search logs, user research, support issues, permissions, governance, and upcoming product changes when available. Distinguish current-state evidence from target-state recommendations.
+> Does the navigation model match your mental model?
+
+Prefer:
+
+> Should patients search across every clinic, or begin inside one clinic and see only its doctors?
+
+Do not include hints that teach the user how to police the skill. The skill must perform its own scope, evidence, and completeness checks.
+
+## Handling weak answers
+
+If the user replies “yes,” “continue,” “I don't know,” or gives no new product detail:
+
+1. do not repeat the same approval request;
+2. infer a defensible default from the brief and domain evidence;
+3. state the default and its user-visible consequence briefly;
+4. mark it Proposed or Inferred;
+5. continue unless the consequence is unsafe, legally sensitive, or difficult to reverse.
+
+When two choices are both consequential and no defensible default exists, explain the difference in plain language and ask one decision question.
+
+## Decision pauses
+
+Pause only for a real decision, not at a fixed number of checkpoints. A useful pause contains:
+
+- a brief description of the product consequence;
+- the smallest concrete choice needed;
+- at most a few answer options when they genuinely simplify the decision.
+
+Do not lead with internal section names such as “Checkpoint 3,” “Navigation Model,” or “Governance” unless the audience requested technical process detail.
+
+## Quick provisional work
+
+Use only after an explicit request for speed, assumptions, or no questions. Keep the result compact: product understanding, candidate objects/content, initial organization and retrieval direction, material assumptions, and the next best check. Do not imitate a complete report.
+
+## Redesign and audit intake
+
+Inspect current navigation, content inventory, analytics, search logs, user research, support issues, permissions, governance, and upcoming changes when available. Distinguish current-state evidence from target-state recommendations.
 
 ## User control
 
-The user may skip questions, change sequence, request more or less depth, or focus on one IA component. Follow that direction. When skipping discovery would make a high-impact claim unreliable, provide the requested provisional work and make the limitation visible.
+The user may skip questions, change sequence, request more or less depth, or focus on one IA component. Follow that direction. If skipped discovery weakens a high-impact claim, provide provisional work and make that limitation visible rather than silently claiming certainty.

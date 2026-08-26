@@ -43,13 +43,32 @@ When no audience is specified and it does not affect the decision, use a cross-f
 
 ## Format selection
 
-Use chat text by default. Ask before producing a file or heavy artifact. Offer only formats supported by the current environment and distinguish:
+Match the default to the environment:
+
+- In a conversation-first environment, use chat text by default and ask before producing a file or heavy artifact.
+- In a build-first environment, build the environment-appropriate IA review artifact after the sufficiency gate passes; do not ask the user to choose a text/file format first.
+
+Offer only formats supported by the current environment and distinguish:
 
 - editable source;
 - rendered output;
 - copy-ready content when file creation is unavailable.
 
 Do not generate every format. Produce the one the user selects.
+
+## Interactive IA review workspace
+
+In a build-first environment, the default artifact should help a mixed team understand and challenge the IA without requiring IA expertise. Include only relevant views:
+
+- a plain-language decision summary;
+- important objects/content and relationships;
+- organization, taxonomy, and label rules;
+- navigation and search principles without turning them into a page map;
+- role, visibility, permission, ownership, and lifecycle views;
+- assumptions, unknowns, evidence status, risks, and next validation;
+- role or evidence filters, progressive detail, and accessible text equivalents where useful.
+
+This workspace is a review tool for the architecture. It is not the product interface, a wireframe, a prototype of the product, a sitemap, or a user flow. Prefer a clear, restrained, accessible presentation over decorative UI. Support the user's language and direction.
 
 ## Semantic IA JSON
 

@@ -4,6 +4,20 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-26
+
+### Changed
+
+- Added a shared autonomous sufficiency gate: material unknowns trigger a questions-only response and a hard stop without requiring prompting instructions from the user.
+- Replaced fixed, jargon-heavy checkpoints with product-language decisions and consequence-aware assumptions for novice users.
+- Clarified IA as the canonical semantic foundation while keeping sitemap and user-flow production in dedicated skills.
+- Added environment-aware delivery shared by the canonical skill: conversation-first agents default to concise chat, while build-first environments use their native output medium.
+- Reworked the Figma Make profile to build an interactive IA Review Workspace after discovery instead of returning only text or building the product UI.
+- Made Plan mode optional rather than a prerequisite for correct Figma behavior.
+- Expanded capability-aware public research, private-data boundaries, source citation, and unavailable-tool fallbacks.
+- Added a cross-platform adapter manifest and deterministic parity checks so the canonical skill, Figma adapter, metadata, and documentation release together.
+- Added behavioral cases for empty Figma intake, sufficient Figma briefs, minimal novice answers, autonomous stopping, and source-aware public research.
+
 ## [0.2.0] - 2026-08-26
 
 ### Changed
@@ -34,6 +48,7 @@ All notable changes to this project are documented here. The project follows Sem
 - English and Persian documentation.
 - Three behavioral evaluation scenarios and deterministic script tests.
 
-[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.3.0
 [0.2.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.2.0
 [0.1.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.1.0

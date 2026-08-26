@@ -17,8 +17,10 @@ Evaluate it in the intersection of:
 - **Information architecture** is the overall findability and meaning system.
 - **Taxonomy** is a controlled classification and vocabulary.
 - **Content model** defines content types, fields, relationships, rules, and lifecycle.
+- **Sitemap** visualizes a hierarchy of pages or destinations derived from architecture decisions; it is not the IA itself and belongs to its dedicated mapping skill.
 - **Navigation** is the interface that exposes paths through the architecture.
 - **Search** supports direct retrieval and discovery.
+- **User flow** models actions, states, decisions, and alternate paths for completing a goal; it is not the IA itself and belongs to its dedicated flow skill.
 - **Content strategy** governs why, by whom, and through what lifecycle content is created and maintained.
 
 Do not use these terms interchangeably.

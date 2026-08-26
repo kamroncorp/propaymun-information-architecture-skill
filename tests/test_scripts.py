@@ -57,6 +57,9 @@ class SkillScriptTests(unittest.TestCase):
             packaged = output.read_text(encoding="utf-8")
             self.assertIn("name: propaymun-information-architecture", packaged)
             self.assertIn("Embedded references", packaged)
+            self.assertIn("source: adapters/figma-make/BEHAVIOR.md", packaged)
+            self.assertIn("Hard pre-build gate", packaged)
+            self.assertIn("IA Review Workspace", packaged)
             self.assertIn("source: references/diagramming.md", packaged)
             self.assertNotIn("](references/", packaged)
 
@@ -72,14 +75,27 @@ class SkillScriptTests(unittest.TestCase):
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertEqual(version, "0.2.0")
+        manifest = json.loads((ROOT / "adapters" / "manifest.json").read_text(encoding="utf-8"))
+        figma = (ROOT / "adapters" / "figma-make" / "propaymun-information-architecture.md").read_text(encoding="utf-8")
+        self.assertEqual(version, "0.3.0")
         self.assertIn(f'version: "{version}"', skill)
         self.assertIn(f'version-{version}-', readme)
+        self.assertEqual(manifest["version"], version)
+        self.assertIn(f'version: "{version}"', figma)
 
-    def test_core_scope_excludes_neighboring_map_deliverables(self) -> None:
-        paths = [ROOT / "SKILL.md", *sorted((ROOT / "references").glob("*.md"))]
-        combined = "\n".join(path.read_text(encoding="utf-8") for path in paths)
-        self.assertIsNone(re.search(r"site\s*map|user\s*flow", combined, flags=re.IGNORECASE))
+    def test_core_scope_routes_neighboring_map_deliverables_without_producing_them(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        self.assertRegex(skill, re.compile(r"sitemap.*separate", flags=re.IGNORECASE))
+        self.assertRegex(skill, re.compile(r"user flow.*separate", flags=re.IGNORECASE))
+        self.assertIn("do not create or offer either one", skill)
+
+    def test_autonomous_stop_is_shared_by_core_and_figma(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        figma_profile = (ROOT / "adapters" / "figma-make" / "BEHAVIOR.md").read_text(encoding="utf-8")
+        self.assertIn("autonomous stop gate", skill.lower())
+        self.assertIn("hard stop", skill.lower())
+        self.assertIn("hard pre-build gate", figma_profile.lower())
+        self.assertIn("do not require the user to say", figma_profile.lower())
 
 
 if __name__ == "__main__":

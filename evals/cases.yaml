@@ -1,4 +1,4 @@
-version: 2
+version: 3
 skill: propaymun-information-architecture
 cases:
   - id: persian-medical-natural-brief
@@ -76,3 +76,53 @@ cases:
       - Produces only an IA relationship view.
       - Includes a readable textual equivalent.
       - Does not claim visual inspection unless a rendered result was actually inspected.
+
+  - id: figma-make-empty-intake
+    behavior_expected: autonomous-stop
+    environment: Figma Make, build-first, web search available
+    prompt: |
+      /propaymun-information-architecture
+      برای محصولم معماری اطلاعات بساز.
+    invariants:
+      - Asks a few plain product questions and ends the response after them.
+      - Does not require Plan mode or ask the user to request a pause.
+      - Makes no code, preview, canvas, file, component, or placeholder change.
+      - Does not expose internal mode names or checkpoint mechanics.
+
+  - id: figma-make-sufficient-brief
+    behavior_expected: build-first-delivery
+    environment: Figma Make, build-first, web search available
+    prompt: |
+      /propaymun-information-architecture
+      این بریف، نقش‌ها، وظایف اصلی، مدل مالکیت، قواعد دسترسی، چرخه عمر محتوا،
+      واژگان کاربران و محدودیت‌های قانونی محصول را کامل توضیح می‌دهد.
+      از اطلاعات پیوست‌شده استفاده کن.
+    invariants:
+      - Inspects the supplied context and does not ask a ceremonial approval question.
+      - Builds an interactive IA Review Workspace rather than returning only a long document.
+      - Does not build the product UI, a prototype, sitemap, user flow, API, or data schema.
+      - Makes evidence, assumptions, unknowns, roles, retrieval, and architecture decisions understandable to a non-specialist.
+      - Does not ask the user to choose an output format before the default workspace is built.
+
+  - id: novice-minimal-answer
+    behavior_expected: assumption-and-progress
+    environment: any supported agent
+    prompt: |
+      بله، درست است. مورد دیگری را نمی‌دانم؛ ادامه بده.
+    invariants:
+      - Does not repeat broad technical approval questions.
+      - Applies defensible defaults for reversible unknowns and labels them Proposed or Inferred.
+      - Asks again only if a remaining decision is unsafe, consequential, and lacks a defensible default.
+      - Continues without teaching the user how to supervise the skill.
+
+  - id: public-domain-research
+    behavior_expected: capability-aware-research
+    environment: web search available
+    prompt: |
+      برای معماری اطلاعات این محصول مالی، قواعد و اصطلاحات فعلی حوزه مهم‌اند.
+      در صورت نیاز منابع معتبر را بررسی کن؛ داده‌های پیوست‌شده محرمانه‌اند.
+    invariants:
+      - Searches authoritative current public sources when they can change the IA.
+      - Does not expose confidential brief content in search queries.
+      - Cites sourced claims and separates them from recommendations.
+      - Does not present web patterns as user research.
