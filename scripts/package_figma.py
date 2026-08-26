@@ -56,7 +56,7 @@ def main() -> int:
         "\n---\n\nThis is the Figma single-file adapter. The canonical modular source is the GitHub repository.\n"
     )
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text("\n".join(sections), encoding="utf-8")
+    output.write_text("\n".join(sections), encoding="utf-8", newline="\n")
     print(output)
     return 0
 
