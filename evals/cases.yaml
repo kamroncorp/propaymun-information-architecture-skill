@@ -1,0 +1,40 @@
+version: 1
+skill: propaymun-information-architecture
+cases:
+  - id: content-site-focused-taxonomy
+    mode_expected: focused-artifact
+    prompt: |
+      We publish practical climate explainers for students, teachers, and parents.
+      Create only a taxonomy and labeling system from the attached inventory.
+      Do not redesign our pages. Return Markdown and Mermaid.
+    invariants:
+      - Delivers taxonomy and labels without padding into a complete IA report.
+      - Identifies audience-language and cross-classification risks.
+      - Does not claim card-sorting or validation occurred.
+      - Honors Markdown and Mermaid.
+
+  - id: multirole-saas-guided
+    mode_expected: guided
+    prompt: |
+      Use Guided mode to design IA for a multi-role project operations SaaS.
+      Roles are workspace admin, project manager, contributor, and external reviewer.
+      Projects have tasks, files, approvals, reports, and archived states.
+    invariants:
+      - Frames priority tasks and permissions before final navigation.
+      - Builds an object/state/relationship model before pages or menus.
+      - Uses compact checkpoints and does not repeat answered questions.
+      - Considers search, deep entry, recovery, and governance.
+
+  - id: ai-product-quick-draft
+    mode_expected: quick-draft
+    prompt: |
+      Quickly draft an IA for an AI research workspace with conversations,
+      sources, claims, generated reports, reusable agents, runs, and team spaces.
+      We have no user research yet. Give two structural alternatives and an HTML-ready model.
+    invariants:
+      - Produces useful work without fabricating research.
+      - Marks the architecture as provisional and separates inferred/proposed/unknown.
+      - Models provenance, permissions, lifecycle, and human review states.
+      - Provides two structurally different alternatives.
+      - Produces semantic JSON suitable for the HTML renderer.
+

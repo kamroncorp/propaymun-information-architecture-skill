@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "title": "Broken model",
+    "version": "0.1",
+    "status": "proposed",
+    "language": "en",
+    "direction": "sideways",
+    "scope": "Test"
+  },
+  "nodes": [
+    {"id": "a", "label": "A", "type": "destination", "parent_id": "missing", "evidence_status": "Certain"}
+  ],
+  "relationships": [
+    {"id": "r", "from": "a", "to": "b", "type": "links", "evidence_status": "Proposed"}
+  ]
+}
+

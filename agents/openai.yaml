@@ -1,0 +1,8 @@
+interface:
+  display_name: "ProPaymun Information Architecture"
+  short_description: "Evidence-aware IA for any digital product"
+  brand_color: "#5B4BDB"
+  default_prompt: "Use $propaymun-information-architecture to design an evidence-aware information architecture for my product."
+policy:
+  allow_implicit_invocation: true
+

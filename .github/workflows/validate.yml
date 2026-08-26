@@ -1,0 +1,26 @@
+name: Validate skill
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Rebuild Figma adapter
+        run: python scripts/package_figma.py
+      - name: Verify generated adapter is current
+        run: git diff --exit-code -- adapters/figma-make/propaymun-information-architecture.md
+      - name: Run deterministic tests
+        run: python -m unittest discover -s tests -v
+      - name: Validate fixture
+        run: python scripts/validate_ia_model.py tests/fixtures/valid-semantic-ia.json
+
