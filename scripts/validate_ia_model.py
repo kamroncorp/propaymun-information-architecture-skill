@@ -69,6 +69,10 @@ def validate_model(data: Any) -> tuple[list[str], list[str]]:
         state = node.get("evidence_status")
         if state not in EVIDENCE_STATES:
             errors.append(f"node {node_id} has invalid evidence_status: {state!r}")
+        if str(node.get("type", "")).lower() in {"page", "screen", "destination", "ui-control"}:
+            warnings.append(
+                f"node {node_id} looks interface-level; canonical IA nodes should normally be semantic domains, objects, content types, or classifications"
+            )
 
     for node_id, parent_id in parent_by_id.items():
         if parent_id is not None and parent_id not in node_ids:
@@ -109,6 +113,10 @@ def validate_model(data: Any) -> tuple[list[str], list[str]]:
             )
         if not relationship.get("label"):
             warnings.append(f"relationship {relationship_id} has no explanatory label")
+        if relationship.get("direction") not in {None, "directed", "bidirectional", "undirected"}:
+            errors.append(
+                f"relationship {relationship_id} direction must be directed, bidirectional, or undirected"
+            )
 
     if nodes and not any(parent is None for parent in parent_by_id.values()):
         warnings.append("hierarchy has no root node")
@@ -147,4 +155,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

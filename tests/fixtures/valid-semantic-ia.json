@@ -7,23 +7,30 @@
     "direction": "ltr",
     "scope": "Core product"
   },
+  "contexts": ["Team workspace"],
   "audiences": ["Member", "Admin"],
   "tasks": ["Find a project", "Review recent work"],
+  "information_domains": ["Work", "Knowledge"],
   "objects": ["Workspace", "Project", "Document"],
   "nodes": [
-    {"id": "home", "label": "Home", "type": "destination", "parent_id": null, "evidence_status": "Confirmed"},
-    {"id": "projects", "label": "Projects", "type": "collection", "parent_id": "home", "evidence_status": "Proposed"},
-    {"id": "documents", "label": "Documents", "type": "collection", "parent_id": "projects", "evidence_status": "Proposed"}
+    {"id": "workspace", "label": "Workspace", "type": "information-domain", "parent_id": null, "purpose": "Shared context for team work", "evidence_status": "Confirmed"},
+    {"id": "projects", "label": "Projects", "type": "object-collection", "parent_id": "workspace", "purpose": "Organize coordinated work", "evidence_status": "Proposed"},
+    {"id": "documents", "label": "Documents", "type": "content-type", "parent_id": "workspace", "purpose": "Preserve project knowledge", "evidence_status": "Proposed"}
   ],
   "relationships": [
-    {"id": "rel-1", "from": "projects", "to": "documents", "type": "contains", "label": "Project documents", "evidence_status": "Proposed"}
+    {"id": "rel-1", "from": "projects", "to": "documents", "type": "references", "label": "Projects reference working documents", "meaning": "Documents remain findable from their project context", "direction": "directed", "evidence_status": "Proposed"}
   ],
+  "organization_schemes": ["Object-first by project"],
+  "taxonomy": {},
+  "labels": [],
+  "metadata_model": [],
   "navigation_systems": [],
   "search": {},
   "permissions": [],
+  "governance": {},
+  "evidence_ledger": [],
   "assumptions": ["Projects are the primary retrieval context"],
   "unknowns": ["Guest visibility"],
   "decisions": [],
   "validation": ["Tree test priority findability tasks"]
 }
-

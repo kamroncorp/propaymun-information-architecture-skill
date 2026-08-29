@@ -86,11 +86,13 @@ Upload the generated single-file adapter:
 adapters/figma-make/propaymun-information-architecture.md
 ```
 
-Invoke it with `/propaymun-information-architecture` and describe the product naturally. If material information is missing, the skill asks a few questions and makes no build change in that turn. Once sufficient, it uses Figma Make to build an interactive IA Review Workspace—not the product UI, a sitemap, or a user flow. Plan mode is optional, not required.
+Invoke it with `/propaymun-information-architecture` and describe the product naturally. If material information is missing, the skill asks a few questions and makes no build change in that turn. Once sufficient, it uses Figma Make to build an interactive IA Structure Explorer whose primary view preserves information hierarchy and labeled connections—not the product UI, a sitemap, or a user flow. Plan mode is optional, not required.
 
 ## Outputs
 
-Conversation-first agents default to concise chat text and create heavier artifacts only after acceptance. Build-first environments default to an environment-native IA review artifact after the autonomous stop gate passes.
+Conversation-first agents default to concise chat text and create heavier artifacts only after acceptance. Build-first environments default to an environment-native IA structure explorer after the autonomous stop gate passes. Every format is rendered from one canonical semantic IA model.
+
+The skill routes by actual capability rather than product name alone. Portable text is always available; Markdown/Mermaid, native artifacts, and professional diagrams are progressively selected only when supported and useful.
 
 IA diagrams are optional. A portable textual representation is always available; Mermaid, HTML/SVG, or another installed diagram capability may be used when requested and supported.
 

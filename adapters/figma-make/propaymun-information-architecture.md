@@ -14,7 +14,8 @@ Act as an experienced information architect. Carry the method so a person who kn
 ## Scope contract
 
 - Work only on information architecture: objects/content, relationships, organization, labels, metadata, navigation, search, permissions, governance, evidence, and validation.
-- A sitemap is a separate structural-map deliverable; a user flow is a separate behavioral-path deliverable. They may consume the IA later, but do not create or offer either one from this skill.
+- A sitemap is a page/destination map and a user flow is an action/state path. They may consume the IA later, but do not create either one from this skill.
+- An IA may still need a hierarchical, connected structural view. Keep its nodes at the level of information domains, concepts, objects, content types, classifications, or retrieval systems—not pages, screens, or task steps.
 - Do not expand into product UI, interaction design, data-schema/API design, content strategy, wireframes, or prototypes unless the user separately invokes the appropriate capability.
 - Treat AI output as a hypothesis until appropriate evidence or testing supports it. Never invent research, analytics, stakeholder approval, domain rules, or user behavior.
 
@@ -31,7 +32,14 @@ Act as an experienced information architect. Carry the method so a person who kn
 
 ## Intake and autonomous stop gate
 
-Before producing consequential architecture, inspect the brief, attachments, conversation, and available sources. Decide whether any **material unknown** remains.
+Before producing consequential architecture, inspect the brief, attachments, conversation, and available sources. Identify the work situation internally:
+
+- **new product:** infer the planned information universe from goals, audiences, tasks, policies, and capabilities;
+- **existing product or redesign:** inspect the current inventory, structure, labels, retrieval behavior, evidence, and known failures;
+- **IA audit:** preserve current-state evidence separately from target-state recommendations;
+- **focused IA request:** inspect only the dependencies needed for that component.
+
+Then decide whether any **material unknown** remains.
 
 A material unknown is one that could change at least one of these:
 
@@ -70,18 +78,23 @@ Do not display these behavior names unless doing so genuinely helps the user.
 
 Adapt the order to the product rather than forcing fixed checkpoints:
 
-1. frame product outcome, audiences, priority tasks, scope, constraints, and available evidence;
-2. model important objects/content, relationships, attributes, states, ownership, permissions, and lifecycle;
-3. define organization, taxonomy, labels, metadata, navigation, search, entry, orientation, and recovery as relevant;
-4. compare structurally different alternatives only when evidence does not clearly support one direction;
-5. record consequential decisions, assumptions, unknowns, validation, and governance;
-6. deliver the smallest complete result for the audience and environment.
+1. frame product outcome, audiences, priority tasks, scope, context, constraints, and evidence;
+2. inventory existing or planned content, capabilities, records, and information-bearing objects;
+3. build one canonical semantic IA model covering domains, objects/content types, hierarchy, typed cross-relationships, attributes, states, ownership, permissions, and lifecycle;
+4. define organization schemes, taxonomy, labels, metadata, navigation, search, entry, orientation, and recovery as relevant;
+5. compare structurally different alternatives only when evidence does not clearly support one direction;
+6. record consequential decisions, assumptions, unknowns, validation, and governance;
+7. render the smallest complete view of the same semantic model for the audience and environment.
+
+Do not let a renderer, visual template, menu, screen list, database schema, or code structure become the source of truth. The semantic IA model comes first; text, Mermaid, HTML, canvas, and professional diagrams are views of it.
 
 Read references/ia-foundations.md (embedded below) and references/modeling.md (embedded below) only when their detail is useful.
 
 ## Evidence, tools, and web research
 
-Use these evidence states consistently: **Provided**, **Observed**, **Confirmed**, **Inferred**, **Proposed**, and **Unknown**.
+Use these evidence states internally and in reusable structured artifacts: **Provided**, **Observed**, **Confirmed**, **Inferred**, **Proposed**, and **Unknown**.
+
+Do not cover the primary human-facing view with unexplained status badges. Surface evidence state only when it changes a decision, and translate it into plain language such as “from your brief,” “proposed assumption,” or “needs an answer before finalization.”
 
 - Inspect supplied documents and connected context before asking for information they may contain.
 - Detect available capabilities; a skill cannot assume browsing, code execution, file creation, diagramming, or connectors exist.
@@ -95,7 +108,18 @@ Read references/evidence.md (embedded below) when evidence quality is mixed and 
 
 ## Environment-aware delivery
 
-Determine the environment from available tools and product context; do not rely only on the model name.
+Determine the environment from available tools and product context; do not rely only on the model or product name. Check whether the current surface supports conversational turns, web or connected sources, file creation, code execution, Mermaid, native canvas/artifacts, image or diagram generation, and installed companion skills.
+
+Use this output ladder from the same semantic model:
+
+1. portable text: plain-language recommendation, readable hierarchy, and typed relationship list;
+2. structured text: Markdown and, when useful and reliable, Mermaid;
+3. native artifact: interactive HTML, document, canvas, or environment-native structured view;
+4. professional diagram: a native diagram capability or an optional companion such as Draw.io or Excalidraw.
+
+Use the lowest layer that fully answers the request. Move upward when the user asks, the environment is build-first, or a visual materially improves comprehension. Never imply that an unavailable layer was produced or inspected.
+
+Read references/capability-routing.md (embedded below) when choosing an output or adapting to a particular surface.
 
 ### Conversation-first environments
 
@@ -111,8 +135,10 @@ For Figma Make and similar prompt-to-app environments:
 
 - use conversation as the intake and decision layer, not as the final medium;
 - obey the autonomous stop gate before any build or canvas mutation;
-- once information is sufficient, use the environment's native strength to build an interactive **IA review workspace**, not the product UI;
-- do not ask the user to select a text/file format before the default IA workspace is built;
+- once information is sufficient, use the environment's native strength to build a connected, hierarchical **IA structure explorer**, not the product UI;
+- make the primary view the architecture itself: information domains, important objects/content types, containment, and labeled cross-relationships;
+- reveal taxonomy, labels, retrieval, access, decisions, uncertainty, and validation as contextual detail or focused views instead of presenting every section as an equal dashboard tab;
+- do not ask the user to select a text/file format before the default IA structure explorer is built;
 - never make Plan mode a prerequisite for correct skill behavior;
 - after building, summarize key decisions, uncertainty, and the next best validation step without offering neighboring deliverables.
 
@@ -127,7 +153,7 @@ Lead with:
 3. uncertainty that could change the architecture;
 4. the next useful validation or governance action.
 
-Use layered detail instead of a fixed long report. Keep internal checkpoints, method names, and completion claims secondary. Say **validated** only when an appropriate test supports that claim.
+Use layered detail instead of a fixed long report. The first view must let a non-specialist understand the major information domains, hierarchy, important connections, and findability direction before exposing specialist detail. Keep internal checkpoints, method names, and completion claims secondary. Say **validated** only when an appropriate test supports that claim.
 
 For reusable artifacts and the optional semantic model, read references/deliverables.md (embedded below). For an accepted IA-only diagram, read references/diagramming.md (embedded below).
 
@@ -173,20 +199,36 @@ If the user's next answer resolves the material unknowns, continue automatically
 
 #### Use native build capability after sufficiency
 
-Once the IA is sufficiently framed, build an interactive **IA Review Workspace** directly. Do not ask the user to choose Markdown, chat, or another output format first.
+Once the IA is sufficiently framed, build an interactive **IA Structure Explorer** directly. Do not ask the user to choose Markdown, chat, or another output format first.
 
-The workspace should make the IA understandable and reviewable, not simulate the product being designed. Select only the sections relevant to the brief:
+##### Primary surface: the connected architecture
 
-- decision summary and scope;
-- audience/role switcher where roles change visibility or retrieval;
-- object/content relationship view;
-- organization, taxonomy, and label rules;
-- navigation and search principles;
-- permission, ownership, lifecycle, and governance views;
-- evidence, assumptions, unknowns, decision log, risks, and validation;
-- progressive detail and concise definitions for specialist terms.
+The first and dominant view must communicate the architecture itself:
 
-Use accessible, restrained visual design; responsive layout; the user's language and writing direction; semantic HTML; keyboard-usable controls; and text equivalents for essential visual relationships. Avoid ornamental dashboards, fake analytics, invented product screenshots, and unnecessary imagery.
+- information domains at the first meaningful level;
+- important concepts, objects, and content types nested beneath them;
+- containment or classification through visible hierarchy;
+- important non-hierarchical relationships through labeled connectors;
+- concise findability cues showing how people browse, search, enter, orient, and recover.
+
+Keep node abstraction consistent. Nodes are not product screens, URLs, menu items, database tables, or user-flow steps. A hierarchical IA structure view is allowed and expected; a page-level sitemap is not.
+
+Use a clear overview first, then progressive detail. When the architecture is large, provide an overview map plus focused domain views rather than one giant graph. Selecting a node or relationship may reveal purpose, attributes, rules, roles, lifecycle, labels, evidence, and decisions in a contextual detail panel.
+
+##### Supporting views
+
+Add only the focused views needed to answer real IA questions, such as:
+
+- organization, taxonomy, label, and metadata rules;
+- navigation and search systems;
+- roles, visibility, permissions, ownership, and lifecycle;
+- consequential decisions, assumptions, unknowns, risks, and validation.
+
+These are supporting views, not equal-weight dashboard tabs. Tables and card collections may support detail, but must not replace the connected hierarchy as the main representation.
+
+Keep evidence states in the underlying model. In the primary view, show them only when they change interpretation and use plain-language wording. Do not cover nodes with unexplained “confirmed,” “proposed,” or “unknown” badges.
+
+Use accessible, restrained visual design; responsive layout; the user's language and writing direction; semantic HTML; keyboard-usable controls; and text equivalents for essential visual relationships. Avoid ornamental dashboards, fake analytics, invented product screenshots, arbitrary metrics, and unnecessary imagery.
 
 Do not build:
 
@@ -194,7 +236,7 @@ Do not build:
 - a sitemap, user flow, journey map, service blueprint, API, or data schema;
 - unrelated “next phase” features.
 
-After the workspace is built, summarize the architecture decisions and material uncertainty in plain language. Offer only alternate formats of the same IA if the user asks; do not advertise neighboring skills or deliverables.
+After the explorer is built, summarize the architecture decisions and material uncertainty in plain language. Offer only alternate formats of the same IA if the user asks; do not advertise neighboring skills or deliverables.
 
 #### Web and connected context
 
@@ -443,6 +485,21 @@ Model in this order when relevant:
 
 This is a reasoning order, not a mandatory conversation order.
 
+#### Model the information universe
+
+Before choosing a visual or document structure, distinguish:
+
+- **information domain:** a stable subject or responsibility area;
+- **concept or object:** a recognizable thing people reason about or act on;
+- **content type or record:** a governed information structure with attributes and lifecycle;
+- **classification:** a way of grouping or faceting items;
+- **destination or page:** a later interface exposure that belongs in a sitemap, not the canonical IA hierarchy;
+- **task step:** an action or state transition that belongs in a user flow.
+
+Build a parent-child hierarchy only where containment, scope, or classification is real. Add typed relationships for association, dependency, reference, membership, ownership, lifecycle, visibility, or derivation. Name the relationship in product language so a non-specialist can understand its consequence.
+
+For an existing product, derive the candidate model from the content inventory, current structure, search/navigation evidence, policies, and observed failures. For a new product, derive it from audiences, priority tasks, planned capabilities, domain rules, and information that must be created, found, understood, governed, or retained.
+
 #### Object card
 
 For each important object capture:
@@ -519,6 +576,83 @@ For products containing agents or generated content, also model:
 - visibility and retention boundaries;
 - stable canonical locations despite adaptive recommendations;
 - recovery, undo, retry, and escalation.
+
+
+<!-- source: references/capability-routing.md -->
+
+### Capability-aware execution and output routing
+
+Read this reference when adapting the same IA work to different agents, chat surfaces, build environments, or installed tools.
+
+#### Route by capability, not brand
+
+Product names are hints, not guarantees. Before choosing behavior or format, inspect the actual capabilities available in the current session:
+
+- Can the agent ask a question, end the turn, and continue from the answer?
+- Can it inspect attachments, URLs, repositories, or authorized connected sources?
+- Can it search the public web without exposing private context?
+- Can it create files or execute code?
+- Can it render Mermaid reliably in the user's language and direction?
+- Can it create a native document, artifact, app, canvas, or diagram?
+- Can the result be visually inspected rather than merely generated?
+- Is a diagram companion installed and authorized?
+
+Never claim a capability from the model name alone. If an important capability is absent, use the strongest truthful fallback.
+
+#### Shared behavioral invariant
+
+Every surface uses the same intake gate and semantic IA model. Environment adaptation changes interaction pacing and rendering, not architecture quality, evidence standards, or IA scope.
+
+#### Output ladder
+
+##### Level 0 — portable text
+
+Use in any environment. Include:
+
+- the architecture recommendation in plain language;
+- an indented hierarchy of information domains and important objects/content;
+- a concise list of typed cross-relationships that the tree cannot express;
+- findability, access, and consequential uncertainty only where relevant.
+
+This is a complete fallback, not an apology or a placeholder.
+
+##### Level 1 — structured text
+
+Use Markdown tables or Mermaid only when they improve comprehension. Preserve a textual equivalent. For unreliable RTL rendering, keep the explanation and hierarchy in the user's language and use concise English technical IDs only where they improve renderer reliability.
+
+##### Level 2 — native artifact
+
+Use a document, interactive HTML, artifact, canvas, or generated app when the environment supports it and the user requested a durable artifact or the surface is inherently build-first. The artifact must render the canonical semantic model rather than invent a new structure.
+
+##### Level 3 — professional diagram
+
+Use a native diagram tool or an optional companion when precise geometry, editable connectors, workshop facilitation, or formal handoff justifies it. Draw.io suits precise editable handoff; Excalidraw suits conceptual explanation and workshops. Do not require either companion for a complete IA and do not install one without authorization.
+
+#### Surface profiles
+
+##### Conversation-first chat
+
+Default to Level 0. Ask before creating a heavy file or visual. If the user requests a richer output, select the highest available truthful level.
+
+##### Chat with artifact or canvas capability
+
+Keep intake conversational. After sufficiency, use Level 2 when an interactive or durable view materially improves review. Do not skip clarification merely because a canvas is available.
+
+##### CLI or agent with files and code execution
+
+May produce and validate structured IA JSON, HTML, SVG, or other editable sources. Run and inspect deterministic helpers when available. Distinguish syntax validation from visual inspection.
+
+##### Build-first surface
+
+Ask material questions before any mutation. Once sufficient, build a Level 2 architecture-first artifact whose primary surface shows hierarchy and connections. Avoid a generic dashboard, document reader, or product prototype.
+
+##### Diagram-capable surface
+
+Use Level 3 only when the requested IA question benefits from a diagram. Keep the diagram scoped and preserve text for accessibility and portability.
+
+#### Research routing
+
+Use web or connected sources when they can materially change terminology, domain rules, compliance, content inventory, or current-state understanding. Do not turn missing search capability into fabricated evidence. A build surface may be able to create visuals but lack reliable browsing; these capabilities must be judged separately.
 
 
 <!-- source: references/evidence.md -->
@@ -672,6 +806,23 @@ Do not use every section by default. Select the smallest useful combination.
 
 For a focused request, include only its essential prerequisites. Do not pad it into a complete report.
 
+#### Canonical structure before presentation
+
+Every deliverable must represent one canonical semantic IA model. Do not independently invent a text hierarchy, diagram, HTML artifact, and role table that disagree with one another.
+
+The canonical model should capture, where relevant:
+
+- users, roles, contexts, and priority information needs;
+- information domains, concepts, objects, and content types;
+- parent-child hierarchy and ordering;
+- typed cross-relationships that hierarchy cannot express;
+- organization schemes, taxonomy, labels, metadata, and classification rules;
+- navigation, search, entry, orientation, and recovery;
+- visibility, permissions, ownership, lifecycle, and governance;
+- evidence, consequential assumptions, unknowns, decisions, and validation.
+
+Renderers select views of this model. They do not become the model.
+
 #### Audience adaptation
 
 - **Product or leadership:** lead with decisions, risks, scope, and consequences.
@@ -696,19 +847,29 @@ Offer only formats supported by the current environment and distinguish:
 
 Do not generate every format. Produce the one the user selects.
 
-#### Interactive IA review workspace
+#### Interactive IA structure explorer
 
-In a build-first environment, the default artifact should help a mixed team understand and challenge the IA without requiring IA expertise. Include only relevant views:
+In a build-first environment, the default artifact should help a mixed team understand and challenge the IA without requiring IA expertise.
 
-- a plain-language decision summary;
-- important objects/content and relationships;
-- organization, taxonomy, and label rules;
-- navigation and search principles without turning them into a page map;
-- role, visibility, permission, ownership, and lifecycle views;
-- assumptions, unknowns, evidence status, risks, and next validation;
-- role or evidence filters, progressive detail, and accessible text equivalents where useful.
+##### Primary view
 
-This workspace is a review tool for the architecture. It is not the product interface, a wireframe, a prototype of the product, a sitemap, or a user flow. Prefer a clear, restrained, accessible presentation over decorative UI. Support the user's language and direction.
+Start with a connected hierarchy of information domains, concepts, objects, and content types. Make containment, classification, and important cross-domain relationships legible. The viewer should understand the product's information universe and major connections before opening any specialist detail.
+
+This is not a sitemap: its nodes are semantic information structures rather than pages or destinations. It is not a user flow: edges express structural or semantic relationships rather than a sequence of actions.
+
+##### Progressive detail
+
+Reveal relevant detail through selection, expansion, filtering, or focused subviews:
+
+- purpose, attributes, states, and lifecycle;
+- taxonomy, labels, metadata, and classification rules;
+- navigation, search, entry, orientation, and recovery;
+- role visibility, permissions, ownership, and governance;
+- decisions, consequential assumptions, unknowns, evidence, risks, and validation.
+
+Do not make a collection of tabs, tables, or cards the primary IA. Use them only to explain the structure. Avoid rendering internal evidence labels as unexplained badges on every node.
+
+The explorer is a review tool for the architecture. It is not the product interface, wireframe, prototype, sitemap, user flow, API, or database schema. Prefer clear hierarchy, labeled connections, progressive disclosure, accessibility, and the user's language and writing direction over decorative UI.
 
 #### Semantic IA JSON
 
@@ -724,14 +885,22 @@ Use this portable shape only when structured reuse, validation, rendering, or ha
     "direction": "ltr",
     "scope": "Product area"
   },
+  "contexts": [],
   "audiences": [],
   "tasks": [],
+  "information_domains": [],
   "objects": [],
   "nodes": [],
   "relationships": [],
+  "organization_schemes": [],
+  "taxonomy": {},
+  "labels": [],
+  "metadata_model": [],
   "navigation_systems": [],
   "search": {},
   "permissions": [],
+  "governance": {},
+  "evidence_ledger": [],
   "assumptions": [],
   "unknowns": [],
   "decisions": [],
@@ -740,6 +909,8 @@ Use this portable shape only when structured reuse, validation, rendering, or ha
 ```
 
 Keep IDs stable across revisions. Relationships must reference existing IDs. Use the response language for human labels. Technical IDs may be English when interoperability benefits. Use `direction: rtl` for an RTL rendered artifact unless the selected renderer is clearer with English technical labels and a different flow direction.
+
+Use `parent_id` only for real hierarchy, containment, or classification. Represent associative, dependency, reference, ownership, lifecycle, and visibility relationships explicitly in `relationships` with a type, direction, and human-readable meaning.
 
 #### Architecture alternative card
 
@@ -779,6 +950,21 @@ Define nodes, relationship types, direction, groups, states, evidence status, an
 
 `Truth model → IA question → Visual encoding → Deliverable`
 
+The visual must be generated from the same canonical model used by text and structured outputs. Do not redesign the architecture while laying out the diagram.
+
+#### ProPaymun structural grammar
+
+The recognizable quality of the output comes from consistent meaning, not a fixed color palette or card style.
+
+- **Primary hierarchy:** information domains contain or classify concepts, objects, or content types.
+- **Typed connections:** labeled edges show meaningful cross-domain relationships that a tree cannot express.
+- **Consistent abstraction:** do not mix domains, pages, UI controls, database fields, and task steps in one level.
+- **Overview before detail:** show the whole information universe at a legible level, then create focused domain views when necessary.
+- **Details on demand:** attributes, states, rules, permissions, evidence, and decisions belong in contextual detail or focused views unless they are essential to interpreting the map.
+- **Findability cues:** communicate relevant browse, search, entry, orientation, and recovery systems without drawing a page-level sitemap.
+
+A connected hierarchical IA map is not automatically a sitemap. It becomes a sitemap when its nodes and containment primarily represent pages or destinations. It becomes a user flow when its edges primarily represent action order, states, or decisions.
+
 #### One IA question per view
 
 Useful IA views include:
@@ -791,6 +977,16 @@ Useful IA views include:
 - current-versus-proposed architecture.
 
 Do not include neighboring mapping deliverables. Keep the view focused on the IA decision.
+
+For complex IA, coordinate several views from the same model:
+
+1. overview structure map;
+2. focused domain or relationship maps;
+3. taxonomy and label view;
+4. retrieval and findability view;
+5. access, lifecycle, or governance view when material.
+
+Do not force all layers into one graph.
 
 #### Capability-aware routing
 
@@ -822,7 +1018,7 @@ Keep the surrounding explanation in the user's language. For Persian or another 
 - Never rely on color alone.
 - Keep labels concise and specific.
 - Use whitespace and scale to establish hierarchy.
-- Encode evidence status redundantly when it matters, such as border style plus a text label.
+- Encode evidence status only when it changes interpretation. Explain it in plain language and redundantly when it matters, such as border style plus a text label. Do not turn internal evidence metadata into unexplained badge noise.
 
 #### Render and inspect
 

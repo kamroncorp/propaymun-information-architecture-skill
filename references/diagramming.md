@@ -8,6 +8,21 @@ Define nodes, relationship types, direction, groups, states, evidence status, an
 
 `Truth model → IA question → Visual encoding → Deliverable`
 
+The visual must be generated from the same canonical model used by text and structured outputs. Do not redesign the architecture while laying out the diagram.
+
+## ProPaymun structural grammar
+
+The recognizable quality of the output comes from consistent meaning, not a fixed color palette or card style.
+
+- **Primary hierarchy:** information domains contain or classify concepts, objects, or content types.
+- **Typed connections:** labeled edges show meaningful cross-domain relationships that a tree cannot express.
+- **Consistent abstraction:** do not mix domains, pages, UI controls, database fields, and task steps in one level.
+- **Overview before detail:** show the whole information universe at a legible level, then create focused domain views when necessary.
+- **Details on demand:** attributes, states, rules, permissions, evidence, and decisions belong in contextual detail or focused views unless they are essential to interpreting the map.
+- **Findability cues:** communicate relevant browse, search, entry, orientation, and recovery systems without drawing a page-level sitemap.
+
+A connected hierarchical IA map is not automatically a sitemap. It becomes a sitemap when its nodes and containment primarily represent pages or destinations. It becomes a user flow when its edges primarily represent action order, states, or decisions.
+
 ## One IA question per view
 
 Useful IA views include:
@@ -20,6 +35,16 @@ Useful IA views include:
 - current-versus-proposed architecture.
 
 Do not include neighboring mapping deliverables. Keep the view focused on the IA decision.
+
+For complex IA, coordinate several views from the same model:
+
+1. overview structure map;
+2. focused domain or relationship maps;
+3. taxonomy and label view;
+4. retrieval and findability view;
+5. access, lifecycle, or governance view when material.
+
+Do not force all layers into one graph.
 
 ## Capability-aware routing
 
@@ -51,7 +76,7 @@ Keep the surrounding explanation in the user's language. For Persian or another 
 - Never rely on color alone.
 - Keep labels concise and specific.
 - Use whitespace and scale to establish hierarchy.
-- Encode evidence status redundantly when it matters, such as border style plus a text label.
+- Encode evidence status only when it changes interpretation. Explain it in plain language and redundantly when it matters, such as border style plus a text label. Do not turn internal evidence metadata into unexplained badge noise.
 
 ## Render and inspect
 

@@ -18,8 +18,10 @@
       },
       "additionalProperties": true
     },
+    "contexts": {"type": "array"},
     "audiences": {"type": "array"},
     "tasks": {"type": "array"},
+    "information_domains": {"type": "array"},
     "objects": {"type": "array"},
     "nodes": {
       "type": "array",
@@ -31,6 +33,10 @@
           "label": {"type": "string", "minLength": 1},
           "type": {"type": "string", "minLength": 1},
           "parent_id": {"type": ["string", "null"]},
+          "purpose": {"type": "string"},
+          "summary": {"type": "string"},
+          "order": {"type": "integer"},
+          "findability": {"type": "array"},
           "evidence_status": {
             "enum": ["Provided", "Observed", "Confirmed", "Inferred", "Proposed", "Unknown"]
           }
@@ -49,6 +55,8 @@
           "to": {"type": "string", "minLength": 1},
           "type": {"type": "string", "minLength": 1},
           "label": {"type": "string"},
+          "meaning": {"type": "string"},
+          "direction": {"enum": ["directed", "bidirectional", "undirected"]},
           "evidence_status": {
             "enum": ["Provided", "Observed", "Confirmed", "Inferred", "Proposed", "Unknown"]
           }
@@ -56,9 +64,15 @@
         "additionalProperties": true
       }
     },
+    "organization_schemes": {"type": "array"},
+    "taxonomy": {"type": "object"},
+    "labels": {"type": "array"},
+    "metadata_model": {"type": "array"},
     "navigation_systems": {"type": "array"},
     "search": {"type": "object"},
     "permissions": {"type": "array"},
+    "governance": {"type": "object"},
+    "evidence_ledger": {"type": "array"},
     "assumptions": {"type": "array"},
     "unknowns": {"type": "array"},
     "decisions": {"type": "array"},
@@ -66,4 +80,3 @@
   },
   "additionalProperties": true
 }
-

@@ -99,10 +99,49 @@ cases:
       از اطلاعات پیوست‌شده استفاده کن.
     invariants:
       - Inspects the supplied context and does not ask a ceremonial approval question.
-      - Builds an interactive IA Review Workspace rather than returning only a long document.
+      - Builds an interactive IA Structure Explorer rather than returning only a long document.
+      - Makes a connected hierarchy of information domains, important objects or content types, and labeled cross-relationships the primary view.
+      - Uses focused detail or subviews instead of exposing every IA component as an equal dashboard tab.
       - Does not build the product UI, a prototype, sitemap, user flow, API, or data schema.
       - Makes evidence, assumptions, unknowns, roles, retrieval, and architecture decisions understandable to a non-specialist.
+      - Does not cover the primary map with unexplained evidence-status badges.
       - Does not ask the user to choose an output format before the default workspace is built.
+
+  - id: existing-product-audit
+    behavior_expected: audit-intake
+    environment: chat with attachments and analytics access
+    prompt: |
+      ساختار فعلی محصول ما پیدا کردن گزارش‌ها را سخت کرده است. منوی فعلی،
+      فهرست محتوا، گزارش جست‌وجو و چند مصاحبه را پیوست کرده‌ام. اول مشکل IA
+      موجود را بررسی کن و بعد ساختار پیشنهادی بده.
+    invariants:
+      - Inspects available current-state artifacts before asking questions.
+      - Separates current-state evidence from target-state recommendations.
+      - Diagnoses organization, labels, hierarchy, navigation, search, and governance where evidence supports them.
+      - Does not reduce the audit to a menu critique or silently generate a sitemap.
+
+  - id: capability-over-brand
+    behavior_expected: capability-routing
+    environment: named chat model with no browsing, no code execution, no canvas, and no Mermaid renderer
+    prompt: |
+      معماری اطلاعات نهایی را همین‌جا بده. اگر دیاگرام حرفه‌ای ممکن است اضافه کن،
+      اما ابزار دیگری نصب نکن.
+    invariants:
+      - Uses a complete portable hierarchy and typed relationship list as the truthful fallback.
+      - Does not infer unavailable capabilities from the model or product name.
+      - Does not emit Mermaid when it cannot be rendered reliably.
+      - Does not install or claim to use a diagram companion.
+
+  - id: same-model-multiple-views
+    behavior_expected: semantic-consistency
+    environment: chat with file and HTML creation
+    prompt: |
+      همین معماری تأییدشده را اول خلاصه کن و بعد یک HTML تعاملی از همان مدل بساز.
+    invariants:
+      - Builds both outputs from one canonical semantic IA model.
+      - Keeps node identities, hierarchy, relationships, labels, and evidence meaning consistent across outputs.
+      - Does not introduce new architecture decisions during visual layout.
+      - Distinguishes generated source, rendered output, and actual visual inspection.
 
   - id: novice-minimal-answer
     behavior_expected: assumption-and-progress

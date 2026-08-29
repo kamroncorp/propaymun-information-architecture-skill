@@ -21,20 +21,36 @@ If the user's next answer resolves the material unknowns, continue automatically
 
 ## Use native build capability after sufficiency
 
-Once the IA is sufficiently framed, build an interactive **IA Review Workspace** directly. Do not ask the user to choose Markdown, chat, or another output format first.
+Once the IA is sufficiently framed, build an interactive **IA Structure Explorer** directly. Do not ask the user to choose Markdown, chat, or another output format first.
 
-The workspace should make the IA understandable and reviewable, not simulate the product being designed. Select only the sections relevant to the brief:
+### Primary surface: the connected architecture
 
-- decision summary and scope;
-- audience/role switcher where roles change visibility or retrieval;
-- object/content relationship view;
-- organization, taxonomy, and label rules;
-- navigation and search principles;
-- permission, ownership, lifecycle, and governance views;
-- evidence, assumptions, unknowns, decision log, risks, and validation;
-- progressive detail and concise definitions for specialist terms.
+The first and dominant view must communicate the architecture itself:
 
-Use accessible, restrained visual design; responsive layout; the user's language and writing direction; semantic HTML; keyboard-usable controls; and text equivalents for essential visual relationships. Avoid ornamental dashboards, fake analytics, invented product screenshots, and unnecessary imagery.
+- information domains at the first meaningful level;
+- important concepts, objects, and content types nested beneath them;
+- containment or classification through visible hierarchy;
+- important non-hierarchical relationships through labeled connectors;
+- concise findability cues showing how people browse, search, enter, orient, and recover.
+
+Keep node abstraction consistent. Nodes are not product screens, URLs, menu items, database tables, or user-flow steps. A hierarchical IA structure view is allowed and expected; a page-level sitemap is not.
+
+Use a clear overview first, then progressive detail. When the architecture is large, provide an overview map plus focused domain views rather than one giant graph. Selecting a node or relationship may reveal purpose, attributes, rules, roles, lifecycle, labels, evidence, and decisions in a contextual detail panel.
+
+### Supporting views
+
+Add only the focused views needed to answer real IA questions, such as:
+
+- organization, taxonomy, label, and metadata rules;
+- navigation and search systems;
+- roles, visibility, permissions, ownership, and lifecycle;
+- consequential decisions, assumptions, unknowns, risks, and validation.
+
+These are supporting views, not equal-weight dashboard tabs. Tables and card collections may support detail, but must not replace the connected hierarchy as the main representation.
+
+Keep evidence states in the underlying model. In the primary view, show them only when they change interpretation and use plain-language wording. Do not cover nodes with unexplained “confirmed,” “proposed,” or “unknown” badges.
+
+Use accessible, restrained visual design; responsive layout; the user's language and writing direction; semantic HTML; keyboard-usable controls; and text equivalents for essential visual relationships. Avoid ornamental dashboards, fake analytics, invented product screenshots, arbitrary metrics, and unnecessary imagery.
 
 Do not build:
 
@@ -42,7 +58,7 @@ Do not build:
 - a sitemap, user flow, journey map, service blueprint, API, or data schema;
 - unrelated “next phase” features.
 
-After the workspace is built, summarize the architecture decisions and material uncertainty in plain language. Offer only alternate formats of the same IA if the user asks; do not advertise neighboring skills or deliverables.
+After the explorer is built, summarize the architecture decisions and material uncertainty in plain language. Offer only alternate formats of the same IA if the user asks; do not advertise neighboring skills or deliverables.
 
 ## Web and connected context
 

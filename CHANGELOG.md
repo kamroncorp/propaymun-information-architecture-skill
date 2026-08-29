@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+### Changed
+
+- Re-centered every output on one canonical semantic IA model before rendering.
+- Replaced the fixed Figma review-dashboard direction with an IA Structure Explorer led by connected hierarchy, typed relationships, and progressive detail.
+- Added capability-first routing and a portable output ladder independent of model branding.
+- Clarified that hierarchical IA maps use semantic domains and objects, while page maps and action paths remain separate sitemap and user-flow deliverables.
+- Kept evidence status as model metadata and limited user-facing indicators to decision-relevant, plain-language uncertainty.
+- Added behavioral coverage for existing-product audits, capability fallbacks, semantic consistency across outputs, and Figma structural legibility.
+
 ## [0.3.0] - 2026-08-26
 
 ### Changed
@@ -12,7 +21,7 @@ All notable changes to this project are documented here. The project follows Sem
 - Replaced fixed, jargon-heavy checkpoints with product-language decisions and consequence-aware assumptions for novice users.
 - Clarified IA as the canonical semantic foundation while keeping sitemap and user-flow production in dedicated skills.
 - Added environment-aware delivery shared by the canonical skill: conversation-first agents default to concise chat, while build-first environments use their native output medium.
-- Reworked the Figma Make profile to build an interactive IA Review Workspace after discovery instead of returning only text or building the product UI.
+- Reworked the Figma Make profile to build an architecture-first IA Structure Explorer after discovery instead of returning only text or building the product UI.
 - Made Plan mode optional rather than a prerequisite for correct Figma behavior.
 - Expanded capability-aware public research, private-data boundaries, source citation, and unavailable-tool fallbacks.
 - Added a cross-platform adapter manifest and deterministic parity checks so the canonical skill, Figma adapter, metadata, and documentation release together.

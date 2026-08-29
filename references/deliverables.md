@@ -32,6 +32,23 @@ Do not use every section by default. Select the smallest useful combination.
 
 For a focused request, include only its essential prerequisites. Do not pad it into a complete report.
 
+## Canonical structure before presentation
+
+Every deliverable must represent one canonical semantic IA model. Do not independently invent a text hierarchy, diagram, HTML artifact, and role table that disagree with one another.
+
+The canonical model should capture, where relevant:
+
+- users, roles, contexts, and priority information needs;
+- information domains, concepts, objects, and content types;
+- parent-child hierarchy and ordering;
+- typed cross-relationships that hierarchy cannot express;
+- organization schemes, taxonomy, labels, metadata, and classification rules;
+- navigation, search, entry, orientation, and recovery;
+- visibility, permissions, ownership, lifecycle, and governance;
+- evidence, consequential assumptions, unknowns, decisions, and validation.
+
+Renderers select views of this model. They do not become the model.
+
 ## Audience adaptation
 
 - **Product or leadership:** lead with decisions, risks, scope, and consequences.
@@ -56,19 +73,29 @@ Offer only formats supported by the current environment and distinguish:
 
 Do not generate every format. Produce the one the user selects.
 
-## Interactive IA review workspace
+## Interactive IA structure explorer
 
-In a build-first environment, the default artifact should help a mixed team understand and challenge the IA without requiring IA expertise. Include only relevant views:
+In a build-first environment, the default artifact should help a mixed team understand and challenge the IA without requiring IA expertise.
 
-- a plain-language decision summary;
-- important objects/content and relationships;
-- organization, taxonomy, and label rules;
-- navigation and search principles without turning them into a page map;
-- role, visibility, permission, ownership, and lifecycle views;
-- assumptions, unknowns, evidence status, risks, and next validation;
-- role or evidence filters, progressive detail, and accessible text equivalents where useful.
+### Primary view
 
-This workspace is a review tool for the architecture. It is not the product interface, a wireframe, a prototype of the product, a sitemap, or a user flow. Prefer a clear, restrained, accessible presentation over decorative UI. Support the user's language and direction.
+Start with a connected hierarchy of information domains, concepts, objects, and content types. Make containment, classification, and important cross-domain relationships legible. The viewer should understand the product's information universe and major connections before opening any specialist detail.
+
+This is not a sitemap: its nodes are semantic information structures rather than pages or destinations. It is not a user flow: edges express structural or semantic relationships rather than a sequence of actions.
+
+### Progressive detail
+
+Reveal relevant detail through selection, expansion, filtering, or focused subviews:
+
+- purpose, attributes, states, and lifecycle;
+- taxonomy, labels, metadata, and classification rules;
+- navigation, search, entry, orientation, and recovery;
+- role visibility, permissions, ownership, and governance;
+- decisions, consequential assumptions, unknowns, evidence, risks, and validation.
+
+Do not make a collection of tabs, tables, or cards the primary IA. Use them only to explain the structure. Avoid rendering internal evidence labels as unexplained badges on every node.
+
+The explorer is a review tool for the architecture. It is not the product interface, wireframe, prototype, sitemap, user flow, API, or database schema. Prefer clear hierarchy, labeled connections, progressive disclosure, accessibility, and the user's language and writing direction over decorative UI.
 
 ## Semantic IA JSON
 
@@ -84,14 +111,22 @@ Use this portable shape only when structured reuse, validation, rendering, or ha
     "direction": "ltr",
     "scope": "Product area"
   },
+  "contexts": [],
   "audiences": [],
   "tasks": [],
+  "information_domains": [],
   "objects": [],
   "nodes": [],
   "relationships": [],
+  "organization_schemes": [],
+  "taxonomy": {},
+  "labels": [],
+  "metadata_model": [],
   "navigation_systems": [],
   "search": {},
   "permissions": [],
+  "governance": {},
+  "evidence_ledger": [],
   "assumptions": [],
   "unknowns": [],
   "decisions": [],
@@ -100,6 +135,8 @@ Use this portable shape only when structured reuse, validation, rendering, or ha
 ```
 
 Keep IDs stable across revisions. Relationships must reference existing IDs. Use the response language for human labels. Technical IDs may be English when interoperability benefits. Use `direction: rtl` for an RTL rendered artifact unless the selected renderer is clearer with English technical labels and a different flow direction.
+
+Use `parent_id` only for real hierarchy, containment, or classification. Represent associative, dependency, reference, ownership, lifecycle, and visibility relationships explicitly in `relationships` with a type, direction, and human-readable meaning.
 
 ## Architecture alternative card
 

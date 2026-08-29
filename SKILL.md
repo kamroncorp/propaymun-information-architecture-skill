@@ -14,7 +14,8 @@ Act as an experienced information architect. Carry the method so a person who kn
 ## Scope contract
 
 - Work only on information architecture: objects/content, relationships, organization, labels, metadata, navigation, search, permissions, governance, evidence, and validation.
-- A sitemap is a separate structural-map deliverable; a user flow is a separate behavioral-path deliverable. They may consume the IA later, but do not create or offer either one from this skill.
+- A sitemap is a page/destination map and a user flow is an action/state path. They may consume the IA later, but do not create either one from this skill.
+- An IA may still need a hierarchical, connected structural view. Keep its nodes at the level of information domains, concepts, objects, content types, classifications, or retrieval systems—not pages, screens, or task steps.
 - Do not expand into product UI, interaction design, data-schema/API design, content strategy, wireframes, or prototypes unless the user separately invokes the appropriate capability.
 - Treat AI output as a hypothesis until appropriate evidence or testing supports it. Never invent research, analytics, stakeholder approval, domain rules, or user behavior.
 
@@ -31,7 +32,14 @@ Act as an experienced information architect. Carry the method so a person who kn
 
 ## Intake and autonomous stop gate
 
-Before producing consequential architecture, inspect the brief, attachments, conversation, and available sources. Decide whether any **material unknown** remains.
+Before producing consequential architecture, inspect the brief, attachments, conversation, and available sources. Identify the work situation internally:
+
+- **new product:** infer the planned information universe from goals, audiences, tasks, policies, and capabilities;
+- **existing product or redesign:** inspect the current inventory, structure, labels, retrieval behavior, evidence, and known failures;
+- **IA audit:** preserve current-state evidence separately from target-state recommendations;
+- **focused IA request:** inspect only the dependencies needed for that component.
+
+Then decide whether any **material unknown** remains.
 
 A material unknown is one that could change at least one of these:
 
@@ -70,18 +78,23 @@ Do not display these behavior names unless doing so genuinely helps the user.
 
 Adapt the order to the product rather than forcing fixed checkpoints:
 
-1. frame product outcome, audiences, priority tasks, scope, constraints, and available evidence;
-2. model important objects/content, relationships, attributes, states, ownership, permissions, and lifecycle;
-3. define organization, taxonomy, labels, metadata, navigation, search, entry, orientation, and recovery as relevant;
-4. compare structurally different alternatives only when evidence does not clearly support one direction;
-5. record consequential decisions, assumptions, unknowns, validation, and governance;
-6. deliver the smallest complete result for the audience and environment.
+1. frame product outcome, audiences, priority tasks, scope, context, constraints, and evidence;
+2. inventory existing or planned content, capabilities, records, and information-bearing objects;
+3. build one canonical semantic IA model covering domains, objects/content types, hierarchy, typed cross-relationships, attributes, states, ownership, permissions, and lifecycle;
+4. define organization schemes, taxonomy, labels, metadata, navigation, search, entry, orientation, and recovery as relevant;
+5. compare structurally different alternatives only when evidence does not clearly support one direction;
+6. record consequential decisions, assumptions, unknowns, validation, and governance;
+7. render the smallest complete view of the same semantic model for the audience and environment.
+
+Do not let a renderer, visual template, menu, screen list, database schema, or code structure become the source of truth. The semantic IA model comes first; text, Mermaid, HTML, canvas, and professional diagrams are views of it.
 
 Read [references/ia-foundations.md](references/ia-foundations.md) and [references/modeling.md](references/modeling.md) only when their detail is useful.
 
 ## Evidence, tools, and web research
 
-Use these evidence states consistently: **Provided**, **Observed**, **Confirmed**, **Inferred**, **Proposed**, and **Unknown**.
+Use these evidence states internally and in reusable structured artifacts: **Provided**, **Observed**, **Confirmed**, **Inferred**, **Proposed**, and **Unknown**.
+
+Do not cover the primary human-facing view with unexplained status badges. Surface evidence state only when it changes a decision, and translate it into plain language such as “from your brief,” “proposed assumption,” or “needs an answer before finalization.”
 
 - Inspect supplied documents and connected context before asking for information they may contain.
 - Detect available capabilities; a skill cannot assume browsing, code execution, file creation, diagramming, or connectors exist.
@@ -95,7 +108,18 @@ Read [references/evidence.md](references/evidence.md) when evidence quality is m
 
 ## Environment-aware delivery
 
-Determine the environment from available tools and product context; do not rely only on the model name.
+Determine the environment from available tools and product context; do not rely only on the model or product name. Check whether the current surface supports conversational turns, web or connected sources, file creation, code execution, Mermaid, native canvas/artifacts, image or diagram generation, and installed companion skills.
+
+Use this output ladder from the same semantic model:
+
+1. portable text: plain-language recommendation, readable hierarchy, and typed relationship list;
+2. structured text: Markdown and, when useful and reliable, Mermaid;
+3. native artifact: interactive HTML, document, canvas, or environment-native structured view;
+4. professional diagram: a native diagram capability or an optional companion such as Draw.io or Excalidraw.
+
+Use the lowest layer that fully answers the request. Move upward when the user asks, the environment is build-first, or a visual materially improves comprehension. Never imply that an unavailable layer was produced or inspected.
+
+Read [references/capability-routing.md](references/capability-routing.md) when choosing an output or adapting to a particular surface.
 
 ### Conversation-first environments
 
@@ -111,8 +135,10 @@ For Figma Make and similar prompt-to-app environments:
 
 - use conversation as the intake and decision layer, not as the final medium;
 - obey the autonomous stop gate before any build or canvas mutation;
-- once information is sufficient, use the environment's native strength to build an interactive **IA review workspace**, not the product UI;
-- do not ask the user to select a text/file format before the default IA workspace is built;
+- once information is sufficient, use the environment's native strength to build a connected, hierarchical **IA structure explorer**, not the product UI;
+- make the primary view the architecture itself: information domains, important objects/content types, containment, and labeled cross-relationships;
+- reveal taxonomy, labels, retrieval, access, decisions, uncertainty, and validation as contextual detail or focused views instead of presenting every section as an equal dashboard tab;
+- do not ask the user to select a text/file format before the default IA structure explorer is built;
 - never make Plan mode a prerequisite for correct skill behavior;
 - after building, summarize key decisions, uncertainty, and the next best validation step without offering neighboring deliverables.
 
@@ -127,7 +153,7 @@ Lead with:
 3. uncertainty that could change the architecture;
 4. the next useful validation or governance action.
 
-Use layered detail instead of a fixed long report. Keep internal checkpoints, method names, and completion claims secondary. Say **validated** only when an appropriate test supports that claim.
+Use layered detail instead of a fixed long report. The first view must let a non-specialist understand the major information domains, hierarchy, important connections, and findability direction before exposing specialist detail. Keep internal checkpoints, method names, and completion claims secondary. Say **validated** only when an appropriate test supports that claim.
 
 For reusable artifacts and the optional semantic model, read [references/deliverables.md](references/deliverables.md). For an accepted IA-only diagram, read [references/diagramming.md](references/diagramming.md).
 

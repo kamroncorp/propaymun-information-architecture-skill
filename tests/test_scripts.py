@@ -47,7 +47,10 @@ class SkillScriptTests(unittest.TestCase):
             rendered = output.read_text(encoding="utf-8")
             self.assertIn('<html lang="en" dir="ltr">', rendered)
             self.assertIn("Team Knowledge Product", rendered)
-            self.assertIn("Project documents", rendered)
+            self.assertIn("Projects reference working documents", rendered)
+            self.assertIn("Information structure", rendered)
+            self.assertIn("Projects</strong>", rendered)
+            self.assertNotIn("status-proposed", rendered)
 
     def test_figma_adapter_contains_embedded_references(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -59,7 +62,9 @@ class SkillScriptTests(unittest.TestCase):
             self.assertIn("Embedded references", packaged)
             self.assertIn("source: adapters/figma-make/BEHAVIOR.md", packaged)
             self.assertIn("Hard pre-build gate", packaged)
-            self.assertIn("IA Review Workspace", packaged)
+            self.assertIn("IA Structure Explorer", packaged)
+            self.assertIn("source: references/capability-routing.md", packaged)
+            self.assertIn("connected architecture", packaged)
             self.assertIn("source: references/diagramming.md", packaged)
             self.assertNotIn("](references/", packaged)
 
@@ -85,9 +90,10 @@ class SkillScriptTests(unittest.TestCase):
 
     def test_core_scope_routes_neighboring_map_deliverables_without_producing_them(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
-        self.assertRegex(skill, re.compile(r"sitemap.*separate", flags=re.IGNORECASE))
-        self.assertRegex(skill, re.compile(r"user flow.*separate", flags=re.IGNORECASE))
-        self.assertIn("do not create or offer either one", skill)
+        self.assertRegex(skill, re.compile(r"sitemap.*page/destination", flags=re.IGNORECASE))
+        self.assertRegex(skill, re.compile(r"user flow.*action/state", flags=re.IGNORECASE))
+        self.assertIn("do not create either one", skill)
+        self.assertIn("hierarchical, connected structural view", skill)
 
     def test_autonomous_stop_is_shared_by_core_and_figma(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
@@ -96,6 +102,26 @@ class SkillScriptTests(unittest.TestCase):
         self.assertIn("hard stop", skill.lower())
         self.assertIn("hard pre-build gate", figma_profile.lower())
         self.assertIn("do not require the user to say", figma_profile.lower())
+
+    def test_core_requires_one_semantic_model_before_rendering(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        deliverables = (ROOT / "references" / "deliverables.md").read_text(encoding="utf-8")
+        self.assertIn("canonical semantic IA model", skill)
+        self.assertIn("Every deliverable must represent one canonical semantic IA model", deliverables)
+        self.assertIn("Renderers select views of this model", deliverables)
+
+    def test_figma_primary_view_preserves_hierarchy_and_connections(self) -> None:
+        figma_profile = (ROOT / "adapters" / "figma-make" / "BEHAVIOR.md").read_text(encoding="utf-8")
+        self.assertIn("Primary surface: the connected architecture", figma_profile)
+        self.assertIn("information domains", figma_profile)
+        self.assertIn("labeled connectors", figma_profile)
+        self.assertIn("must not replace the connected hierarchy", figma_profile)
+
+    def test_capability_routing_does_not_require_diagram_companions(self) -> None:
+        routing = (ROOT / "references" / "capability-routing.md").read_text(encoding="utf-8")
+        self.assertIn("Route by capability, not brand", routing)
+        self.assertIn("complete fallback", routing)
+        self.assertIn("Do not require either companion", routing)
 
 
 if __name__ == "__main__":

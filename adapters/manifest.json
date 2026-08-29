@@ -1,6 +1,8 @@
 {
   "version": "0.3.0",
   "canonical_source": "SKILL.md",
+  "semantic_source": "assets/semantic-ia.schema.json",
+  "routing": "capability-first",
   "surfaces": {
     "claude": {
       "entrypoint": "SKILL.md",
@@ -18,7 +20,7 @@
     "figma_make": {
       "entrypoint": "adapters/figma-make/propaymun-information-architecture.md",
       "source_profile": "adapters/figma-make/BEHAVIOR.md",
-      "delivery_profile": "build-first"
+      "delivery_profile": "build-first-structure-explorer"
     }
   }
 }

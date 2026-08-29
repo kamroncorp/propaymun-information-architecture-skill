@@ -12,6 +12,7 @@ REFERENCE_ORDER = [
     "ia-foundations.md",
     "discovery.md",
     "modeling.md",
+    "capability-routing.md",
     "evidence.md",
     "validation.md",
     "deliverables.md",

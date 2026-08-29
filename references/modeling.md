@@ -17,6 +17,21 @@ Model in this order when relevant:
 
 This is a reasoning order, not a mandatory conversation order.
 
+## Model the information universe
+
+Before choosing a visual or document structure, distinguish:
+
+- **information domain:** a stable subject or responsibility area;
+- **concept or object:** a recognizable thing people reason about or act on;
+- **content type or record:** a governed information structure with attributes and lifecycle;
+- **classification:** a way of grouping or faceting items;
+- **destination or page:** a later interface exposure that belongs in a sitemap, not the canonical IA hierarchy;
+- **task step:** an action or state transition that belongs in a user flow.
+
+Build a parent-child hierarchy only where containment, scope, or classification is real. Add typed relationships for association, dependency, reference, membership, ownership, lifecycle, visibility, or derivation. Name the relationship in product language so a non-specialist can understand its consequence.
+
+For an existing product, derive the candidate model from the content inventory, current structure, search/navigation evidence, policies, and observed failures. For a new product, derive it from audiences, priority tasks, planned capabilities, domain rules, and information that must be created, found, understood, governed, or retained.
+
 ## Object card
 
 For each important object capture:
@@ -93,4 +108,3 @@ For products containing agents or generated content, also model:
 - visibility and retention boundaries;
 - stable canonical locations despite adaptive recommendations;
 - recovery, undo, retry, and escalation.
-
