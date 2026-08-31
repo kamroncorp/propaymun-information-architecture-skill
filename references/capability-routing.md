@@ -76,6 +76,6 @@ Use web or connected sources when they can materially change terminology, domain
 
 - A native Skill runtime discovers `SKILL.md` and its resources.
 - A web Project, Gem, or custom Agent usually needs a persistent instruction plus an uploaded knowledge file.
-- A one-off chat can use the universal file as an attachment plus an activation message.
+- A one-off chat can use the Workspace Kit knowledge file as an attachment plus the short workspace instruction.
 
 Do not call file upload or prompt pasting a native Skill installation. The behavior contract stays the same, but persistence, automatic triggering, tools, and context limits may differ by surface.

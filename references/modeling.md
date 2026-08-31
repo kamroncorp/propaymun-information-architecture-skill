@@ -28,17 +28,23 @@ Before choosing a visual or document structure, distinguish:
 - **destination or page:** a later interface exposure that belongs in a sitemap, not the canonical IA hierarchy;
 - **task step:** an action or state transition that belongs in a user flow.
 
-Build a parent-child hierarchy only where containment, scope, or classification is real. Add typed relationships for association, dependency, reference, membership, ownership, lifecycle, visibility, or derivation. Name the relationship in product language so a non-specialist can understand its consequence.
+Use one canonical item registry. Every item must reference exactly one information domain; do not maintain separate `objects` and `nodes` lists that can drift. Build a parent-child hierarchy only where containment, scope, or classification is real. Add typed relationships for association, dependency, reference, membership, ownership, lifecycle, visibility, or derivation. Name the relationship in product language so a non-specialist can understand its consequence.
+
+Model a relationship record such as membership, assignment, payment, or application as its own item when it has attributes, lifecycle, permissions, history, or findability. Do not collapse distinct objects only to make a diagram smaller.
 
 For an existing product, derive the candidate model from the content inventory, current structure, search/navigation evidence, policies, and observed failures. For a new product, derive it from audiences, priority tasks, planned capabilities, domain rules, and information that must be created, found, understood, governed, or retained.
 
-## Object card
+## Canonical item card
 
 For each important object capture:
 
 ```yaml
+id: item-project
+domain_id: domain-work
 name: Project
+kind: object
 purpose: Unit of coordinated work
+parent_id: null
 attributes: [name, owner, status, due_date]
 relationships:
   - target: Workspace
@@ -50,6 +56,15 @@ entry_points: [global_search, workspace_projects, recent_items]
 lifecycle_owner: Product Operations
 evidence_status: Proposed
 ```
+
+## Relationship and lifecycle integrity
+
+- Use `parent_id` only for a real primary hierarchy.
+- Use typed relationships for additional meaning, including `belongs_to`, `references`, `membership`, `assignment`, `settles`, `owned_by`, and `visible_to`.
+- Give each relationship explicit endpoints, direction, label, meaning, and evidence state.
+- When an item can belong to alternative scopes, model the options explicitly instead of forcing one parent.
+- Structure lifecycle states and transitions. For each transition record the source, destination, permitted role, condition, and evidence state when relevant.
+- Keep roles distinct until their permissions and authority are confirmed equivalent.
 
 ## Taxonomy design
 

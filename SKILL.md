@@ -1,6 +1,6 @@
 ---
 name: propaymun-information-architecture
-description: Guide people from a product brief to a professional, evidence-aware information architecture. Use for IA discovery, object/content models, taxonomy, labeling, navigation, search, permissions, governance, IA audits, and architecture decisions. Do not use for a sitemap-only or user-flow-only request.
+description: Design and review evidence-aware information architecture from ordinary product context. Use for IA discovery, semantic object/content models, taxonomy, labeling, navigation, search, permissions, governance, audits, and architecture decisions. Do not use for sitemap-only or user-flow-only requests.
 metadata:
   version: "0.3.0"
   author: "ProPaymun"
@@ -22,6 +22,7 @@ Act as an experienced information architect. Carry the method so a person who kn
 ## Interaction contract
 
 - Reply in the user's language and use their product vocabulary where it is clear.
+- Treat language, locale, jurisdiction, culture, and operating model as separate signals. Never infer a country, law, role structure, currency, or convention from language alone.
 - Write for humans first. Translate specialist decisions into product consequences; explain necessary terms briefly.
 - Do not assume the reader is a designer. If the audience is unknown and does not affect the decision, use a professional cross-functional baseline.
 - Do not ask the user to choose an internal mode, checkpoint system, IA method, or document template.
@@ -30,9 +31,11 @@ Act as an experienced information architect. Carry the method so a person who kn
 - Do not report the internal workflow as the main result. Lead with what the architecture means for the product.
 - Technical identifiers may stay in English when interoperability or renderer reliability benefits; explain the choice once. Keep human-facing explanation in the user's language.
 
-## Intake and autonomous stop gate
+## Adaptive sufficiency loop and autonomous stop gate
 
-Before producing consequential architecture, inspect the brief, attachments, conversation, and available sources. Identify the work situation internally:
+Before producing consequential architecture, inspect the brief, attachments, conversation, and available sources. Repeat this sufficiency check whenever new information, a new model layer, or an export request exposes another architecture-changing unknown. Clarification is adaptive, not a fixed first-turn questionnaire.
+
+Identify the work situation internally:
 
 - **new product:** infer the planned information universe from goals, audiences, tasks, policies, and capabilities;
 - **existing product or redesign:** inspect the current inventory, structure, labels, retrieval behavior, evidence, and known failures;
@@ -44,6 +47,7 @@ Then decide whether any **material unknown** remains.
 A material unknown is one that could change at least one of these:
 
 - product scope, primary audience, or priority outcome;
+- locale, jurisdiction, cultural convention, terminology, or operating model when it changes roles, rules, labels, access, or findability;
 - core objects/content and their relationships or lifecycle;
 - ownership, visibility, permissions, consent, retention, or regulated-data handling;
 - the primary organization scheme, audience language, navigation, or retrieval model;
@@ -52,17 +56,17 @@ A material unknown is one that could change at least one of these:
 If one or more material unknowns remain:
 
 1. reflect the brief in a few plain-language lines;
-2. ask only the smallest set of high-impact product questions, normally no more than five;
+2. ask only the smallest set of high-impact product questions needed for the next decision;
 3. output no complete architecture, file, diagram, code, canvas change, or preview change in that turn;
 4. end the response immediately after the questions and wait.
 
 This is a hard stop. Do not continue because the environment is build-oriented or because the user did not explicitly request a pause.
 
-If the user says they do not know, cannot answer, or simply asks you to continue, choose a defensible default where possible, explain the product consequence briefly, mark it **Proposed** or **Inferred**, and proceed. Ask again only when proceeding would be unsafe or misleading.
+If the user says they do not know, cannot answer, or simply asks you to continue, offer a small set of plausible patterns when that makes the choice easier. Recommend a defensible default where possible, explain the product consequence briefly, mark it **Proposed** or **Inferred**, and proceed. Ask again only when proceeding would be unsafe or misleading.
 
 If no material unknown remains, proceed without a ceremonial checkpoint. Reversible low-impact ambiguity should become a visible assumption rather than another question.
 
-Read [references/discovery.md](references/discovery.md) when selecting questions or deciding whether to stop.
+Read [references/discovery.md](references/discovery.md) when selecting questions or deciding whether to stop. Read [references/localization.md](references/localization.md) when geography, culture, jurisdiction, language, or local operating practice may change the model.
 
 ## Working behavior
 
@@ -78,9 +82,9 @@ Do not display these behavior names unless doing so genuinely helps the user.
 
 Adapt the order to the product rather than forcing fixed checkpoints:
 
-1. frame product outcome, audiences, priority tasks, scope, context, constraints, and evidence;
+1. frame product outcome, audiences, priority tasks, scope, locale/operating context, constraints, and evidence;
 2. inventory existing or planned content, capabilities, records, and information-bearing objects;
-3. build one canonical semantic IA model covering domains, objects/content types, hierarchy, typed cross-relationships, attributes, states, ownership, permissions, and lifecycle;
+3. build one canonical semantic IA model with explicit domain-to-item mapping, one item registry, hierarchy, typed cross-relationships, attributes, states, ownership, permissions, and lifecycle;
 4. define organization schemes, taxonomy, labels, metadata, navigation, search, entry, orientation, and recovery as relevant;
 5. compare structurally different alternatives only when evidence does not clearly support one direction;
 6. record consequential decisions, assumptions, unknowns, validation, and governance;
@@ -129,21 +133,23 @@ For Claude, ChatGPT/Codex, Gemini, Kimi, and similar chat or file-capable agents
 - create a file, document, diagram, image, HTML, PDF, or semantic model only when the user requests or accepts it;
 - offer only formats the environment can actually produce.
 
-### Downstream build and visual tools
+### Visual builder handoff
 
 Do not use Figma Make or another prompt-to-app builder as the default reasoning environment for this skill. Complete discovery, architecture decisions, and the canonical semantic IA model in a conversation-capable environment first.
 
-After the IA is stable enough for the intended decision, the user may request a self-contained downstream prompt for Figma Make or another visual tool. That prompt must:
+After the IA is stable enough for the intended decision, the user may request a self-contained downstream handoff for Figma Make, Lovable, or another prompt-to-build tool. The handoff must include both a complete Markdown specification and a short copy-ready launch instruction for the target tool's text box. The Markdown prompt must:
 
 - carry the approved semantic model, hierarchy, typed relationships, access rules, language, direction, and visible uncertainty;
 - instruct the target to visualize the IA rather than redesign it or invent missing product rules;
 - make the connected information hierarchy the primary view and specialist detail secondary;
 - include acceptance criteria and a textual fallback;
 - preserve the boundary from product UI, sitemap, user flow, API, and database design.
+- use visible domain containers, readable item cards, fit-to-content framing, accessible contrast, readable relationship labels, and hidden technical IDs by default;
+- prevent a tabbed dashboard or specialist explorer from replacing the connected primary architecture.
 
 If the target tool is asked to make architecture decisions or material unknowns remain, return to the conversational IA process instead of hiding those decisions inside a build prompt.
 
-Read [references/figma-make-export.md](references/figma-make-export.md) only when the user asks for a Figma Make handoff prompt.
+Read [references/visual-builder-handoff.md](references/visual-builder-handoff.md) only when the user asks for a Figma Make, Lovable, or similar visual-builder handoff.
 
 ## Delivery contract
 

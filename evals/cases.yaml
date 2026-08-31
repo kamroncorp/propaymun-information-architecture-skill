@@ -77,9 +77,9 @@ cases:
       - Includes a readable textual equivalent.
       - Does not claim visual inspection unless a rendered result was actually inspected.
 
-  - id: universal-web-empty-intake
+  - id: workspace-kit-empty-intake
     behavior_expected: autonomous-stop
-    environment: web Project with universal file and no native Skill runtime
+    environment: web Project with the Workspace Kit and no native Skill runtime
     prompt: |
       برای محصولم معماری اطلاعات بساز.
     invariants:
@@ -88,28 +88,53 @@ cases:
       - Produces no complete architecture or unsolicited file in that turn.
       - Does not expose internal mode names or checkpoint mechanics.
 
-  - id: figma-make-downstream-export
-    behavior_expected: downstream-prompt
+  - id: adaptive-midstream-clarification
+    behavior_expected: adaptive-stop
+    environment: any supported agent, after an initial architecture draft
+    prompt: |
+      حالا پرداخت سازمانی و تأیید دو مرحله‌ای هم به محصول اضافه می‌شود؛
+      نسخه قابل تحویل را آماده کن.
+    invariants:
+      - Re-runs sufficiency at the newly introduced payment and approval layer.
+      - Asks only questions whose answers can materially change roles, access, lifecycle, or structure.
+      - Stops before finalization or export when consequential ownership or approval rules remain unknown.
+      - Does not rely on a fixed number of intake questions.
+
+  - id: persian-language-locale-unknown
+    behavior_expected: contextual-localization
+    environment: Persian conversation with no confirmed country or operating model
+    prompt: |
+      برای سامانه مدیریت ساختمان نقش‌ها و دسترسی‌ها را کامل کن.
+    invariants:
+      - Does not infer Iran, Iranian law, a board, or a building committee from Persian language alone.
+      - Separates language preference from locale, jurisdiction, culture, and operating model.
+      - Asks for local context only if it changes the architecture, roles, labels, permissions, or governance.
+      - May offer a small set of plausible operating patterns when the user does not know.
+
+  - id: visual-builder-handoff
+    behavior_expected: downstream-handoff
     environment: conversation-capable agent with a stable canonical semantic IA
     prompt: |
       معماری اطلاعات را تأیید می‌کنم. از همین معماری یک پرامپت کامل و خودبسنده
       برای Figma Make بساز تا آن را به شکل حرفه‌ای و قابل بررسی نمایش دهد.
     invariants:
-      - Returns a Figma Make prompt rather than trying to operate Figma Make as the IA runtime.
+      - Returns a self-contained Markdown specification and a separate short launch instruction.
+      - Treats Figma Make as a downstream visual builder rather than the IA reasoning runtime.
       - Embeds the stable semantic model, hierarchy, typed relationships, access, language, and consequential uncertainty.
       - Instructs Figma Make to visualize rather than redesign or invent the IA.
       - Requires a connected architecture as the primary view and progressive detail as secondary views.
       - Explicitly excludes product UI, prototype, sitemap, user flow, API, and data schema.
       - Includes traceability and non-specialist comprehension acceptance checks.
+      - Blocks the handoff when the canonical model is explicitly not ready.
 
-  - id: universal-web-activation
+  - id: workspace-kit-activation
     behavior_expected: portable-persistence
-    environment: Project, Gem, or custom Agent with universal Markdown uploaded as knowledge
+    environment: Project, Gem, or custom Agent with the Workspace Kit uploaded as knowledge
     prompt: |
       از فایل پیوست‌شده به‌عنوان دستور کار معماری اطلاعات استفاده کن.
       سامانه ما چند نقش و اطلاعات حساس دارد؛ این هم بریف.
     invariants:
-      - Treats the universal file as operating instructions rather than summarizing it.
+      - Treats the Workspace Kit as operating instructions rather than summarizing it.
       - Preserves the IA-only scope and autonomous stop gate of the canonical skill.
       - Does not claim native Skill installation, automatic triggering, or tools the host has not confirmed.
       - Replies in the user's language and lets the user describe the product naturally.

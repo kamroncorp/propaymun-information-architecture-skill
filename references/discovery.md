@@ -8,7 +8,9 @@ The agent carries the IA method. The user supplies product knowledge in ordinary
 
 Do not ask the user to choose Guided/Quick modes, approve jargon-heavy models, select a checkpoint, or restate “stop and wait.”
 
-## Sufficiency gate
+## Adaptive sufficiency loop
+
+Run the sufficiency gate before every consequential architecture step, not only at intake. New objects, relationships, permissions, lifecycle rules, locale signals, evidence, and export requests can reveal a new blocking question.
 
 Before each consequential step, classify open issues:
 
@@ -37,7 +39,7 @@ First inspect all provided material. Reflect the product and scope in a few line
 
 ### Sufficient brief
 
-Proceed. Do not ask a ritual confirmation merely because a workflow template contains a checkpoint.
+Proceed, but reassess sufficiency when the model reaches another consequential decision. Do not ask a ritual confirmation merely because a workflow template contains a checkpoint.
 
 ## High-impact question lenses
 
@@ -49,6 +51,7 @@ Use only the lenses relevant to the product:
 - visibility, permissions, consent, retention, and legal constraints;
 - global versus contextual findability;
 - audience vocabulary, organization logic, browse versus search needs;
+- language, geography, jurisdiction, cultural convention, and local operating model when they change structure or terminology;
 - scale, volatility, governance, and change authority;
 - evidence that can confirm or challenge the proposed structure.
 
@@ -81,10 +84,11 @@ Do not include hints that teach the user how to police the skill. The skill must
 If the user replies “yes,” “continue,” “I don't know,” or gives no new product detail:
 
 1. do not repeat the same approval request;
-2. infer a defensible default from the brief and domain evidence;
-3. state the default and its user-visible consequence briefly;
-4. mark it Proposed or Inferred;
-5. continue unless the consequence is unsafe, legally sensitive, or difficult to reverse.
+2. offer a small set of plausible patterns when the user needs help recognizing the choice;
+3. infer or recommend a defensible default from the brief and domain evidence;
+4. state the default and its user-visible consequence briefly;
+5. mark it Proposed or Inferred;
+6. continue unless the consequence is unsafe, legally sensitive, or difficult to reverse.
 
 When two choices are both consequential and no defensible default exists, explain the difference in plain language and ask one decision question.
 
@@ -97,6 +101,16 @@ Pause only for a real decision, not at a fixed number of checkpoints. A useful p
 - at most a few answer options when they genuinely simplify the decision.
 
 Do not lead with internal section names such as “Checkpoint 3,” “Navigation Model,” or “Governance” unless the audience requested technical process detail.
+
+## Export request
+
+An export request is another consequential step. Before creating a semantic file, diagram prompt, or visual-builder handoff:
+
+- verify that every visible item belongs to a domain;
+- verify that important containment and cross-domain relationships are explicit;
+- verify that role combinations, local conventions, and lifecycle transitions are not hidden guesses;
+- ask and stop if a remaining unknown would materially change the requested artifact;
+- otherwise export a clearly marked Proposed or Approved model according to the user's intent.
 
 ## Quick provisional work
 

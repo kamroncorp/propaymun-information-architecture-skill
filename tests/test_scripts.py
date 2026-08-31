@@ -13,23 +13,46 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 FIXTURES = ROOT / "tests" / "fixtures"
+PACKAGES = ROOT / "packages"
 
 
 class SkillScriptTests(unittest.TestCase):
     def run_script(self, name: str, *args: str) -> subprocess.CompletedProcess[str]:
-        return subprocess.run([sys.executable, str(SCRIPTS / name), *args], cwd=ROOT, text=True, capture_output=True, check=False)
+        return subprocess.run(
+            [sys.executable, str(SCRIPTS / name), *args],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
 
-    def test_valid_model_passes(self) -> None:
+    def test_valid_semantic_ia_2_model_passes(self) -> None:
         result = self.run_script("validate_ia_model.py", str(FIXTURES / "valid-semantic-ia.json"), "--json")
         self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
-        self.assertTrue(json.loads(result.stdout)["valid"])
+        payload = json.loads(result.stdout)
+        self.assertTrue(payload["valid"])
+        self.assertEqual(payload["errors"], [])
 
-    def test_invalid_model_fails(self) -> None:
+    def test_invalid_model_fails_with_structural_errors(self) -> None:
         result = self.run_script("validate_ia_model.py", str(FIXTURES / "invalid-semantic-ia.json"), "--json")
         self.assertEqual(result.returncode, 1)
-        self.assertFalse(json.loads(result.stdout)["valid"])
+        payload = json.loads(result.stdout)
+        self.assertFalse(payload["valid"])
+        self.assertTrue(any("model_version" in error for error in payload["errors"]))
+        self.assertTrue(any("missing domain" in error for error in payload["errors"]))
+        self.assertTrue(any("blocking unknown" in error for error in payload["errors"]))
 
-    def test_html_renderer_outputs_rtl_aware_document(self) -> None:
+    def test_every_item_requires_an_existing_domain(self) -> None:
+        data = json.loads((FIXTURES / "valid-semantic-ia.json").read_text(encoding="utf-8"))
+        data["items"][0]["domain_id"] = "missing-domain"
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "invalid-domain.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            result = self.run_script("validate_ia_model.py", str(path), "--json")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("missing domain", result.stdout)
+
+    def test_html_renderer_exposes_domains_hierarchy_and_relationships(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "ia.html"
             result = self.run_script("render_ia_html.py", str(FIXTURES / "valid-semantic-ia.json"), "-o", str(output))
@@ -37,63 +60,111 @@ class SkillScriptTests(unittest.TestCase):
             rendered = output.read_text(encoding="utf-8")
             self.assertIn('<html lang="en" dir="ltr">', rendered)
             self.assertIn("Team Knowledge Product", rendered)
+            self.assertIn("Information domains", rendered)
+            self.assertIn("People and access", rendered)
             self.assertIn("Projects reference working documents", rendered)
             self.assertIn("Information structure", rendered)
-            self.assertNotIn("status-proposed", rendered)
 
-    def test_universal_web_distribution_is_self_contained(self) -> None:
+    def test_workspace_kit_is_self_contained(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            universal = Path(directory) / "universal.md"
-            claude_zip = Path(directory) / "claude.zip"
-            result = self.run_script("package_distributions.py", "--root", str(ROOT), "--universal-output", str(universal), "--claude-output", str(claude_zip))
+            workspace = Path(directory) / "workspace.md"
+            agent_zip = Path(directory) / "agent.zip"
+            result = self.run_script(
+                "build_packages.py",
+                "--root", str(ROOT),
+                "--workspace-output", str(workspace),
+                "--agent-output", str(agent_zip),
+                "--skip-legacy-aliases",
+            )
             self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
-            packaged = universal.read_text(encoding="utf-8")
-            self.assertIn("Operating instruction for the assistant", packaged)
-            self.assertIn("autonomous stop gate", packaged.lower())
-            self.assertIn("source: references/figma-make-export.md", packaged)
-            self.assertIn("Figma Make is the renderer", packaged)
+            packaged = workspace.read_text(encoding="utf-8")
+            self.assertIn("ProPaymun IA Workspace Kit", packaged)
+            self.assertIn("adaptive sufficiency loop", packaged.lower())
+            self.assertIn("source: references/localization.md", packaged)
+            self.assertIn("source: references/visual-builder-handoff.md", packaged)
+            self.assertIn("short copy-ready launch instruction", packaged)
             self.assertNotIn("](references/", packaged)
 
-    def test_generated_distributions_are_current(self) -> None:
+    def test_generated_packages_and_legacy_aliases_are_current(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            universal = Path(directory) / "universal.md"
-            claude_zip = Path(directory) / "claude.zip"
-            result = self.run_script("package_distributions.py", "--root", str(ROOT), "--universal-output", str(universal), "--claude-output", str(claude_zip))
+            workspace = Path(directory) / "workspace.md"
+            agent_zip = Path(directory) / "agent.zip"
+            result = self.run_script(
+                "build_packages.py",
+                "--root", str(ROOT),
+                "--workspace-output", str(workspace),
+                "--agent-output", str(agent_zip),
+                "--skip-legacy-aliases",
+            )
             self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
-            self.assertEqual(universal.read_bytes(), (ROOT / "install" / "universal-web" / "propaymun-information-architecture.md").read_bytes())
-            self.assertEqual(claude_zip.read_bytes(), (ROOT / "install" / "claude-ai" / "propaymun-information-architecture.zip").read_bytes())
+            canonical_workspace = PACKAGES / "workspace-kit" / "propaymun-ia-workspace-kit.md"
+            canonical_agent = PACKAGES / "agent-skill" / "propaymun-information-architecture.zip"
+            self.assertEqual(workspace.read_bytes(), canonical_workspace.read_bytes())
+            self.assertEqual(agent_zip.read_bytes(), canonical_agent.read_bytes())
+            self.assertEqual(canonical_workspace.read_bytes(), (ROOT / "install" / "universal-web" / "propaymun-information-architecture.md").read_bytes())
+            self.assertEqual(canonical_agent.read_bytes(), (ROOT / "install" / "claude-ai" / "propaymun-information-architecture.zip").read_bytes())
+            self.assertEqual(
+                (PACKAGES / "workspace-kit" / "WORKSPACE_INSTRUCTIONS.md").read_bytes(),
+                (ROOT / "install" / "universal-web" / "PROJECT_INSTRUCTIONS.md").read_bytes(),
+            )
 
-    def test_claude_zip_has_skill_folder_and_resources(self) -> None:
-        archive_path = ROOT / "install" / "claude-ai" / "propaymun-information-architecture.zip"
+    def test_agent_skill_package_has_canonical_resources(self) -> None:
+        archive_path = PACKAGES / "agent-skill" / "propaymun-information-architecture.zip"
         with zipfile.ZipFile(archive_path) as archive:
             names = set(archive.namelist())
             base = "propaymun-information-architecture/"
             self.assertIn(base + "SKILL.md", names)
             self.assertIn(base + "references/discovery.md", names)
-            self.assertIn(base + "assets/semantic-ia.schema.json", names)
+            self.assertIn(base + "references/localization.md", names)
+            self.assertIn(base + "references/visual-builder-handoff.md", names)
+            self.assertIn(base + "schema/semantic-ia.schema.json", names)
+            self.assertIn(base + "scripts/export_builder_handoff.py", names)
             self.assertNotIn(base + "tests/test_scripts.py", names)
 
-    def test_figma_prompt_export_is_model_bound(self) -> None:
+    def test_visual_builder_handoff_outputs_spec_and_launch_text(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            output = Path(directory) / "figma-prompt.md"
-            result = self.run_script("export_figma_make_prompt.py", str(FIXTURES / "valid-semantic-ia.json"), "-o", str(output))
+            specification = Path(directory) / "build-spec.md"
+            launch = Path(directory) / "launch.txt"
+            result = self.run_script(
+                "export_builder_handoff.py",
+                str(FIXTURES / "valid-semantic-ia.json"),
+                "--target", "figma-make",
+                "-o", str(specification),
+                "--launch-output", str(launch),
+            )
             self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
-            prompt = output.read_text(encoding="utf-8")
-            self.assertIn("Team Knowledge Product", prompt)
-            self.assertIn("projects → documents [references]", prompt)
-            self.assertIn("source of truth", prompt)
+            prompt = specification.read_text(encoding="utf-8")
+            launch_text = launch.read_text(encoding="utf-8")
+            self.assertIn("Build a Connected Information Architecture Blueprint", prompt)
+            self.assertIn("Domain-to-item map", prompt)
+            self.assertIn("Projects reference working documents", prompt)
+            self.assertIn("at least about two-thirds", prompt)
             self.assertIn("Do not create a sitemap, user flow", prompt)
-            self.assertIn("Do not redesign", prompt)
+            self.assertNotIn("Review Explorer", prompt)
+            self.assertLess(len(launch_text.strip()), 240)
+            self.assertIn("attached Markdown file", launch_text)
 
-    def test_release_version_is_consistent(self) -> None:
+    def test_not_ready_model_cannot_export(self) -> None:
+        data = json.loads((FIXTURES / "valid-semantic-ia.json").read_text(encoding="utf-8"))
+        data["meta"]["handoff"]["readiness"] = "not-ready"
+        with tempfile.TemporaryDirectory() as directory:
+            model = Path(directory) / "not-ready.json"
+            model.write_text(json.dumps(data), encoding="utf-8")
+            result = self.run_script("export_builder_handoff.py", str(model), "--target", "lovable")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("not-ready", result.stderr or result.stdout)
+
+    def test_release_and_package_metadata_are_consistent(self) -> None:
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        manifest = json.loads((ROOT / "adapters" / "manifest.json").read_text(encoding="utf-8"))
+        manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(version, "0.3.0")
         self.assertIn(f'version: "{version}"', skill)
-        self.assertIn(f'version-{version}-', readme)
+        self.assertIn(f"version-{version}-", readme)
         self.assertEqual(manifest["version"], version)
+        self.assertEqual(manifest["packages"]["agent_skill"]["display_name"], "Agent Skill Package")
+        self.assertEqual(manifest["packages"]["workspace_kit"]["display_name"], "Workspace Kit")
 
     def test_core_scope_routes_neighboring_maps_without_producing_them(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
@@ -102,21 +173,31 @@ class SkillScriptTests(unittest.TestCase):
         self.assertIn("do not create either one", skill)
         self.assertIn("hierarchical, connected structural view", skill)
 
-    def test_autonomous_stop_is_in_core_and_universal(self) -> None:
+    def test_adaptive_stop_and_localization_are_in_both_packages(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
-        universal = (ROOT / "install" / "universal-web" / "propaymun-information-architecture.md").read_text(encoding="utf-8")
-        self.assertIn("autonomous stop gate", skill.lower())
-        self.assertIn("hard stop", skill.lower())
-        self.assertIn("autonomous stop gate", universal.lower())
+        workspace = (PACKAGES / "workspace-kit" / "propaymun-ia-workspace-kit.md").read_text(encoding="utf-8")
+        for content in (skill, workspace):
+            self.assertIn("Adaptive sufficiency loop", content)
+            self.assertIn("Repeat this sufficiency check", content)
+            self.assertIn("Never infer a country", content)
+            self.assertIn("short copy-ready launch instruction", content)
 
-    def test_figma_is_downstream_not_runtime(self) -> None:
-        manifest = json.loads((ROOT / "adapters" / "manifest.json").read_text(encoding="utf-8"))
+    def test_visual_builder_is_downstream_and_not_a_runtime(self) -> None:
+        manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
-        self.assertNotIn("figma_make", manifest["surfaces"])
-        self.assertEqual(manifest["downstream_exports"]["figma_make"]["type"], "post-approval-prompt")
+        self.assertIn("visual_builder_handoff", manifest)
+        self.assertEqual(manifest["visual_builder_handoff"]["outputs"], ["markdown-specification", "short-launch-text"])
         self.assertIn("Do not use Figma Make", skill)
-        legacy = ROOT / "adapters" / "figma-make"
-        self.assertFalse(legacy.exists() and any(legacy.iterdir()))
+        self.assertFalse((ROOT / "adapters" / "figma-make").exists())
+
+    def test_repository_uses_professional_package_names(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("Agent Skill Package", readme)
+        self.assertIn("Workspace Kit", readme)
+        self.assertIn("Machine-scannable install map", readme)
+        self.assertNotIn("## Two supported distributions", readme)
+        self.assertTrue((PACKAGES / "manifest.json").exists())
+        self.assertFalse((ROOT / "adapters" / "manifest.json").exists())
 
     def test_capability_routing_does_not_require_diagram_companions(self) -> None:
         routing = (ROOT / "references" / "capability-routing.md").read_text(encoding="utf-8")

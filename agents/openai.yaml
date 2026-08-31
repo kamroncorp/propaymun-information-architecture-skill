@@ -1,7 +1,7 @@
 interface:
-  display_name: "ProPaymun Information Architecture"
-  short_description: "Smart, evidence-aware IA from an ordinary product brief"
+  display_name: "ProPaymun IA Architect"
+  short_description: "Evidence-aware IA from ordinary product context"
   brand_color: "#5B4BDB"
-  default_prompt: "Use $propaymun-information-architecture for this product. I will describe the product naturally; decide what must be clarified, pause when a material answer is needed, and produce the best IA this environment supports."
+  default_prompt: "Use $propaymun-information-architecture to turn my product context into a clear, evidence-aware information architecture."
 policy:
   allow_implicit_invocation: true

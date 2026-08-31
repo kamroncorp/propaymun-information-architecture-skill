@@ -70,7 +70,7 @@ Offer only formats supported by the current environment and distinguish:
 
 Do not generate every format. Produce the one the user selects.
 
-## Interactive IA structure explorer
+## Interactive connected IA blueprint
 
 When the user requests an interactive visual artifact, it should help a mixed team understand and challenge the IA without requiring IA expertise.
 
@@ -92,7 +92,7 @@ Reveal relevant detail through selection, expansion, filtering, or focused subvi
 
 Do not make a collection of tabs, tables, or cards the primary IA. Use them only to explain the structure. Avoid rendering internal evidence labels as unexplained badges on every node.
 
-The explorer is a review tool for the architecture. It is not the product interface, wireframe, prototype, sitemap, user flow, API, or database schema. Prefer clear hierarchy, labeled connections, progressive disclosure, accessibility, and the user's language and writing direction over decorative UI.
+The blueprint is a review view of the architecture. It is not the product interface, wireframe, prototype, sitemap, user flow, API, or database schema. Prefer visible domain containers, clear hierarchy, labeled connections, progressive disclosure, accessibility, and the user's language and writing direction over decorative UI.
 
 ## Semantic IA JSON
 
@@ -102,19 +102,28 @@ Use this portable shape only when structured reuse, validation, rendering, or ha
 {
   "meta": {
     "title": "Example IA",
-    "version": "0.2",
+    "model_version": "2.0",
     "status": "proposed",
     "language": "en",
     "direction": "ltr",
-    "scope": "Product area"
+    "scope": "Product area",
+    "locale_context": {
+      "country": null,
+      "operating_model": null,
+      "evidence_status": "Unknown"
+    },
+    "handoff": {
+      "purpose": "review",
+      "readiness": "provisional"
+    }
   },
   "contexts": [],
   "audiences": [],
   "tasks": [],
-  "information_domains": [],
-  "objects": [],
-  "nodes": [],
+  "domains": [],
+  "items": [],
   "relationships": [],
+  "roles": [],
   "organization_schemes": [],
   "taxonomy": {},
   "labels": [],
@@ -122,10 +131,12 @@ Use this portable shape only when structured reuse, validation, rendering, or ha
   "navigation_systems": [],
   "search": {},
   "permissions": [],
+  "lifecycles": [],
   "governance": {},
   "evidence_ledger": [],
   "assumptions": [],
   "unknowns": [],
+  "conflicts": [],
   "decisions": [],
   "validation": []
 }

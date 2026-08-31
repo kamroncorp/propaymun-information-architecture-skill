@@ -1,0 +1,33 @@
+{
+  "version": "0.3.0",
+  "product_name": "ProPaymun Information Architecture",
+  "canonical_source": "SKILL.md",
+  "semantic_model": "schema/semantic-ia.schema.json",
+  "routing": "capability-first",
+  "packages": {
+    "agent_skill": {
+      "display_name": "Agent Skill Package",
+      "path": "packages/agent-skill/propaymun-information-architecture.zip",
+      "use_when": "The host can install a native Agent Skill ZIP or skill directory."
+    },
+    "workspace_kit": {
+      "display_name": "Workspace Kit",
+      "knowledge_path": "packages/workspace-kit/propaymun-ia-workspace-kit.md",
+      "instructions_path": "packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md",
+      "use_when": "The host supports Projects, Gems, custom agents, persistent knowledge, or file-capable chats."
+    }
+  },
+  "visual_builder_handoff": {
+    "display_name": "Visual Builder Handoff",
+    "reference": "references/visual-builder-handoff.md",
+    "generator": "scripts/export_builder_handoff.py",
+    "targets": ["figma-make", "lovable", "generic"],
+    "requires": "semantic-ia-ready-for-intended-purpose",
+    "outputs": ["markdown-specification", "short-launch-text"]
+  },
+  "legacy_download_aliases": {
+    "install/claude-ai/propaymun-information-architecture.zip": "packages/agent-skill/propaymun-information-architecture.zip",
+    "install/universal-web/propaymun-information-architecture.md": "packages/workspace-kit/propaymun-ia-workspace-kit.md",
+    "install/universal-web/PROJECT_INSTRUCTIONS.md": "packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md"
+  }
+}

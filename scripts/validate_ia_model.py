@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate structural invariants in a ProPaymun semantic IA JSON file."""
+"""Validate structural invariants in a ProPaymun Semantic IA 2.0 JSON file."""
 
 from __future__ import annotations
 
@@ -10,125 +10,195 @@ from pathlib import Path
 from typing import Any
 
 
-EVIDENCE_STATES = {
-    "Provided",
-    "Observed",
-    "Confirmed",
-    "Inferred",
-    "Proposed",
-    "Unknown",
-}
+EVIDENCE_STATES = {"Provided", "Observed", "Confirmed", "Inferred", "Proposed", "Unknown"}
+MODEL_STATUSES = {"draft", "proposed", "reviewed", "approved"}
+READINESS_STATES = {"not-ready", "provisional", "reviewable", "approved"}
 
 
-def _required_mapping(value: Any, name: str, errors: list[str]) -> dict[str, Any]:
+def _mapping(value: Any, name: str, errors: list[str]) -> dict[str, Any]:
     if not isinstance(value, dict):
         errors.append(f"{name} must be an object")
         return {}
     return value
 
 
-def _required_list(value: Any, name: str, errors: list[str]) -> list[Any]:
+def _list(value: Any, name: str, errors: list[str]) -> list[Any]:
     if not isinstance(value, list):
         errors.append(f"{name} must be an array")
         return []
     return value
 
 
+def _nonempty(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _evidence(owner: str, value: Any, errors: list[str]) -> None:
+    if value not in EVIDENCE_STATES:
+        errors.append(f"{owner} has invalid evidence_status: {value!r}")
+
+
+def _unique_records(records: list[Any], name: str, errors: list[str]) -> tuple[list[dict[str, Any]], set[str]]:
+    clean: list[dict[str, Any]] = []
+    identifiers: set[str] = set()
+    for index, raw in enumerate(records):
+        record = _mapping(raw, f"{name}[{index}]", errors)
+        identifier = record.get("id")
+        if not _nonempty(identifier):
+            errors.append(f"{name}[{index}].id must be a non-empty string")
+            continue
+        if identifier in identifiers:
+            errors.append(f"duplicate {name} id: {identifier}")
+        identifiers.add(identifier)
+        clean.append(record)
+    return clean, identifiers
+
+
 def validate_model(data: Any) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
-    root = _required_mapping(data, "document", errors)
-    meta = _required_mapping(root.get("meta"), "meta", errors)
-    nodes = _required_list(root.get("nodes"), "nodes", errors)
-    relationships = _required_list(root.get("relationships"), "relationships", errors)
+    root = _mapping(data, "document", errors)
+    meta = _mapping(root.get("meta"), "meta", errors)
 
-    for field in ("title", "version", "status", "language", "scope"):
-        if not isinstance(meta.get(field), str) or not meta[field].strip():
+    for field in ("title", "model_version", "status", "language", "scope"):
+        if not _nonempty(meta.get(field)):
             errors.append(f"meta.{field} must be a non-empty string")
+    if meta.get("model_version") != "2.0":
+        errors.append("meta.model_version must be '2.0'")
+    if meta.get("status") not in MODEL_STATUSES:
+        errors.append(f"meta.status must be one of: {', '.join(sorted(MODEL_STATUSES))}")
     if meta.get("direction") not in {"ltr", "rtl"}:
         errors.append("meta.direction must be 'ltr' or 'rtl'")
 
-    node_ids: set[str] = set()
+    handoff = _mapping(meta.get("handoff"), "meta.handoff", errors)
+    if handoff.get("readiness") not in READINESS_STATES:
+        errors.append(f"meta.handoff.readiness must be one of: {', '.join(sorted(READINESS_STATES))}")
+    if not _nonempty(handoff.get("purpose")):
+        errors.append("meta.handoff.purpose must be a non-empty string")
+
+    domains, domain_ids = _unique_records(_list(root.get("domains"), "domains", errors), "domains", errors)
+    items, item_ids = _unique_records(_list(root.get("items"), "items", errors), "items", errors)
+    relationships, _ = _unique_records(_list(root.get("relationships"), "relationships", errors), "relationships", errors)
+    roles_raw = root.get("roles", [])
+    roles, role_ids = _unique_records(_list(roles_raw, "roles", errors), "roles", errors)
+
+    if not domains:
+        warnings.append("model contains no information domains")
+    if not items:
+        warnings.append("model contains no items")
+
+    for domain in domains:
+        domain_id = domain["id"]
+        if not _nonempty(domain.get("label")):
+            errors.append(f"domain {domain_id} label must be a non-empty string")
+        _evidence(f"domain {domain_id}", domain.get("evidence_status"), errors)
+
     parent_by_id: dict[str, str | None] = {}
-    for index, raw_node in enumerate(nodes):
-        node = _required_mapping(raw_node, f"nodes[{index}]", errors)
-        node_id = node.get("id")
-        if not isinstance(node_id, str) or not node_id.strip():
-            errors.append(f"nodes[{index}].id must be a non-empty string")
-            continue
-        if node_id in node_ids:
-            errors.append(f"duplicate node id: {node_id}")
-        node_ids.add(node_id)
-        parent = node.get("parent_id")
+    for item in items:
+        item_id = item["id"]
+        if item.get("domain_id") not in domain_ids:
+            errors.append(f"item {item_id} references missing domain: {item.get('domain_id')!r}")
+        for field in ("label", "kind"):
+            if not _nonempty(item.get(field)):
+                errors.append(f"item {item_id} {field} must be a non-empty string")
+        parent = item.get("parent_id")
         if parent is not None and not isinstance(parent, str):
-            errors.append(f"node {node_id} parent_id must be a string or null")
-        parent_by_id[node_id] = parent
-        for field in ("label", "type"):
-            if not isinstance(node.get(field), str) or not node[field].strip():
-                errors.append(f"node {node_id} {field} must be a non-empty string")
-        state = node.get("evidence_status")
-        if state not in EVIDENCE_STATES:
-            errors.append(f"node {node_id} has invalid evidence_status: {state!r}")
-        if str(node.get("type", "")).lower() in {"page", "screen", "destination", "ui-control"}:
-            warnings.append(
-                f"node {node_id} looks interface-level; canonical IA nodes should normally be semantic domains, objects, content types, or classifications"
-            )
+            errors.append(f"item {item_id} parent_id must be a string or null")
+        parent_by_id[item_id] = parent
+        alternatives = item.get("alternative_parent_ids", [])
+        if not isinstance(alternatives, list) or any(not isinstance(value, str) for value in alternatives):
+            errors.append(f"item {item_id} alternative_parent_ids must be an array of strings")
+        _evidence(f"item {item_id}", item.get("evidence_status"), errors)
 
-    for node_id, parent_id in parent_by_id.items():
-        if parent_id is not None and parent_id not in node_ids:
-            errors.append(f"node {node_id} references missing parent: {parent_id}")
+    for item_id, parent_id in parent_by_id.items():
+        if parent_id is not None and parent_id not in item_ids:
+            errors.append(f"item {item_id} references missing parent: {parent_id}")
+    for item in items:
+        for parent_id in item.get("alternative_parent_ids", []):
+            if parent_id not in item_ids:
+                errors.append(f"item {item['id']} references missing alternative parent: {parent_id}")
 
-    for start in node_ids:
+    for start in item_ids:
         seen: set[str] = set()
         current: str | None = start
         while current is not None and current in parent_by_id:
             if current in seen:
-                errors.append(f"hierarchy cycle detected at node: {current}")
+                errors.append(f"hierarchy cycle detected at item: {current}")
                 break
             seen.add(current)
             current = parent_by_id[current]
 
-    relationship_ids: set[str] = set()
-    for index, raw_relationship in enumerate(relationships):
-        relationship = _required_mapping(raw_relationship, f"relationships[{index}]", errors)
-        relationship_id = relationship.get("id")
-        if not isinstance(relationship_id, str) or not relationship_id.strip():
-            errors.append(f"relationships[{index}].id must be a non-empty string")
-            continue
-        if relationship_id in relationship_ids:
-            errors.append(f"duplicate relationship id: {relationship_id}")
-        relationship_ids.add(relationship_id)
+    for relationship in relationships:
+        relationship_id = relationship["id"]
         for endpoint in ("from", "to"):
-            value = relationship.get(endpoint)
-            if value not in node_ids:
-                errors.append(
-                    f"relationship {relationship_id} references missing {endpoint} node: {value!r}"
-                )
-        if not isinstance(relationship.get("type"), str) or not relationship["type"].strip():
-            errors.append(f"relationship {relationship_id} type must be a non-empty string")
-        state = relationship.get("evidence_status")
-        if state not in EVIDENCE_STATES:
-            errors.append(
-                f"relationship {relationship_id} has invalid evidence_status: {state!r}"
-            )
-        if not relationship.get("label"):
-            warnings.append(f"relationship {relationship_id} has no explanatory label")
-        if relationship.get("direction") not in {None, "directed", "bidirectional", "undirected"}:
-            errors.append(
-                f"relationship {relationship_id} direction must be directed, bidirectional, or undirected"
-            )
+            if relationship.get(endpoint) not in item_ids:
+                errors.append(f"relationship {relationship_id} references missing {endpoint} item: {relationship.get(endpoint)!r}")
+        for field in ("type", "label", "meaning"):
+            if not _nonempty(relationship.get(field)):
+                errors.append(f"relationship {relationship_id} {field} must be a non-empty string")
+        if relationship.get("direction") not in {"directed", "bidirectional", "undirected"}:
+            errors.append(f"relationship {relationship_id} direction must be directed, bidirectional, or undirected")
+        _evidence(f"relationship {relationship_id}", relationship.get("evidence_status"), errors)
 
-    if nodes and not any(parent is None for parent in parent_by_id.values()):
-        warnings.append("hierarchy has no root node")
-    if not nodes:
-        warnings.append("model contains no nodes")
+    for role in roles:
+        role_id = role["id"]
+        if not _nonempty(role.get("label")):
+            errors.append(f"role {role_id} label must be a non-empty string")
+        _evidence(f"role {role_id}", role.get("evidence_status"), errors)
+        if "/" in str(role.get("label", "")):
+            warnings.append(f"role {role_id} combines labels with '/'; confirm that permissions are genuinely equivalent")
+
+    permissions = _list(root.get("permissions", []), "permissions", errors)
+    for index, raw in enumerate(permissions):
+        permission = _mapping(raw, f"permissions[{index}]", errors)
+        if permission.get("role_id") not in role_ids:
+            errors.append(f"permissions[{index}] references missing role: {permission.get('role_id')!r}")
+        if permission.get("item_id") not in item_ids:
+            errors.append(f"permissions[{index}] references missing item: {permission.get('item_id')!r}")
+        if not isinstance(permission.get("actions"), list):
+            errors.append(f"permissions[{index}].actions must be an array")
+        _evidence(f"permissions[{index}]", permission.get("evidence_status"), errors)
+
+    lifecycles = _list(root.get("lifecycles", []), "lifecycles", errors)
+    for index, raw in enumerate(lifecycles):
+        lifecycle = _mapping(raw, f"lifecycles[{index}]", errors)
+        item_id = lifecycle.get("item_id")
+        if item_id not in item_ids:
+            errors.append(f"lifecycles[{index}] references missing item: {item_id!r}")
+        states, state_ids = _unique_records(_list(lifecycle.get("states"), f"lifecycles[{index}].states", errors), f"lifecycles[{index}].states", errors)
+        for state in states:
+            if not _nonempty(state.get("label")):
+                errors.append(f"lifecycle state {state['id']} label must be a non-empty string")
+        transitions = _list(lifecycle.get("transitions"), f"lifecycles[{index}].transitions", errors)
+        for transition_index, raw_transition in enumerate(transitions):
+            transition = _mapping(raw_transition, f"lifecycles[{index}].transitions[{transition_index}]", errors)
+            for endpoint in ("from", "to"):
+                if transition.get(endpoint) not in state_ids:
+                    errors.append(f"lifecycle {item_id} transition references missing {endpoint} state: {transition.get(endpoint)!r}")
+            actors = transition.get("actor_role_ids")
+            if not isinstance(actors, list):
+                errors.append(f"lifecycle {item_id} transition actor_role_ids must be an array")
+            else:
+                for role_id in actors:
+                    if role_id not in role_ids:
+                        errors.append(f"lifecycle {item_id} transition references missing role: {role_id!r}")
+            _evidence(f"lifecycle {item_id} transition", transition.get("evidence_status"), errors)
+
+    unknowns = _list(root.get("unknowns", []), "unknowns", errors)
+    if handoff.get("readiness") in {"reviewable", "approved"}:
+        for unknown in unknowns:
+            if isinstance(unknown, dict) and unknown.get("blocks_handoff") is True:
+                errors.append(f"handoff is {handoff.get('readiness')} but blocking unknown remains: {unknown.get('id', 'unnamed')}")
+
+    if items and not any(parent is None for parent in parent_by_id.values()):
+        warnings.append("hierarchy has no root item")
 
     return sorted(set(errors)), sorted(set(warnings))
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("model", type=Path, help="Path to semantic IA JSON")
+    parser.add_argument("model", type=Path, help="Path to Semantic IA 2.0 JSON")
     parser.add_argument("--json", action="store_true", help="Emit machine-readable results")
     args = parser.parse_args()
 

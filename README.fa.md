@@ -1,127 +1,171 @@
-# مهارت معماری اطلاعات ProPaymun
+# معماری اطلاعات پروپیمان
 
-یک مهارت تخصصی و فقط مخصوص معماری اطلاعات که کاربر را از توضیح طبیعی محصول تا یک IA حرفه‌ای و شواهدمحور همراهی می‌کند؛ حتی اگر کاربر اصطلاحات معماری اطلاعات را نداند.
+[![Version](https://img.shields.io/badge/version-0.3.0-5B4BDB)](CHANGELOG.md)
+[![License](https://img.shields.io/badge/license-Apache--2.0-2F855A)](LICENSE)
+[![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
-**ProPaymun — پروپیمان** یعنی کامل و پُر. کامل‌بودن اینجا یعنی «آمادهٔ تصمیم‌گیری»، نه تولید سند طولانی و غیرضروری.
+توضیحات عادی محصول را به یک معماری اطلاعات روشن، شواهدمحور و قابل‌تصمیم‌گیری تبدیل می‌کند؛ حتی اگر کاربر اصطلاحات IA را نداند.
+
+**پروپیمان** یعنی کامل و پُر. کامل‌بودن اینجا یعنی معماری قابل‌فهم، آماده تصمیم و صادق درباره مجهولات؛ نه یک سند طولانی و غیرضروری.
 
 [English](README.md)
 
-## چه کاری انجام می‌دهد؟
+## بسته مناسب را انتخاب کنید
 
-- قبل از پرسیدن سؤال، بریف و منابع در دسترس را بررسی می‌کند؛
-- فقط سؤال‌هایی را می‌پرسد که پاسخشان می‌تواند معماری را تغییر دهد و خودش منتظر پاسخ می‌ماند؛
-- حوزه‌های اطلاعاتی، اشیا و محتوا، سلسله‌مراتب، روابط معنادار، Taxonomy، برچسب‌ها، Metadata، یافت‌پذیری، دسترسی، چرخهٔ عمر و Governance را مدل می‌کند؛
-- دادهٔ ارائه‌شده، مشاهده، استنباط، پیشنهاد، تأیید و مجهول را با هم مخلوط نمی‌کند؛
-- زبان و عمق پاسخ را با کاربر و توانایی واقعی محیط هماهنگ می‌کند؛
-- در صورت نیاز و وجود قابلیت، از جست‌وجوی وب برای اطلاعات جاری و اثرگذار استفاده می‌کند؛
-- Sitemap، User Flow، UI، API و Database Design را وارد این مهارت نمی‌کند.
+| بسته | مناسب برای | دریافت |
+|---|---|---|
+| **بسته Agent Skill** | Claude.ai Skills، Claude Code، Codex، Gemini CLI، ZCode و محیط‌های سازگار با Agent Skills | [دانلود ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
+| **کیت Workspace** | ChatGPT Projects، Claude Projects، Gemini Gems، Kimi Projects، محیط‌های Z.AI/GLM، Custom Agent و چت‌های فایل‌پذیر | [فایل دانش](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [دستور Workspace](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
-## دو بستهٔ هماهنگ
+هر دو بسته از یک رفتار اصلی ساخته می‌شوند. فعال‌شدن خودکار، ماندگاری، ابزارها و محدودیت Context به سرویس میزبان وابسته است.
 
-هیچ روش نصب یک‌کلیکی واقعی وجود ندارد که میان همهٔ هوشواره‌ها مشترک باشد. به همین دلیل ProPaymun دو بستهٔ هم‌زمان دارد:
+## نصب در Claude.ai
 
-1. **Native Agent Skill** — فایل [`SKILL.md`](SKILL.md) و منابع همراه برای Claude.ai، Claude Code، Codex، Gemini CLI، ZCode و محیط‌های سازگار با Agent Skills.
-2. **Universal Web** — یک فایل Markdown خودبسنده برای Project، Gem، Custom Agent یا چت‌هایی که Native Skill بارگذاری نمی‌کنند.
+1. **[بسته Agent Skill](packages/agent-skill/propaymun-information-architecture.zip)** را دانلود کنید.
+2. در Claude.ai، قابلیت **Settings → Capabilities → Code execution and file creation** را فعال کنید.
+3. وارد **Customize → Skills** شوید.
+4. مسیر **+ → Create skill → Upload a skill** را انتخاب کنید.
+5. فایل ZIP را بدون Extract کردن آپلود و Skill را فعال کنید.
 
-آپلود فایل در Project با نصب Native Skill یکسان نیست. رفتار IA مشترک می‌ماند، اما فعال‌شدن خودکار، ماندگاری، ابزارها و محدودیت Context به سرویس میزبان بستگی دارد.
+لینک مخزن GitHub فایل قابل‌آپلود Claude.ai نیست؛ از ZIP بالا استفاده کنید.
 
-## نصب یا راه‌اندازی
+## راه‌اندازی در Workspaceهای وب
 
-### Claude.ai وب — نصب واقعی Skill، حتی پلن Free
+برای ChatGPT Projects، Claude Projects، Gemini Gems، Kimi Projects، محیط‌های Z.AI/GLM یا دستیار فایل‌پذیر دیگر:
 
-فایل آمادهٔ [`propaymun-information-architecture.zip`](install/claude-ai/propaymun-information-architecture.zip) را دانلود کنید. سپس در Claude.ai:
+1. فایل [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) را به دانش Workspace اضافه کنید؛
+2. متن [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) را در دستور Project، Gem، Workspace یا Custom Agent قرار دهید؛
+3. محصول را طبیعی توضیح دهید.
 
-1. در **Settings → Capabilities** گزینهٔ **Code execution and file creation** را فعال کنید؛
-2. وارد **Customize → Skills** شوید؛
-3. مسیر **+ → Create skill → Upload a skill** را انتخاب کنید؛
-4. فایل ZIP را آپلود و Skill را فعال کنید.
+این مسیر «تنظیم با دانش پروژه» است و نباید به‌اشتباه نصب Native Skill نامیده شود.
 
-لینک مخزن گیت‌هاب نصب‌کنندهٔ Claude.ai نیست؛ Claude.ai بستهٔ ZIP مهارت را می‌خواهد.
-
-### Claude Projects — مسیر Universal
-
-یک Project بسازید، فایل [`propaymun-information-architecture.md`](install/universal-web/propaymun-information-architecture.md) را به دانش پروژه اضافه کنید و متن [`PROJECT_INSTRUCTIONS.md`](install/universal-web/PROJECT_INSTRUCTIONS.md) را در Project Instructions قرار دهید.
-
-### ChatGPT وب
-
-یک Project بسازید، فایل Universal Web را آپلود و متن Project Instructions را در دستورهای پروژه Paste کنید. سپس فقط محصول و نیازتان را طبیعی توضیح دهید. این مسیر پیشنهادی بدون ترمینال برای ChatGPT شخصی است.
-
-### Gemini وب
-
-یک Gem بسازید، متن Project Instructions را در Instructions قرار دهید و فایل Universal Web را به Knowledge اضافه کنید. برای استفادهٔ یک‌باره نیز می‌توانید فایل را به چت پیوست کنید و بخواهید آن را به‌عنوان دستور کار اجرا کند.
-
-### Kimi وب
-
-یک Kimi Project بسازید، فایل Universal Web را به فایل‌های پروژه اضافه و متن Project Instructions را در دستورهای پروژه قرار دهید. Kimi Agent سازندهٔ Skill اختصاصی هم دارد، اما مسیر Project راه‌اندازی قابل‌حمل و بدون ترمینال ماست.
-
-### Z.AI / GLM وب و سایر دستیارها
-
-اگر سرویس Project، Custom Agent، Knowledge Base یا Persistent Instructions دارد، فایل Universal و متن دستور پروژه را همان‌جا اضافه کنید. در غیر این صورت فایل را به چت پیوست کنید و صریحاً بخواهید در همان گفتگو آن را به‌عنوان دستور کار اجرا کند. تا وقتی سرویس تأیید نکرده، نباید ادعا کنیم Native Skill به‌صورت پایدار نصب شده است.
-
-### Claude Code، Codex، Gemini CLI، ZCode و محیط‌های سازگار
+## نصب در Agentهای سازگار
 
 ```bash
 npx skills add https://github.com/kamroncorp/propaymun-information-architecture-skill
 ```
 
-یا مخزن را در پوشهٔ Skills همان Agent قرار دهید. برای Gemini CLI:
+برای Gemini CLI:
 
 ```bash
 gemini skills install https://github.com/kamroncorp/propaymun-information-architecture-skill
 ```
 
-## استفاده
+## نقشه نصب قابل‌اسکن برای AI
 
-کافی است طبیعی بنویسید:
-
-```text
-برای محصولم یک معماری اطلاعات حرفه‌ای می‌خواهم. این هم بریف اولیه...
+```yaml
+product: ProPaymun Information Architecture
+skill_id: propaymun-information-architecture
+canonical_entrypoint: SKILL.md
+agent_skill_package: packages/agent-skill/propaymun-information-architecture.zip
+workspace_knowledge: packages/workspace-kit/propaymun-ia-workspace-kit.md
+workspace_instructions: packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md
+package_manifest: packages/manifest.json
+semantic_schema: schema/semantic-ia.schema.json
+visual_builder_exporter: scripts/export_builder_handoff.py
+legacy_download_paths: preserved
+release_state: unreleased changes on main; no new tag
 ```
 
-کاربر لازم نیست Mode، Checkpoint، روش توقف یا اصطلاحات IA را بداند. مهارت خودش تشخیص می‌دهد چه زمانی اطلاعات کافی دارد و چه زمانی باید سؤال بپرسد و منتظر بماند.
+یک AI Installer باید فقط بسته متناسب با محیط را انتخاب کند، محتویات بسته را حفظ کند و آپلود فایل دانش را نصب Native معرفی نکند.
 
-## خروجی‌ها
+## مهارت چه کاری انجام می‌دهد؟
 
-خروجی پیش‌فرض، گفت‌وگوی کوتاه و آمادهٔ تصمیم‌گیری است. فایل، JSON معنایی، Mermaid، HTML، PDF یا دیاگرام حرفه‌ای فقط در صورت درخواست و پشتیبانی محیط ساخته می‌شود. همهٔ خروجی‌ها باید نمایی از یک مدل معنایی واحد IA باشند.
+- قبل از سؤال، بریف، فایل‌ها، گفتگو و منابع مجاز را بررسی می‌کند؛
+- در تمام مسیر کفایت اطلاعات را دوباره می‌سنجد و به یک دور سؤال ابتدایی محدود نیست؛
+- فقط وقتی پاسخ می‌تواند تصمیم بعدی معماری را تغییر دهد سؤال می‌پرسد و خودش متوقف می‌شود؛
+- زبان را از جغرافیا، قوانین، فرهنگ و مدل عملیاتی جدا می‌کند؛
+- Domainها، Itemهای اصلی، سلسله‌مراتب، روابط، Taxonomy، برچسب‌ها، Metadata، یافت‌پذیری، دسترسی، چرخه عمر و Governance را مدل می‌کند؛
+- واقعیت، مشاهده، تأیید، استنباط، پیشنهاد، تعارض و مجهول را مخلوط نمی‌کند؛
+- در صورت اثرگذاری و وجود قابلیت، از منابع عمومی جاری استفاده می‌کند؛
+- Sitemap، User Flow، UI محصول، API و Database Design را وارد این مهارت نمی‌کند.
 
-ابزارهای مکمل دیاگرام اختیاری‌اند و بدون اجازه نصب نمی‌شوند:
+## رفتار تطبیقی
 
-- [Draw.io Skill](https://github.com/Agents365-ai/drawio-skill) برای هندآف دقیق و ویرایش‌پذیر؛
-- [Excalidraw Diagram Skill](https://github.com/coleam00/excalidraw-diagram-skill) برای ورک‌شاپ و توضیح مفهومی.
-
-## Figma Make یک خروجی پس از IA است
-
-Figma Make دیگر محل نصب مهارت یا محیط اصلی تصمیم‌گیری IA نیست. پس از اینکه معماری اطلاعات به ثبات کافی رسید، از همان هوشواره بخواهید:
+کاربر Mode یا Checkpoint انتخاب نمی‌کند:
 
 ```text
-از این معماری اطلاعات تأییدشده، یک پرامپت کامل و خودبسنده برای Figma Make بساز.
+بررسی اطلاعات
+→ مدل‌سازی لایه بعدی
+→ کشف ابهام معماری‌ساز
+→ پرسیدن کوچک‌ترین سؤال لازم و توقف
+→ ادامه پس از پاسخ
+→ سنجش آمادگی پیش از ساخت خروجی
 ```
 
-مهارت مدل اصلی IA، سلسله‌مراتب، روابط، دسترسی، زبان، مجهولات، محدودیت‌ها و معیارهای پذیرش را وارد پرامپت می‌کند. وظیفهٔ Figma Make نمایش معماری است، نه اختراع آن. در محیط دارای Python:
+اگر کاربر پاسخ را نداند، مهارت می‌تواند چند الگوی قابل‌فهم پیشنهاد و یک پیش‌فرض موقت را با برچسب روشن توصیه کند. زبان یا کلیشه فرهنگی هیچ‌وقت به‌تنهایی قانون محصول نمی‌شود.
+
+## هندآف به ابزارهای سازنده
+
+Figma Make، Lovable و ابزارهای مشابه رندرکننده پایین‌دستی‌اند، نه محل تصمیم‌گیری IA.
+
+پس از آماده‌شدن معماری برای هدف موردنظر بنویسید:
+
+```text
+از این معماری اطلاعات یک Visual Builder Handoff برای Figma Make بساز.
+```
+
+هندآف دو بخش دارد:
+
+1. فایل Markdown خودبسنده شامل مشخصات کامل ساخت؛
+2. متن بسیار کوتاه و آماده کپی برای باکس توضیحات ابزار.
+
+این متن کوتاه ضروری است، چون بعضی ابزارها پرامپت بلند را فایل تلقی می‌کنند و تا چیزی در باکس نوشته نشود دکمه Generate فعال نمی‌شود.
+
+خروجی قطعی:
 
 ```bash
-python scripts/export_figma_make_prompt.py path/to/ia.json -o figma-make-prompt.md
+python scripts/export_builder_handoff.py path/to/ia.json --target figma-make -o build-spec.md
+python scripts/export_builder_handoff.py path/to/ia.json --target lovable -o build-spec.md
 ```
 
-## مدل معنایی قابل‌حمل
+نمای اول باید Domainها، Itemهای متصل، سلسله‌مراتب و روابط بین‌دامنه‌ای را نشان دهد و نباید به Dashboard، Sitemap، User Flow، Wireframe، UI، API یا Database Schema تبدیل شود.
+
+## Semantic IA 2.0
+
+قرارداد مستقل از Renderer در [`schema/semantic-ia.schema.json`](schema/semantic-ia.schema.json) قرار دارد و شامل این موارد است:
+
+- اتصال صریح هر Item به Domain؛
+- یک فهرست اصلی Itemها؛
+- سلسله‌مراتب اصلی و روابط معنادار؛
+- نقش‌های مستقل و Permissionهای متصل به Item؛
+- وضعیت‌ها و انتقال‌های چرخه عمر؛
+- Context محلی همراه با وضعیت شواهد؛
+- آمادگی هندآف و مجهولات مسدودکننده.
+
+اعتبارسنجی و رندر:
 
 ```bash
 python scripts/validate_ia_model.py path/to/ia.json
 python scripts/render_ia_html.py path/to/ia.json -o ia.html
 ```
 
-محیط فقط‌چت منبع درخواستی را مستقیم می‌دهد و ادعا نمی‌کند اسکریپتی اجرا شده است.
+## نقشه مخزن
 
-## توسعه و ارزیابی
+```text
+SKILL.md                     رفتار اصلی
+agents/                      Metadata نمایشی Skill
+references/                  راهنمای شرطی IA
+schema/                      قرارداد Semantic IA 2.0
+scripts/                     اعتبارسنجی، رندر، بسته‌بندی و Export
+packages/                    بسته‌های حرفه‌ای نصب و راه‌اندازی
+install/                     مسیرهای سازگاری برای لینک‌های قبلی
+evals/                       سناریوها و معیارهای رفتاری
+tests/                       تست‌های قطعی
+```
+
+## توسعه و اعتبارسنجی
 
 ```bash
-python scripts/package_distributions.py
+python scripts/build_packages.py
 python -m unittest discover -s tests -v
 python /path/to/skill-creator/scripts/quick_validate.py .
 ```
 
-بسته‌های Universal Web و Claude.ai با منبع اصلی همگام و تست می‌شوند. فایل [`adapters/manifest.json`](adapters/manifest.json) بسته‌ها و خروجی‌های پایین‌دستی را ثبت می‌کند.
+GitHub Actions بسته‌ها را بازسازی، برابری بایت‌به‌بایت را بررسی، Fixture مدل معنایی را اعتبارسنجی و تمام تست‌ها را اجرا می‌کند.
 
-## نسخه‌بندی و مجوز
+## نسخه‌بندی و سازگاری
 
-پروژه از Semantic Versioning و Apache License 2.0 استفاده می‌کند. این تغییرات فعلاً فقط زیر بخش [Unreleased](CHANGELOG.md) هستند و تا تأیید تست، Tag یا Release جدیدی ساخته نمی‌شود.
+پروژه از Semantic Versioning و Apache License 2.0 استفاده می‌کند. تغییرات فعلی زیر [Unreleased](CHANGELOG.md) می‌مانند و تا تأیید تست چندمحیطی Tag یا Release جدید ساخته نمی‌شود.
+
+لینک‌های قبلی `install/claude-ai` و `install/universal-web` به‌عنوان Alias سازگار و همگام حفظ می‌شوند؛ مستندات جدید از نام‌های حرفه‌ای بالا استفاده می‌کنند.

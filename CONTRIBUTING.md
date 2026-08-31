@@ -9,14 +9,15 @@ Thanks for helping improve ProPaymun Information Architecture.
 - Separate evidence from heuristics and proposed conventions.
 - Do not turn one product, language, user group, or test result into a universal IA rule.
 - Keep `SKILL.md` concise; route conditional detail to focused references.
-- Keep generated Universal Web and Claude.ai distributions synchronized with canonical sources.
-- Keep Figma Make as a downstream export; do not reintroduce it as an IA reasoning runtime.
+- Keep the generated Agent Skill Package, Workspace Kit, and compatibility aliases synchronized with canonical sources.
+- Keep visual builders such as Figma Make and Lovable downstream; do not reintroduce them as IA reasoning runtimes.
+- Treat language, locale, jurisdiction, culture, and operating model as separate signals.
 
 ## Workflow
 
 1. Create a focused branch.
-2. Update canonical files in `SKILL.md`, `references/`, `assets/`, or `scripts/`.
-3. Rebuild distributions with `python scripts/package_distributions.py`.
+2. Update canonical files in `SKILL.md`, `references/`, `schema/`, or `scripts/`.
+3. Rebuild packages with `python scripts/build_packages.py`.
 4. Run `python -m unittest discover -s tests -v`.
 5. Run the Agent Skill quick validator.
 6. Add or refine an eval case when behavior changes.

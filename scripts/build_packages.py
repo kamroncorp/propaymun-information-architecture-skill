@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Build the Universal Web file and the Claude.ai upload ZIP."""
+"""Build the installable Agent Skill Package and portable Workspace Kit."""
 
 from __future__ import annotations
 
 import argparse
 import re
+import shutil
 import zipfile
 from pathlib import Path
 
@@ -12,13 +13,14 @@ from pathlib import Path
 REFERENCE_ORDER = [
     "ia-foundations.md",
     "discovery.md",
+    "localization.md",
     "modeling.md",
     "capability-routing.md",
     "evidence.md",
     "validation.md",
     "deliverables.md",
     "diagramming.md",
-    "figma-make-export.md",
+    "visual-builder-handoff.md",
 ]
 
 PACKAGE_FOLDER = "propaymun-information-architecture"
@@ -37,15 +39,15 @@ def rewrite_reference_links(text: str) -> str:
     return re.sub(r"\[([^\]]+)\]\(references/[^)]+\)", r"\1 (embedded below)", text)
 
 
-def build_universal(root: Path) -> str:
+def build_workspace_kit(root: Path) -> str:
     skill = rewrite_reference_links(strip_frontmatter((root / "SKILL.md").read_text(encoding="utf-8")).strip())
-    intro = """# ProPaymun Information Architecture — Universal Web
+    intro = """# ProPaymun IA Workspace Kit
 
 ## Operating instruction for the assistant
 
-When the user asks for information architecture work, follow this file as operating instructions, not merely as background reading. The user should only need to describe the product, task, or source material naturally. Apply the autonomous stop gate yourself, stay inside IA scope, and answer in the user's language.
+When the user asks for information architecture work, follow this file as operating instructions rather than background reading. The user only needs to describe the product, task, or source material naturally. Run the adaptive sufficiency loop yourself, pause whenever a material answer is required, stay inside IA scope, localize only from evidence, and answer in the user's language.
 
-This portable file is for web Projects, Gems, custom Agents, and file-capable chats that do not load a native `SKILL.md` package. Native Skill runtimes should use the repository package instead.
+This self-contained package is designed for Projects, Gems, custom agents, knowledge workspaces, and file-capable chats that do not load a native Agent Skill package.
 """
     sections = [intro.strip(), "\n---\n", skill, "\n---\n\n# Embedded operating references\n"]
     for name in REFERENCE_ORDER:
@@ -55,43 +57,55 @@ This portable file is for web Projects, Gems, custom Agents, and file-capable ch
     return "\n".join(sections).replace("\r\n", "\n")
 
 
-def zip_write_text(archive: zipfile.ZipFile, arcname: str, data: bytes) -> None:
+def zip_write(archive: zipfile.ZipFile, arcname: str, data: bytes) -> None:
     info = zipfile.ZipInfo(arcname, FIXED_ZIP_TIME)
     info.create_system = 3
-    # Stored entries avoid zlib-version differences between Windows packaging
-    # and Linux CI, making the committed upload ZIP byte-for-byte reproducible.
     info.compress_type = zipfile.ZIP_STORED
     info.external_attr = 0o644 << 16
     archive.writestr(info, data)
 
 
-def build_claude_zip(root: Path, output: Path) -> None:
+def build_agent_skill(root: Path, output: Path) -> None:
     files = [root / "SKILL.md", root / "LICENSE"]
     files.extend(sorted((root / "references").glob("*.md")))
-    files.extend(sorted((root / "assets").glob("*")))
+    files.extend(sorted((root / "schema").glob("*")))
     files.extend(sorted((root / "scripts").glob("*.py")))
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w") as archive:
         for path in files:
             if path.is_file():
                 relative = path.relative_to(root).as_posix()
-                zip_write_text(archive, f"{PACKAGE_FOLDER}/{relative}", path.read_bytes())
+                zip_write(archive, f"{PACKAGE_FOLDER}/{relative}", path.read_bytes())
+
+
+def copy_alias(source: Path, destination: Path) -> None:
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, destination)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--universal-output", type=Path)
-    parser.add_argument("--claude-output", type=Path)
+    parser.add_argument("--workspace-output", type=Path)
+    parser.add_argument("--agent-output", type=Path)
+    parser.add_argument("--skip-legacy-aliases", action="store_true")
     args = parser.parse_args()
+
     root = args.root.resolve()
-    universal_output = args.universal_output or root / "install" / "universal-web" / "propaymun-information-architecture.md"
-    claude_output = args.claude_output or root / "install" / "claude-ai" / "propaymun-information-architecture.zip"
-    universal_output.parent.mkdir(parents=True, exist_ok=True)
-    universal_output.write_text(build_universal(root), encoding="utf-8", newline="\n")
-    build_claude_zip(root, claude_output)
-    print(universal_output)
-    print(claude_output)
+    workspace_output = args.workspace_output or root / "packages" / "workspace-kit" / "propaymun-ia-workspace-kit.md"
+    agent_output = args.agent_output or root / "packages" / "agent-skill" / "propaymun-information-architecture.zip"
+
+    workspace_output.parent.mkdir(parents=True, exist_ok=True)
+    workspace_output.write_text(build_workspace_kit(root), encoding="utf-8", newline="\n")
+    build_agent_skill(root, agent_output)
+
+    if not args.skip_legacy_aliases:
+        copy_alias(workspace_output, root / "install" / "universal-web" / "propaymun-information-architecture.md")
+        copy_alias(root / "packages" / "workspace-kit" / "WORKSPACE_INSTRUCTIONS.md", root / "install" / "universal-web" / "PROJECT_INSTRUCTIONS.md")
+        copy_alias(agent_output, root / "install" / "claude-ai" / "propaymun-information-architecture.zip")
+
+    print(workspace_output)
+    print(agent_output)
     return 0
 
 

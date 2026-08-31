@@ -6,17 +6,16 @@ All notable changes to this project are documented here. The project follows Sem
 
 ### Changed
 
-- Reclassified Figma Make from a runtime adapter to an optional downstream visualization prompt generated only after the IA is stable.
-- Added a deterministic, self-contained Figma Make prompt exporter that carries the canonical semantic model and forbids architecture reinvention.
-- Added a Universal Web distribution for Projects, Gems, custom Agents, and file-capable chats, plus a short persistent activation instruction.
-- Added a deterministic Claude.ai upload ZIP with `SKILL.md` and its resources in the required skill-folder package.
-- Rewrote installation guidance to distinguish native Skill installation from Project/Gem configuration and one-off file use.
-- Re-centered every output on one canonical semantic IA model before rendering.
-- Defined the requested IA Structure Explorer as a downstream view led by connected hierarchy, typed relationships, and progressive detail.
-- Added capability-first routing and a portable output ladder independent of model branding.
-- Clarified that hierarchical IA maps use semantic domains and objects, while page maps and action paths remain separate sitemap and user-flow deliverables.
-- Kept evidence status as model metadata and limited user-facing indicators to decision-relevant, plain-language uncertainty.
-- Added behavioral coverage for existing-product audits, capability fallbacks, semantic consistency, Universal Web activation, and downstream Figma prompts.
+- Replaced model-branded distribution names with two professional packages: **Agent Skill Package** for native Skill upload and **Workspace Kit** for Projects, Gems, custom agents, and file-capable chats.
+- Added an adaptive sufficiency loop that repeats whenever the work reaches a consequential new layer, an assumption changes, or an export is requested.
+- Added contextual localization that separates language, locale, jurisdiction, culture, and operating model instead of inferring local roles or rules from language alone.
+- Upgraded the canonical machine-readable contract to Semantic IA 2.0 with information domains, a single item registry, typed relationships, roles, permissions, lifecycle transitions, blocking unknowns, and handoff readiness.
+- Reclassified Figma Make and Lovable as optional downstream **Visual Builder Handoff** targets generated only after the IA is ready.
+- Added a deterministic builder exporter that produces both a self-contained Markdown specification and a short launch instruction for builder input fields.
+- Required builder outputs to lead with a readable, connected domain-to-item architecture and explicitly exclude product UI, dashboards, sitemaps, user flows, APIs, and database schemas.
+- Added deterministic package generation, a machine-scannable package manifest, canonical package paths, and synchronized legacy download aliases.
+- Rewrote English and Persian repository guidance for human comprehension and reliable AI-assisted installation.
+- Expanded behavioral and script coverage for midstream clarification, localization, Semantic IA integrity, package parity, export readiness, and downstream builder handoff.
 
 ## [0.3.0] - 2026-08-26
 
