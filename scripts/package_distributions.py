@@ -57,7 +57,9 @@ This portable file is for web Projects, Gems, custom Agents, and file-capable ch
 
 def zip_write_text(archive: zipfile.ZipFile, arcname: str, data: bytes) -> None:
     info = zipfile.ZipInfo(arcname, FIXED_ZIP_TIME)
-    info.compress_type = zipfile.ZIP_DEFLATED
+    # Stored entries avoid zlib-version differences between Windows packaging
+    # and Linux CI, making the committed upload ZIP byte-for-byte reproducible.
+    info.compress_type = zipfile.ZIP_STORED
     info.external_attr = 0o644 << 16
     archive.writestr(info, data)
 
