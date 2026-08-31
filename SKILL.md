@@ -2,7 +2,7 @@
 name: propaymun-information-architecture
 description: Design and review evidence-aware information architecture from ordinary product context. Use for IA discovery, semantic object/content models, taxonomy, labeling, navigation, search, permissions, governance, audits, and architecture decisions. Do not use for sitemap-only or user-flow-only requests.
 metadata:
-  version: "0.3.0"
+  version: "0.3.1"
   author: "ProPaymun"
   license: "Apache-2.0"
 ---
@@ -127,7 +127,7 @@ Read [references/capability-routing.md](references/capability-routing.md) when c
 
 ### Conversation-first environments
 
-For Claude, ChatGPT/Codex, Gemini, Kimi, and similar chat or file-capable agents:
+For chat and file-capable agents:
 
 - default to concise, decision-ready chat output;
 - create a file, document, diagram, image, HTML, PDF, or semantic model only when the user requests or accepts it;

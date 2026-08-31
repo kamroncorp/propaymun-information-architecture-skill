@@ -128,7 +128,7 @@ Read references/capability-routing.md (embedded below) when choosing an output o
 
 ### Conversation-first environments
 
-For Claude, ChatGPT/Codex, Gemini, Kimi, and similar chat or file-capable agents:
+For chat and file-capable agents:
 
 - default to concise, decision-ready chat output;
 - create a file, document, diagram, image, HTML, PDF, or semantic model only when the user requests or accepts it;

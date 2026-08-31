@@ -1,6 +1,6 @@
 # معماری اطلاعات پروپیمان
 
-[![Version](https://img.shields.io/badge/version-0.3.0-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.3.1-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-Apache--2.0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
@@ -14,8 +14,8 @@
 
 | بسته | مناسب برای | دریافت |
 |---|---|---|
-| **بسته Agent Skill** | Claude.ai Skills، Claude Code، Codex، Gemini CLI، ZCode و محیط‌های سازگار با Agent Skills | [دانلود ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
-| **کیت Workspace** | ChatGPT Projects، Claude Projects، Gemini Gems، Kimi Projects، محیط‌های Z.AI/GLM، Custom Agent و چت‌های فایل‌پذیر | [فایل دانش](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [دستور Workspace](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
+| **بسته Agent Skill** | Claude.ai Skills و فقط محیط‌هایی که مستندات خودشان سازگاری با بستهٔ Agent Skill را تأیید کرده‌اند | [دانلود ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
+| **کیت Workspace** | ChatGPT Projects، Claude Projects، Gemini Gemهایی که دستی ساخته می‌شوند و محیط‌هایی با Instructions پایدار و فایل Knowledge | [فایل دانش](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [دستور Workspace](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
 هر دو بسته از یک رفتار اصلی ساخته می‌شوند. فعال‌شدن خودکار، ماندگاری، ابزارها و محدودیت Context به سرویس میزبان وابسته است.
 
@@ -31,7 +31,7 @@
 
 ## راه‌اندازی در Workspaceهای وب
 
-برای ChatGPT Projects، Claude Projects، Gemini Gems، Kimi Projects، محیط‌های Z.AI/GLM یا دستیار فایل‌پذیر دیگر:
+برای محیطی که صریحاً هم Instructions پایدار و هم فایل Knowledge دارد:
 
 1. فایل [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) را به دانش Workspace اضافه کنید؛
 2. متن [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) را در دستور Project، Gem، Workspace یا Custom Agent قرار دهید؛
@@ -39,17 +39,22 @@
 
 این مسیر «تنظیم با دانش پروژه» است و نباید به‌اشتباه نصب Native Skill نامیده شود.
 
-## نصب در Agentهای سازگار
+### Gemini وب
 
-```bash
-npx skills add https://github.com/kamroncorp/propaymun-information-architecture-skill
-```
+Gemini وب این بسته را به‌صورت Native Skill نصب نمی‌کند؛ باید یک Gem دستی بسازید:
 
-برای Gemini CLI:
+1. مسیر **Explore Gems → New Gem** را باز کنید؛
+2. متن [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) را در Instructions قرار دهید؛
+3. فایل [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) را زیر **Knowledge** اضافه کنید؛
+4. Gem را Save کنید.
 
-```bash
-gemini skills install https://github.com/kamroncorp/propaymun-information-architecture-skill
-```
+### استفادهٔ یک‌باره با فایل
+
+اگر یک سرویس فقط فایل را داخل چت می‌پذیرد، Workspace Kit را پیوست و متن کوتاه Workspace Instructions را همراه اولین پیام Paste کنید. این «استفادهٔ موقت از فایل» است؛ نه نصب، نه تنظیم پایدار و نه تضمین فعال‌شدن خودکار.
+
+## محیط‌های دیگرِ Agent Skill
+
+فقط وقتی از بستهٔ Agent Skill استفاده کنید که مستندات خود همان سرویس، فرمت بسته و روش نصب آن را تأیید کرده باشد. این مخزن عمداً دستور نصب CLI تأییدنشده ارائه نمی‌دهد.
 
 ## نقشه نصب قابل‌اسکن برای AI
 
@@ -57,14 +62,19 @@ gemini skills install https://github.com/kamroncorp/propaymun-information-archit
 product: ProPaymun Information Architecture
 skill_id: propaymun-information-architecture
 canonical_entrypoint: SKILL.md
-agent_skill_package: packages/agent-skill/propaymun-information-architecture.zip
+native_package: packages/agent-skill/propaymun-information-architecture.zip
+native_package_verified_for: [claude.ai-skills]
 workspace_knowledge: packages/workspace-kit/propaymun-ia-workspace-kit.md
 workspace_instructions: packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md
+workspace_requires: [persistent-instructions, file-knowledge]
+gemini_web: create-a-new-gem-manually
+one_off_file_use: attach-workspace-kit-and-paste-instructions
+do_not_claim: [native-installation, persistent-behavior, automatic-triggering, unverified-cli-support]
 package_manifest: packages/manifest.json
 semantic_schema: schema/semantic-ia.schema.json
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: unreleased changes on main; no new tag
+release_state: v0.3.1-published
 ```
 
 یک AI Installer باید فقط بسته متناسب با محیط را انتخاب کند، محتویات بسته را حفظ کند و آپلود فایل دانش را نصب Native معرفی نکند.

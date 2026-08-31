@@ -159,7 +159,7 @@ class SkillScriptTests(unittest.TestCase):
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
-        self.assertEqual(version, "0.3.0")
+        self.assertEqual(version, "0.3.1")
         self.assertIn(f'version: "{version}"', skill)
         self.assertIn(f"version-{version}-", readme)
         self.assertEqual(manifest["version"], version)
@@ -198,6 +198,16 @@ class SkillScriptTests(unittest.TestCase):
         self.assertNotIn("## Two supported distributions", readme)
         self.assertTrue((PACKAGES / "manifest.json").exists())
         self.assertFalse((ROOT / "adapters" / "manifest.json").exists())
+
+    def test_installation_guidance_does_not_overclaim_hosts(self) -> None:
+        for filename in ("README.md", "README.fa.md"):
+            content = (ROOT / filename).read_text(encoding="utf-8")
+            self.assertNotIn("Gemini CLI", content)
+            self.assertNotIn("Kimi Projects", content)
+            self.assertNotIn("Z.AI/GLM workspaces", content)
+            self.assertIn("New Gem", content)
+        self.assertIn("unverified", (ROOT / "README.md").read_text(encoding="utf-8").lower())
+        self.assertIn("تأییدنشده", (ROOT / "README.fa.md").read_text(encoding="utf-8"))
 
     def test_capability_routing_does_not_require_diagram_companions(self) -> None:
         routing = (ROOT / "references" / "capability-routing.md").read_text(encoding="utf-8")

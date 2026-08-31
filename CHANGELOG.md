@@ -4,8 +4,13 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-08-31
+
 ### Changed
 
+- Corrected host-support language: Gemini web is documented as a manually created Gem; unverified CLI commands and unverified claims for file-capable hosts are removed.
+- Removed Kimi and Z.AI from the list of certified installation or persistent-workspace surfaces; file attachment remains a truthful one-off fallback when a host supports it.
+- Added a regression test that rejects future claims for removed hosts or unverified Gemini CLI installation.
 - Replaced model-branded distribution names with two professional packages: **Agent Skill Package** for native Skill upload and **Workspace Kit** for Projects, Gems, custom agents, and file-capable chats.
 - Added an adaptive sufficiency loop that repeats whenever the work reaches a consequential new layer, an assumption changes, or an export is requested.
 - Added contextual localization that separates language, locale, jurisdiction, culture, and operating model instead of inferring local roles or rules from language alone.
@@ -62,6 +67,7 @@ All notable changes to this project are documented here. The project follows Sem
 - Three behavioral evaluation scenarios and deterministic script tests.
 
 [Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.3.0...HEAD
+[0.3.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.3.0
 [0.2.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.2.0
 [0.1.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.1.0

@@ -1,6 +1,6 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-0.3.0-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.3.1-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-Apache--2.0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
@@ -14,8 +14,8 @@ Turn ordinary product context into clear, evidence-aware information architectur
 
 | Package | Best for | Download |
 |---|---|---|
-| **Agent Skill Package** | Claude.ai Skills, Claude Code, Codex, Gemini CLI, ZCode, and compatible Agent Skill runtimes | [Download ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
-| **Workspace Kit** | ChatGPT Projects, Claude Projects, Gemini Gems, Kimi Projects, Z.AI/GLM workspaces, custom agents, and file-capable chats | [Knowledge file](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [Workspace instructions](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
+| **Agent Skill Package** | Claude.ai Skills and only runtimes whose own documentation confirms compatible Agent Skill package support | [Download ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
+| **Workspace Kit** | ChatGPT Projects, Claude Projects, manually created Gemini Gems, and surfaces that provide persistent instructions plus file knowledge | [Knowledge file](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [Workspace instructions](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
 The two packages share the same canonical behavior. Automatic triggering, persistence, tools, and context limits still depend on the host product.
 
@@ -31,7 +31,7 @@ A GitHub repository URL is not a Claude.ai upload package. Use the ZIP above.
 
 ## Configure a web workspace
 
-For ChatGPT Projects, Claude Projects, Gemini Gems, Kimi Projects, Z.AI/GLM workspaces, or another persistent file-capable assistant:
+For a workspace that explicitly provides both persistent instructions and file knowledge:
 
 1. add [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) as project knowledge;
 2. paste [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) into the workspace, project, Gem, or custom-agent instructions;
@@ -39,17 +39,22 @@ For ChatGPT Projects, Claude Projects, Gemini Gems, Kimi Projects, Z.AI/GLM work
 
 This is configuration through project knowledge, not a claim of native Skill installation.
 
-## Install in a compatible Agent Skill runtime
+### Gemini web
 
-```bash
-npx skills add https://github.com/kamroncorp/propaymun-information-architecture-skill
-```
+Gemini web uses a manually created Gem rather than a native Skill installation:
 
-Gemini CLI:
+1. choose **Explore Gems → New Gem**;
+2. paste [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) into the Gem instructions;
+3. add [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) under **Knowledge**;
+4. save the Gem.
 
-```bash
-gemini skills install https://github.com/kamroncorp/propaymun-information-architecture-skill
-```
+### One-off file use
+
+If a service only accepts files in a chat, attach the Workspace Kit and paste the short Workspace Instructions with the first message. This is session-scoped file use—not installation, persistent configuration, or guaranteed automatic triggering.
+
+## Other Agent Skill runtimes
+
+Use the Agent Skill Package only when the host's own documentation confirms this package format and installation route. This repository intentionally does not provide unverified CLI installation commands.
 
 ## Machine-scannable install map
 
@@ -57,14 +62,19 @@ gemini skills install https://github.com/kamroncorp/propaymun-information-archit
 product: ProPaymun Information Architecture
 skill_id: propaymun-information-architecture
 canonical_entrypoint: SKILL.md
-agent_skill_package: packages/agent-skill/propaymun-information-architecture.zip
+native_package: packages/agent-skill/propaymun-information-architecture.zip
+native_package_verified_for: [claude.ai-skills]
 workspace_knowledge: packages/workspace-kit/propaymun-ia-workspace-kit.md
 workspace_instructions: packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md
+workspace_requires: [persistent-instructions, file-knowledge]
+gemini_web: create-a-new-gem-manually
+one_off_file_use: attach-workspace-kit-and-paste-instructions
+do_not_claim: [native-installation, persistent-behavior, automatic-triggering, unverified-cli-support]
 package_manifest: packages/manifest.json
 semantic_schema: schema/semantic-ia.schema.json
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: unreleased changes on main; no new tag
+release_state: v0.3.1-published
 ```
 
 An AI installer should select exactly one host-appropriate package, preserve the package contents, and avoid claiming native installation when it only attached a knowledge file.
