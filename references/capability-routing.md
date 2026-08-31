@@ -40,7 +40,7 @@ Use Markdown tables or Mermaid only when they improve comprehension. Preserve a 
 
 ### Level 2 — native artifact
 
-Use a document, interactive HTML, artifact, canvas, or generated app when the environment supports it and the user requested a durable artifact or the surface is inherently build-first. The artifact must render the canonical semantic model rather than invent a new structure.
+Use a document, interactive HTML, artifact, canvas, or generated app when the environment supports it and the user requested a durable artifact. The artifact must render the canonical semantic model rather than invent a new structure.
 
 ### Level 3 — professional diagram
 
@@ -60,9 +60,9 @@ Keep intake conversational. After sufficiency, use Level 2 when an interactive o
 
 May produce and validate structured IA JSON, HTML, SVG, or other editable sources. Run and inspect deterministic helpers when available. Distinguish syntax validation from visual inspection.
 
-### Build-first surface
+### Prompt-to-app or build-first surface
 
-Ask material questions before any mutation. Once sufficient, build a Level 2 architecture-first artifact whose primary surface shows hierarchy and connections. Avoid a generic dashboard, document reader, or product prototype.
+Treat it as a downstream renderer, not the default IA reasoning environment. First stabilize the IA in a conversation-capable environment. Then provide a self-contained prompt that carries the canonical model and constrains the builder to visualization. If the builder is the only available surface, use portable text and questions first; do not mutate the canvas while material unknowns remain.
 
 ### Diagram-capable surface
 
@@ -71,3 +71,11 @@ Use Level 3 only when the requested IA question benefits from a diagram. Keep th
 ## Research routing
 
 Use web or connected sources when they can materially change terminology, domain rules, compliance, content inventory, or current-state understanding. Do not turn missing search capability into fabricated evidence. A build surface may be able to create visuals but lack reliable browsing; these capabilities must be judged separately.
+
+## Installation and configuration are different
+
+- A native Skill runtime discovers `SKILL.md` and its resources.
+- A web Project, Gem, or custom Agent usually needs a persistent instruction plus an uploaded knowledge file.
+- A one-off chat can use the universal file as an attachment plus an activation message.
+
+Do not call file upload or prompt pasting a native Skill installation. The behavior contract stays the same, but persistence, automatic triggering, tools, and context limits may differ by surface.

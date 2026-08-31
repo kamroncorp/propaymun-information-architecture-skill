@@ -117,7 +117,7 @@ Use this output ladder from the same semantic model:
 3. native artifact: interactive HTML, document, canvas, or environment-native structured view;
 4. professional diagram: a native diagram capability or an optional companion such as Draw.io or Excalidraw.
 
-Use the lowest layer that fully answers the request. Move upward when the user asks, the environment is build-first, or a visual materially improves comprehension. Never imply that an unavailable layer was produced or inspected.
+Use the lowest layer that fully answers the request. Move upward when the user asks or a visual materially improves comprehension. Never imply that an unavailable layer was produced or inspected.
 
 Read [references/capability-routing.md](references/capability-routing.md) when choosing an output or adapting to a particular surface.
 
@@ -129,20 +129,21 @@ For Claude, ChatGPT/Codex, Gemini, Kimi, and similar chat or file-capable agents
 - create a file, document, diagram, image, HTML, PDF, or semantic model only when the user requests or accepts it;
 - offer only formats the environment can actually produce.
 
-### Build-first environments
+### Downstream build and visual tools
 
-For Figma Make and similar prompt-to-app environments:
+Do not use Figma Make or another prompt-to-app builder as the default reasoning environment for this skill. Complete discovery, architecture decisions, and the canonical semantic IA model in a conversation-capable environment first.
 
-- use conversation as the intake and decision layer, not as the final medium;
-- obey the autonomous stop gate before any build or canvas mutation;
-- once information is sufficient, use the environment's native strength to build a connected, hierarchical **IA structure explorer**, not the product UI;
-- make the primary view the architecture itself: information domains, important objects/content types, containment, and labeled cross-relationships;
-- reveal taxonomy, labels, retrieval, access, decisions, uncertainty, and validation as contextual detail or focused views instead of presenting every section as an equal dashboard tab;
-- do not ask the user to select a text/file format before the default IA structure explorer is built;
-- never make Plan mode a prerequisite for correct skill behavior;
-- after building, summarize key decisions, uncertainty, and the next best validation step without offering neighboring deliverables.
+After the IA is stable enough for the intended decision, the user may request a self-contained downstream prompt for Figma Make or another visual tool. That prompt must:
 
-The generated Figma adapter includes stricter surface-specific instructions. Other build-first platforms should follow the same principle while adapting to their native capabilities.
+- carry the approved semantic model, hierarchy, typed relationships, access rules, language, direction, and visible uncertainty;
+- instruct the target to visualize the IA rather than redesign it or invent missing product rules;
+- make the connected information hierarchy the primary view and specialist detail secondary;
+- include acceptance criteria and a textual fallback;
+- preserve the boundary from product UI, sitemap, user flow, API, and database design.
+
+If the target tool is asked to make architecture decisions or material unknowns remain, return to the conversational IA process instead of hiding those decisions inside a build prompt.
+
+Read [references/figma-make-export.md](references/figma-make-export.md) only when the user asks for a Figma Make handoff prompt.
 
 ## Delivery contract
 

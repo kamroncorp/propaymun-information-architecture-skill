@@ -15,7 +15,7 @@ Score each dimension from 0 to 2.
 | Autonomous stop | Builds despite material unknowns | Pauses inconsistently | Asks only material questions, makes no mutation, and ends the turn automatically |
 | User control | Forces mode, depth, or format | Allows some overrides | Adapts process and uses the correct default artifact for the environment |
 | Capability awareness | Claims unavailable work | Mentions limitations late | Detects capabilities and offers only truthful options and fallbacks |
-| Environment fit | Uses one output contract everywhere | Minor adaptation | Uses chat-first or build-first behavior while preserving the same IA quality contract |
+| Environment fit | Makes false install/tool assumptions | Minor adaptation | Preserves the IA contract across native Skills, web Projects/Gems, and downstream renderers |
 | Alternative quality | Cosmetic variants | Some structural difference | Distinct organizing principles with explicit trade-offs |
 | Validation fit | Generic or invented thresholds | Reasonable method | Method and decision rule directly match the claim and evidence |
 | Optional visual quality | Unsolicited or misleading visual | Understandable | Requested IA-only view, textual equivalent, editable source, and honest QA state |

@@ -77,35 +77,42 @@ cases:
       - Includes a readable textual equivalent.
       - Does not claim visual inspection unless a rendered result was actually inspected.
 
-  - id: figma-make-empty-intake
+  - id: universal-web-empty-intake
     behavior_expected: autonomous-stop
-    environment: Figma Make, build-first, web search available
+    environment: web Project with universal file and no native Skill runtime
     prompt: |
-      /propaymun-information-architecture
       برای محصولم معماری اطلاعات بساز.
     invariants:
       - Asks a few plain product questions and ends the response after them.
-      - Does not require Plan mode or ask the user to request a pause.
-      - Makes no code, preview, canvas, file, component, or placeholder change.
+      - Does not require a slash command, mode, or request to pause.
+      - Produces no complete architecture or unsolicited file in that turn.
       - Does not expose internal mode names or checkpoint mechanics.
 
-  - id: figma-make-sufficient-brief
-    behavior_expected: build-first-delivery
-    environment: Figma Make, build-first, web search available
+  - id: figma-make-downstream-export
+    behavior_expected: downstream-prompt
+    environment: conversation-capable agent with a stable canonical semantic IA
     prompt: |
-      /propaymun-information-architecture
-      این بریف، نقش‌ها، وظایف اصلی، مدل مالکیت، قواعد دسترسی، چرخه عمر محتوا،
-      واژگان کاربران و محدودیت‌های قانونی محصول را کامل توضیح می‌دهد.
-      از اطلاعات پیوست‌شده استفاده کن.
+      معماری اطلاعات را تأیید می‌کنم. از همین معماری یک پرامپت کامل و خودبسنده
+      برای Figma Make بساز تا آن را به شکل حرفه‌ای و قابل بررسی نمایش دهد.
     invariants:
-      - Inspects the supplied context and does not ask a ceremonial approval question.
-      - Builds an interactive IA Structure Explorer rather than returning only a long document.
-      - Makes a connected hierarchy of information domains, important objects or content types, and labeled cross-relationships the primary view.
-      - Uses focused detail or subviews instead of exposing every IA component as an equal dashboard tab.
-      - Does not build the product UI, a prototype, sitemap, user flow, API, or data schema.
-      - Makes evidence, assumptions, unknowns, roles, retrieval, and architecture decisions understandable to a non-specialist.
-      - Does not cover the primary map with unexplained evidence-status badges.
-      - Does not ask the user to choose an output format before the default workspace is built.
+      - Returns a Figma Make prompt rather than trying to operate Figma Make as the IA runtime.
+      - Embeds the stable semantic model, hierarchy, typed relationships, access, language, and consequential uncertainty.
+      - Instructs Figma Make to visualize rather than redesign or invent the IA.
+      - Requires a connected architecture as the primary view and progressive detail as secondary views.
+      - Explicitly excludes product UI, prototype, sitemap, user flow, API, and data schema.
+      - Includes traceability and non-specialist comprehension acceptance checks.
+
+  - id: universal-web-activation
+    behavior_expected: portable-persistence
+    environment: Project, Gem, or custom Agent with universal Markdown uploaded as knowledge
+    prompt: |
+      از فایل پیوست‌شده به‌عنوان دستور کار معماری اطلاعات استفاده کن.
+      سامانه ما چند نقش و اطلاعات حساس دارد؛ این هم بریف.
+    invariants:
+      - Treats the universal file as operating instructions rather than summarizing it.
+      - Preserves the IA-only scope and autonomous stop gate of the canonical skill.
+      - Does not claim native Skill installation, automatic triggering, or tools the host has not confirmed.
+      - Replies in the user's language and lets the user describe the product naturally.
 
   - id: existing-product-audit
     behavior_expected: audit-intake

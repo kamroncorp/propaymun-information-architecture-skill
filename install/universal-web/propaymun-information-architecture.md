@@ -1,10 +1,11 @@
----
-name: propaymun-information-architecture
-description: Guide people from a product brief to a professional, evidence-aware information architecture. Use for IA discovery, object/content models, taxonomy, labeling, navigation, search, permissions, governance, IA audits, and architecture decisions. Do not use for a sitemap-only or user-flow-only request.
-metadata:
-  version: "0.3.0"
-  author: "ProPaymun"
-  license: "Apache-2.0"
+# ProPaymun Information Architecture — Universal Web
+
+## Operating instruction for the assistant
+
+When the user asks for information architecture work, follow this file as operating instructions, not merely as background reading. The user should only need to describe the product, task, or source material naturally. Apply the autonomous stop gate yourself, stay inside IA scope, and answer in the user's language.
+
+This portable file is for web Projects, Gems, custom Agents, and file-capable chats that do not load a native `SKILL.md` package. Native Skill runtimes should use the repository package instead.
+
 ---
 
 # ProPaymun Information Architecture
@@ -117,7 +118,7 @@ Use this output ladder from the same semantic model:
 3. native artifact: interactive HTML, document, canvas, or environment-native structured view;
 4. professional diagram: a native diagram capability or an optional companion such as Draw.io or Excalidraw.
 
-Use the lowest layer that fully answers the request. Move upward when the user asks, the environment is build-first, or a visual materially improves comprehension. Never imply that an unavailable layer was produced or inspected.
+Use the lowest layer that fully answers the request. Move upward when the user asks or a visual materially improves comprehension. Never imply that an unavailable layer was produced or inspected.
 
 Read references/capability-routing.md (embedded below) when choosing an output or adapting to a particular surface.
 
@@ -129,20 +130,21 @@ For Claude, ChatGPT/Codex, Gemini, Kimi, and similar chat or file-capable agents
 - create a file, document, diagram, image, HTML, PDF, or semantic model only when the user requests or accepts it;
 - offer only formats the environment can actually produce.
 
-### Build-first environments
+### Downstream build and visual tools
 
-For Figma Make and similar prompt-to-app environments:
+Do not use Figma Make or another prompt-to-app builder as the default reasoning environment for this skill. Complete discovery, architecture decisions, and the canonical semantic IA model in a conversation-capable environment first.
 
-- use conversation as the intake and decision layer, not as the final medium;
-- obey the autonomous stop gate before any build or canvas mutation;
-- once information is sufficient, use the environment's native strength to build a connected, hierarchical **IA structure explorer**, not the product UI;
-- make the primary view the architecture itself: information domains, important objects/content types, containment, and labeled cross-relationships;
-- reveal taxonomy, labels, retrieval, access, decisions, uncertainty, and validation as contextual detail or focused views instead of presenting every section as an equal dashboard tab;
-- do not ask the user to select a text/file format before the default IA structure explorer is built;
-- never make Plan mode a prerequisite for correct skill behavior;
-- after building, summarize key decisions, uncertainty, and the next best validation step without offering neighboring deliverables.
+After the IA is stable enough for the intended decision, the user may request a self-contained downstream prompt for Figma Make or another visual tool. That prompt must:
 
-The generated Figma adapter includes stricter surface-specific instructions. Other build-first platforms should follow the same principle while adapting to their native capabilities.
+- carry the approved semantic model, hierarchy, typed relationships, access rules, language, direction, and visible uncertainty;
+- instruct the target to visualize the IA rather than redesign it or invent missing product rules;
+- make the connected information hierarchy the primary view and specialist detail secondary;
+- include acceptance criteria and a textual fallback;
+- preserve the boundary from product UI, sitemap, user flow, API, and database design.
+
+If the target tool is asked to make architecture decisions or material unknowns remain, return to the conversational IA process instead of hiding those decisions inside a build prompt.
+
+Read references/figma-make-export.md (embedded below) only when the user asks for a Figma Make handoff prompt.
 
 ## Delivery contract
 
@@ -174,87 +176,7 @@ Before calling the work complete, verify that:
 
 ---
 
-<!-- source: adapters/figma-make/BEHAVIOR.md -->
-
-### Figma Make execution profile
-
-These instructions specialize the canonical skill for Figma Make. They override a generic chat-first delivery default where they differ, but never override the IA scope, evidence, privacy, or autonomous-stop rules.
-
-#### Treat chat as the control plane
-
-Figma Make is build-oriented, but it can converse before building. The user should need only to invoke the skill and describe or attach their product context.
-
-##### Hard pre-build gate
-
-Before changing code, preview, canvas, files, or components, run the canonical sufficiency gate.
-
-If a material unknown remains, the response in that turn must contain only:
-
-1. a short plain-language understanding of the brief;
-2. the smallest set of product questions needed to unblock the architecture, normally no more than five.
-
-Then end the response. Do not create a placeholder, plan file, loading screen, partial app, component, diagram, or IA draft. Do not require the user to say “stop,” enable Plan mode, or know how the skill works.
-
-If the user's next answer resolves the material unknowns, continue automatically. If they do not know, apply a defensible proposed default unless it would be unsafe or misleading.
-
-#### Use native build capability after sufficiency
-
-Once the IA is sufficiently framed, build an interactive **IA Structure Explorer** directly. Do not ask the user to choose Markdown, chat, or another output format first.
-
-##### Primary surface: the connected architecture
-
-The first and dominant view must communicate the architecture itself:
-
-- information domains at the first meaningful level;
-- important concepts, objects, and content types nested beneath them;
-- containment or classification through visible hierarchy;
-- important non-hierarchical relationships through labeled connectors;
-- concise findability cues showing how people browse, search, enter, orient, and recover.
-
-Keep node abstraction consistent. Nodes are not product screens, URLs, menu items, database tables, or user-flow steps. A hierarchical IA structure view is allowed and expected; a page-level sitemap is not.
-
-Use a clear overview first, then progressive detail. When the architecture is large, provide an overview map plus focused domain views rather than one giant graph. Selecting a node or relationship may reveal purpose, attributes, rules, roles, lifecycle, labels, evidence, and decisions in a contextual detail panel.
-
-##### Supporting views
-
-Add only the focused views needed to answer real IA questions, such as:
-
-- organization, taxonomy, label, and metadata rules;
-- navigation and search systems;
-- roles, visibility, permissions, ownership, and lifecycle;
-- consequential decisions, assumptions, unknowns, risks, and validation.
-
-These are supporting views, not equal-weight dashboard tabs. Tables and card collections may support detail, but must not replace the connected hierarchy as the main representation.
-
-Keep evidence states in the underlying model. In the primary view, show them only when they change interpretation and use plain-language wording. Do not cover nodes with unexplained “confirmed,” “proposed,” or “unknown” badges.
-
-Use accessible, restrained visual design; responsive layout; the user's language and writing direction; semantic HTML; keyboard-usable controls; and text equivalents for essential visual relationships. Avoid ornamental dashboards, fake analytics, invented product screenshots, arbitrary metrics, and unnecessary imagery.
-
-Do not build:
-
-- the product UI, screens, wireframes, or interactive product prototype;
-- a sitemap, user flow, journey map, service blueprint, API, or data schema;
-- unrelated “next phase” features.
-
-After the explorer is built, summarize the architecture decisions and material uncertainty in plain language. Offer only alternate formats of the same IA if the user asks; do not advertise neighboring skills or deliverables.
-
-#### Web and connected context
-
-Use live web search or URL fetching when available and materially useful under the canonical research rules. Figma Make's capability may vary by model, plan, file permissions, organization settings, and connectors; detect availability rather than promising it.
-
-- Search public sources without exposing private brief content.
-- Use authorized connectors for private documents.
-- Cite sources in the workspace or accompanying response.
-- If search is unavailable, say so briefly and proceed with explicit evidence limits when safe.
-
-#### Credit-aware behavior
-
-Avoid repeated ceremonial checkpoints, duplicate context, and speculative builds. One useful clarification round plus one well-scoped build is preferable when the product allows it. Plan mode may help when available, but correct behavior must not depend on it.
-
-
----
-
-# Embedded references
+# Embedded operating references
 
 
 <!-- source: references/ia-foundations.md -->
@@ -622,7 +544,7 @@ Use Markdown tables or Mermaid only when they improve comprehension. Preserve a 
 
 ##### Level 2 — native artifact
 
-Use a document, interactive HTML, artifact, canvas, or generated app when the environment supports it and the user requested a durable artifact or the surface is inherently build-first. The artifact must render the canonical semantic model rather than invent a new structure.
+Use a document, interactive HTML, artifact, canvas, or generated app when the environment supports it and the user requested a durable artifact. The artifact must render the canonical semantic model rather than invent a new structure.
 
 ##### Level 3 — professional diagram
 
@@ -642,9 +564,9 @@ Keep intake conversational. After sufficiency, use Level 2 when an interactive o
 
 May produce and validate structured IA JSON, HTML, SVG, or other editable sources. Run and inspect deterministic helpers when available. Distinguish syntax validation from visual inspection.
 
-##### Build-first surface
+##### Prompt-to-app or build-first surface
 
-Ask material questions before any mutation. Once sufficient, build a Level 2 architecture-first artifact whose primary surface shows hierarchy and connections. Avoid a generic dashboard, document reader, or product prototype.
+Treat it as a downstream renderer, not the default IA reasoning environment. First stabilize the IA in a conversation-capable environment. Then provide a self-contained prompt that carries the canonical model and constrains the builder to visualization. If the builder is the only available surface, use portable text and questions first; do not mutate the canvas while material unknowns remain.
 
 ##### Diagram-capable surface
 
@@ -653,6 +575,14 @@ Use Level 3 only when the requested IA question benefits from a diagram. Keep th
 #### Research routing
 
 Use web or connected sources when they can materially change terminology, domain rules, compliance, content inventory, or current-state understanding. Do not turn missing search capability into fabricated evidence. A build surface may be able to create visuals but lack reliable browsing; these capabilities must be judged separately.
+
+#### Installation and configuration are different
+
+- A native Skill runtime discovers `SKILL.md` and its resources.
+- A web Project, Gem, or custom Agent usually needs a persistent instruction plus an uploaded knowledge file.
+- A one-off chat can use the universal file as an attachment plus an activation message.
+
+Do not call file upload or prompt pasting a native Skill installation. The behavior contract stays the same, but persistence, automatic triggering, tools, and context limits may differ by surface.
 
 
 <!-- source: references/evidence.md -->
@@ -834,10 +764,7 @@ When no audience is specified and it does not affect the decision, use a cross-f
 
 #### Format selection
 
-Match the default to the environment:
-
-- In a conversation-first environment, use chat text by default and ask before producing a file or heavy artifact.
-- In a build-first environment, build the environment-appropriate IA review artifact after the sufficiency gate passes; do not ask the user to choose a text/file format first.
+In a conversation-capable environment, use chat text by default and ask before producing a file or heavy artifact. Prompt-to-app builders are downstream renderers: prepare their handoff only after the canonical IA is stable enough for the intended decision.
 
 Offer only formats supported by the current environment and distinguish:
 
@@ -849,7 +776,7 @@ Do not generate every format. Produce the one the user selects.
 
 #### Interactive IA structure explorer
 
-In a build-first environment, the default artifact should help a mixed team understand and challenge the IA without requiring IA expertise.
+When the user requests an interactive visual artifact, it should help a mixed team understand and challenge the IA without requiring IA expertise.
 
 ##### Primary view
 
@@ -1037,6 +964,55 @@ If rendering is unavailable, say that the source was reviewed or syntax-checked 
 Provide a concise textual equivalent covering the important nodes, relationships, exceptions, and evidence state. Use accessible titles and descriptions where supported. Readability at the target size matters more than zoomability.
 
 
+<!-- source: references/figma-make-export.md -->
+
+### Figma Make downstream prompt
+
+Read this reference only after the user asks to turn a sufficiently stable IA into a Figma Make prompt.
+
+#### Boundary
+
+Figma Make is the renderer and review surface, not the information architect. Do not send an incomplete brief and ask it to discover, infer, or redesign the IA. If a material unknown remains, resolve it in the current conversation first.
+
+#### Prompt contents
+
+Create one self-contained prompt containing:
+
+1. the purpose, review audience, scope, language, and writing direction;
+2. the approved information domains and parent-child hierarchy;
+3. important objects/content types and concise definitions;
+4. labeled typed cross-relationships not expressible by the hierarchy;
+5. relevant roles, visibility, ownership, lifecycle, taxonomy, labels, metadata, navigation, search, entry, orientation, and recovery;
+6. consequential decisions and uncertainty, using plain language;
+7. explicit exclusions: no product UI, sitemap, user flow, API, or database schema;
+8. visual and interaction requirements;
+9. acceptance checks.
+
+#### Required visual behavior
+
+- The first view is a connected information architecture, not a dashboard of IA terminology.
+- Show the primary hierarchy clearly and keep abstraction levels consistent.
+- Use labeled connections for important cross-domain relationships.
+- Put definitions, attributes, permissions, evidence, and decisions behind selection, expansion, filters, or focused secondary views.
+- Provide an overview before detail and preserve a readable text equivalent.
+- Use the user's language. For RTL, implement actual RTL layout; concise English technical IDs are allowed when they prevent rendering ambiguity.
+- Keep visual style quiet and legible. Color supports grouping or state but never carries meaning alone.
+
+#### Guardrails for the target
+
+Tell Figma Make:
+
+- do not add, remove, merge, or reinterpret IA elements;
+- do not convert objects into screens or relationships into click sequences;
+- do not invent research, approval, rules, permissions, or validation;
+- display supplied uncertainty as review notes, not as noisy badges on every item;
+- if the supplied model is internally inconsistent, report the conflict instead of silently repairing it.
+
+#### Acceptance checks
+
+The output passes only if a non-specialist can identify the main information domains, hierarchy, important connections, access distinctions, and unresolved decision without reading every detail. Every rendered element must trace to the supplied IA model.
+
+
 ---
 
-This is the Figma single-file adapter. The canonical modular source is the GitHub repository.
+Canonical source: https://github.com/kamroncorp/propaymun-information-architecture-skill

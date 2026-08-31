@@ -4,132 +4,128 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-2E7D32)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-compatible-19172B)](SKILL.md)
 
-An IA-only Agent Skill that acts as an experienced information architect: it guides people from an initial product brief and high-impact questions to a professional, evidence-aware information architecture.
+An IA-only expert workflow that guides a person from a natural product brief to a professional, evidence-aware information architecture—even when they do not know IA terminology.
 
-**ProPaymun** comes from the Persian word «پروپیمان»: full, complete, and generously filled. Completeness here means decision-ready—not unnecessarily long.
+**ProPaymun** comes from the Persian «پروپیمان»: full and complete. Here, complete means decision-ready, not unnecessarily long.
 
 [فارسی](README.fa.md)
 
 ## What it does
 
-- guides people who do not already understand IA;
-- asks consequential questions before committing to a complete architecture;
-- models objects/content, relationships, organization, taxonomy, labels, navigation, search, access, lifecycle, and governance;
-- distinguishes supplied evidence, observation, inference, proposal, confirmation, and unknowns;
-- adapts language and depth for product, design, research, content, engineering, or cross-functional readers;
-- detects whether it is running in a conversation-first or build-first environment and uses that environment appropriately;
-- stops by itself when a material answer is required—the user does not need prompting tricks;
-- uses public web research and connected context when available and materially useful;
-- supports greenfield IA, redesign, audits, and focused IA components.
+- inspects the brief and available sources before asking questions;
+- asks only questions whose answers can change the architecture, then stops by itself;
+- models information domains, objects/content, hierarchy, typed relationships, taxonomy, labels, metadata, findability, access, lifecycle, and governance;
+- separates provided facts, observation, inference, proposal, confirmation, and unknowns;
+- adapts language and depth to the user and the available environment;
+- uses current public research when it can materially improve the IA and browsing is available;
+- keeps sitemap, user flow, UI, API, and database design outside this skill.
 
-The skill stays within information architecture. Separate mapping disciplines belong to their own dedicated skills.
+## Two supported distributions
 
-## Default experience
+There is no honest one-click installer shared by every AI product. ProPaymun provides two synchronized distributions instead:
 
-For complete IA work, the skill normally:
+1. **Native Agent Skill** — [`SKILL.md`](SKILL.md) plus references, assets, and helpers for Claude.ai, Claude Code, Codex, Gemini CLI, ZCode, and other Skill-compatible agents.
+2. **Universal Web** — one self-contained Markdown file for Projects, Gems, custom Agents, or file-capable chats that do not load native Skills.
 
-1. reflects the brief and existing evidence;
-2. asks a compact set of architecture-changing questions;
-3. stops automatically when those answers are required;
-4. proceeds with visible assumptions for reversible unknowns;
-5. delivers the best IA artifact for the current environment.
+Uploading a file to a Project is configuration, not a native Skill installation. The IA behavior is shared, while automatic triggering, persistence, tools, and context limits depend on the host.
 
-A detailed brief does not silently trigger a full draft when important access, lifecycle, role, or domain decisions remain unresolved. A compact provisional answer is available when the user explicitly asks for speed or work without questions.
+## Install or configure
 
-## Quick start
+### Claude.ai web — native Skill, including Free
 
-### Universal installer
+Download the ready-to-upload [`propaymun-information-architecture.zip`](install/claude-ai/propaymun-information-architecture.zip). In Claude.ai:
+
+1. enable **Code execution and file creation** in **Settings → Capabilities**;
+2. open **Customize → Skills**;
+3. choose **+ → Create skill → Upload a skill**;
+4. upload the ZIP and enable it.
+
+A GitHub repository URL is not a Claude.ai Skill installer. Claude.ai expects the packaged ZIP.
+
+### Claude Projects — universal fallback
+
+Create a Project, upload [`install/universal-web/propaymun-information-architecture.md`](install/universal-web/propaymun-information-architecture.md) to project knowledge, and paste [`PROJECT_INSTRUCTIONS.md`](install/universal-web/PROJECT_INSTRUCTIONS.md) into Project Instructions.
+
+### ChatGPT web
+
+Create a Project, upload the Universal Web file, and paste the Project Instructions text into the project's instructions. Then describe the product naturally. This is the recommended personal ChatGPT web path; it does not require a terminal.
+
+### Gemini web
+
+Create a Gem, paste the Project Instructions text into the Gem instructions, and add the Universal Web file as Knowledge. For one-off use, attach the Universal Web file to a chat and ask Gemini to follow it as operating instructions.
+
+### Kimi web
+
+Create a Kimi Project, upload the Universal Web Markdown as a project file, and paste the Project Instructions text into project instructions. Kimi Agent users may also use Kimi's own Skill creator, but the Project route is the portable no-terminal setup.
+
+### Z.AI / GLM web and other file-capable assistants
+
+Where the product offers a Project, custom Agent, knowledge base, or persistent instructions, add the Universal Web file and the Project Instructions text there. Otherwise attach the file to a chat and explicitly ask the assistant to follow it as operating instructions for that conversation. Do not assume native Skill persistence unless the product confirms it.
+
+### Claude Code, Codex, Gemini CLI, ZCode, and compatible agents
 
 ```bash
 npx skills add https://github.com/kamroncorp/propaymun-information-architecture-skill
 ```
 
-Then ask naturally:
-
-```text
-Help me design the information architecture for my product. Here is the brief...
-```
-
-The user does not need to choose a mode, understand checkpoints, request a pause, or know IA terminology.
-
-### Claude Code
-
-Clone or copy this repository to:
-
-```text
-~/.claude/skills/propaymun-information-architecture/
-```
-
-The repository can also be packaged as a zip and uploaded as a custom Skill where Claude supports skill uploads.
-
-### Codex / ChatGPT
-
-Place the repository at:
-
-```text
-~/.codex/skills/propaymun-information-architecture/
-```
-
-For OpenAI API Skills, upload the skill directory or a release zip. The included [`agents/openai.yaml`](agents/openai.yaml) provides UI metadata.
-
-### Gemini CLI
+Platform-native alternatives include copying the repository into the agent's Skill directory or, for Gemini CLI:
 
 ```bash
 gemini skills install https://github.com/kamroncorp/propaymun-information-architecture-skill
 ```
 
-### Figma agent and Figma Make
+## Use
 
-Upload the generated single-file adapter:
+Ask naturally:
 
 ```text
-adapters/figma-make/propaymun-information-architecture.md
+Help me design the information architecture for my product. Here is the brief...
 ```
 
-Invoke it with `/propaymun-information-architecture` and describe the product naturally. If material information is missing, the skill asks a few questions and makes no build change in that turn. Once sufficient, it uses Figma Make to build an interactive IA Structure Explorer whose primary view preserves information hierarchy and labeled connections—not the product UI, a sitemap, or a user flow. Plan mode is optional, not required.
+The user does not need to choose a mode, mention checkpoints, request a pause, or know IA vocabulary. The skill decides when it has enough information and stops when a material answer is required.
 
 ## Outputs
 
-Conversation-first agents default to concise chat text and create heavier artifacts only after acceptance. Build-first environments default to an environment-native IA structure explorer after the autonomous stop gate passes. Every format is rendered from one canonical semantic IA model.
+The default is concise, decision-ready conversation. Files, semantic JSON, Mermaid, HTML, PDF, or a professional diagram are created only when requested and supported. Every format must represent the same canonical semantic IA model.
 
-The skill routes by actual capability rather than product name alone. Portable text is always available; Markdown/Mermaid, native artifacts, and professional diagrams are progressively selected only when supported and useful.
+Optional diagram companions are never required or installed without permission:
 
-IA diagrams are optional. A portable textual representation is always available; Mermaid, HTML/SVG, or another installed diagram capability may be used when requested and supported.
+- [Draw.io Skill](https://github.com/Agents365-ai/drawio-skill) for precise editable handoff;
+- [Excalidraw Diagram Skill](https://github.com/coleam00/excalidraw-diagram-skill) for workshops and conceptual explanation.
 
-### Optional diagram companions
+## Figma Make is a downstream output
 
-These are not required and are never installed without explicit user authorization:
+Figma Make is no longer an installation target or the default place to reason about IA. After the IA is stable, ask the active assistant:
 
-- [Draw.io Skill](https://github.com/Agents365-ai/drawio-skill) — precise editable geometry and formal handoff
-- [Excalidraw Diagram Skill](https://github.com/coleam00/excalidraw-diagram-skill) — workshops and conceptual explanation
+```text
+Create a self-contained Figma Make prompt from this approved information architecture.
+```
+
+The skill carries the canonical IA, hierarchy, relationships, access, language, uncertainty, guardrails, and acceptance criteria into the prompt. Figma Make is instructed to visualize the architecture—not invent it. Environments with Python can also export deterministically:
+
+```bash
+python scripts/export_figma_make_prompt.py path/to/ia.json -o figma-make-prompt.md
+```
 
 ## Portable semantic model
-
-When structured reuse is requested, the skill can produce a renderer-independent IA JSON model. Environments with Python can validate or render it:
 
 ```bash
 python scripts/validate_ia_model.py path/to/ia.json
 python scripts/render_ia_html.py path/to/ia.json -o ia.html
 ```
 
-Chat-only environments return the requested semantic source directly and do not pretend these scripts ran.
+Chat-only environments return the requested source directly and never pretend a helper ran.
 
 ## Development and validation
 
 ```bash
-python scripts/package_figma.py
+python scripts/package_distributions.py
 python -m unittest discover -s tests -v
 python /path/to/skill-creator/scripts/quick_validate.py .
 ```
 
-[`adapters/manifest.json`](adapters/manifest.json) records the shared release version and delivery profile for Claude, ChatGPT/Codex, Gemini, and Figma Make. Tests verify that the canonical skill, generated Figma adapter, manifest, and documentation stay version-aligned.
-
-Behavioral cases cover natural Persian intake, autonomous stopping, minimal novice answers, chat-only capability limits, Figma build-first delivery, public research, artifact consent, and RTL diagram fallback. See [`evals/cases.yaml`](evals/cases.yaml).
-
-## Quality policy
-
-The skill does not invent research or universal success thresholds, call an untested structure validated, create unsolicited artifacts, or use hidden high-impact assumptions to select an architecture.
+Generated Universal Web and Claude.ai packages are tested against the canonical source. [`adapters/manifest.json`](adapters/manifest.json) records distributions and downstream exports. Behavioral evaluations are in [`evals/cases.yaml`](evals/cases.yaml).
 
 ## Versioning and license
 
-The project uses Semantic Versioning and Apache License 2.0. See [CHANGELOG.md](CHANGELOG.md) and [LICENSE](LICENSE).
+The project uses Semantic Versioning and Apache License 2.0. Current unreleased changes remain under [Unreleased](CHANGELOG.md); no new tag or release is created until testing is accepted.

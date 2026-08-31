@@ -15,12 +15,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Rebuild Figma adapter
-        run: python scripts/package_figma.py
-      - name: Verify generated adapter is current
-        run: git diff --exit-code -- adapters/figma-make/propaymun-information-architecture.md
+      - name: Rebuild installable distributions
+        run: python scripts/package_distributions.py
+      - name: Verify generated distributions are current
+        run: git diff --exit-code -- install/universal-web/propaymun-information-architecture.md install/claude-ai/propaymun-information-architecture.zip
       - name: Run deterministic tests
         run: python -m unittest discover -s tests -v
       - name: Validate fixture
         run: python scripts/validate_ia_model.py tests/fixtures/valid-semantic-ia.json
-

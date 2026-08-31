@@ -6,12 +6,17 @@ All notable changes to this project are documented here. The project follows Sem
 
 ### Changed
 
+- Reclassified Figma Make from a runtime adapter to an optional downstream visualization prompt generated only after the IA is stable.
+- Added a deterministic, self-contained Figma Make prompt exporter that carries the canonical semantic model and forbids architecture reinvention.
+- Added a Universal Web distribution for Projects, Gems, custom Agents, and file-capable chats, plus a short persistent activation instruction.
+- Added a deterministic Claude.ai upload ZIP with `SKILL.md` and its resources in the required skill-folder package.
+- Rewrote installation guidance to distinguish native Skill installation from Project/Gem configuration and one-off file use.
 - Re-centered every output on one canonical semantic IA model before rendering.
-- Replaced the fixed Figma review-dashboard direction with an IA Structure Explorer led by connected hierarchy, typed relationships, and progressive detail.
+- Defined the requested IA Structure Explorer as a downstream view led by connected hierarchy, typed relationships, and progressive detail.
 - Added capability-first routing and a portable output ladder independent of model branding.
 - Clarified that hierarchical IA maps use semantic domains and objects, while page maps and action paths remain separate sitemap and user-flow deliverables.
 - Kept evidence status as model metadata and limited user-facing indicators to decision-relevant, plain-language uncertainty.
-- Added behavioral coverage for existing-product audits, capability fallbacks, semantic consistency across outputs, and Figma structural legibility.
+- Added behavioral coverage for existing-product audits, capability fallbacks, semantic consistency, Universal Web activation, and downstream Figma prompts.
 
 ## [0.3.0] - 2026-08-26
 

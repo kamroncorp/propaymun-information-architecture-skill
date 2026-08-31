@@ -60,10 +60,7 @@ When no audience is specified and it does not affect the decision, use a cross-f
 
 ## Format selection
 
-Match the default to the environment:
-
-- In a conversation-first environment, use chat text by default and ask before producing a file or heavy artifact.
-- In a build-first environment, build the environment-appropriate IA review artifact after the sufficiency gate passes; do not ask the user to choose a text/file format first.
+In a conversation-capable environment, use chat text by default and ask before producing a file or heavy artifact. Prompt-to-app builders are downstream renderers: prepare their handoff only after the canonical IA is stable enough for the intended decision.
 
 Offer only formats supported by the current environment and distinguish:
 
@@ -75,7 +72,7 @@ Do not generate every format. Produce the one the user selects.
 
 ## Interactive IA structure explorer
 
-In a build-first environment, the default artifact should help a mixed team understand and challenge the IA without requiring IA expertise.
+When the user requests an interactive visual artifact, it should help a mixed team understand and challenge the IA without requiring IA expertise.
 
 ### Primary view
 
