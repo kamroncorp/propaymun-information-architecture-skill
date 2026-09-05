@@ -64,6 +64,32 @@ class SkillScriptTests(unittest.TestCase):
             self.assertIn("People and access", rendered)
             self.assertIn("Projects reference working documents", rendered)
             self.assertIn("Information structure", rendered)
+            self.assertIn("Priority information needs", rendered)
+            self.assertIn("Roles and access", rendered)
+            self.assertIn("Lifecycles", rendered)
+
+    def test_validator_rejects_empty_or_semantically_invalid_models(self) -> None:
+        data = json.loads((FIXTURES / "valid-semantic-ia.json").read_text(encoding="utf-8"))
+        data["domains"] = []
+        data["items"] = []
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "empty.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            result = self.run_script("validate_ia_model.py", str(path), "--json")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("at least one information domain", result.stdout)
+        self.assertIn("at least one item", result.stdout)
+
+        data = json.loads((FIXTURES / "valid-semantic-ia.json").read_text(encoding="utf-8"))
+        data["items"][0]["kind"] = "screen"
+        data["permissions"][0]["scope"] = ""
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "invalid-semantics.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            result = self.run_script("validate_ia_model.py", str(path), "--json")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("kind must be one of", result.stdout)
+        self.assertIn("scope must be a non-empty string", result.stdout)
 
     def test_workspace_kit_is_self_contained(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -154,12 +180,53 @@ class SkillScriptTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("not-ready", result.stderr or result.stdout)
 
+    def test_blocking_unknown_prevents_provisional_export(self) -> None:
+        data = json.loads((FIXTURES / "valid-semantic-ia.json").read_text(encoding="utf-8"))
+        data["unknowns"][0]["blocks_handoff"] = True
+        with tempfile.TemporaryDirectory() as directory:
+            model = Path(directory) / "blocked.json"
+            model.write_text(json.dumps(data), encoding="utf-8")
+            result = self.run_script("export_builder_handoff.py", str(model), "--target", "figma-make")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("blocking unknown", result.stderr or result.stdout)
+
+    def test_product_prototype_handoff_is_distinct_from_ia_blueprint(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            specification = Path(directory) / "prototype.md"
+            launch = Path(directory) / "launch.txt"
+            result = self.run_script(
+                "export_builder_handoff.py",
+                str(FIXTURES / "valid-semantic-ia.json"),
+                "--target", "lovable",
+                "--intent", "product-prototype",
+                "-o", str(specification),
+                "--launch-output", str(launch),
+            )
+            self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
+            prompt = specification.read_text(encoding="utf-8")
+            launch_text = launch.read_text(encoding="utf-8")
+            self.assertIn("Product Prototype from an Approved Information Architecture", prompt)
+            self.assertIn("Do not present the internal IA diagram as the product interface", prompt)
+            self.assertIn("product's information-architecture constraints", launch_text)
+
+    def test_undirected_relationship_summary_uses_non_directional_symbol(self) -> None:
+        data = json.loads((FIXTURES / "valid-semantic-ia.json").read_text(encoding="utf-8"))
+        data["relationships"][0]["direction"] = "undirected"
+        with tempfile.TemporaryDirectory() as directory:
+            model = Path(directory) / "undirected.json"
+            specification = Path(directory) / "handoff.md"
+            model.write_text(json.dumps(data), encoding="utf-8")
+            result = self.run_script("export_builder_handoff.py", str(model), "-o", str(specification))
+            self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
+            prompt = specification.read_text(encoding="utf-8")
+        self.assertIn("Project — Document", prompt)
+
     def test_release_and_package_metadata_are_consistent(self) -> None:
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
-        self.assertEqual(version, "0.3.1")
+        self.assertEqual(version, "0.4.0")
         self.assertIn(f'version: "{version}"', skill)
         self.assertIn(f"version-{version}-", readme)
         self.assertEqual(manifest["version"], version)
@@ -181,6 +248,15 @@ class SkillScriptTests(unittest.TestCase):
             self.assertIn("Repeat this sufficiency check", content)
             self.assertIn("Never infer a country", content)
             self.assertIn("short copy-ready launch instruction", content)
+
+    def test_memory_isolation_and_token_discipline_are_in_both_packages(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        workspace = (PACKAGES / "workspace-kit" / "propaymun-ia-workspace-kit.md").read_text(encoding="utf-8")
+        for content in (skill, workspace):
+            self.assertIn("Current-turn authority and memory isolation", content)
+            self.assertIn("Never create a file, presentation, diagram", content)
+            self.assertIn("Relevance and token discipline", content)
+            self.assertIn("one representation at a time", content)
 
     def test_visual_builder_is_downstream_and_not_a_runtime(self) -> None:
         manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))

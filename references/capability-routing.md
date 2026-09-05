@@ -21,6 +21,8 @@ Never claim a capability from the model name alone. If an important capability i
 
 Every surface uses the same intake gate and semantic IA model. Environment adaptation changes interaction pacing and rendering, not architecture quality, evidence standards, or IA scope.
 
+Host memory, profiles, and prior-chat preferences do not change the current deliverable gate. They may adapt harmless presentation choices, but cannot authorize a file, canvas mutation, presentation, prototype, upload, or external action that the current conversation did not request or accept.
+
 ## Output ladder
 
 ### Level 0 — portable text

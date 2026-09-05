@@ -6,6 +6,13 @@ Read this reference only after the user asks to turn an IA into a build specific
 
 The target builder is a renderer and review surface, not the information architect. Before exporting, rerun the adaptive sufficiency gate.
 
+Determine the requested outcome before writing the handoff:
+
+- **IA review blueprint:** visualize domains, canonical items, hierarchy, typed relationships, access, findability, and uncertainty for review.
+- **Product prototype:** carry the approved IA into downstream product design and construction. Preserve structural constraints without making the product UI look like an IA diagram.
+
+If “build a first version” could mean either outcome, ask one concrete question. Do not decide from host memory or a prior-chat artifact preference.
+
 - If a material unknown blocks the intended output, ask the smallest necessary question and stop.
 - If the user explicitly wants a provisional workshop artifact, export it with `Proposed` status and keep consequential unknowns visible.
 - Never ask the builder to discover, infer, localize, or repair the IA.
@@ -43,7 +50,7 @@ Include:
 8. hard exclusions, visual behavior, and acceptance checks;
 9. the canonical semantic IA JSON as the source of truth.
 
-## Required primary view
+## Required primary view for an IA review blueprint
 
 - Show all information domains as clearly labeled containers or regions.
 - Place every visible item inside its assigned domain.
@@ -56,6 +63,10 @@ Include:
 - Provide a compact readable legend and a plain-text equivalent of hierarchy and relationships.
 
 The connected architecture is the first view. A tabbed dashboard, card catalogue, or specialist review explorer must not replace it.
+
+## Product-prototype handoff
+
+When the user wants the product rather than an IA review artifact, pass the approved domains, labels, navigation, search, entry and recovery behavior, roles, permissions, lifecycle, locale, assumptions, and unresolved constraints as binding inputs. Let the downstream product-design capability decide screens and interactions. Require it to mark any structural change as a proposal and keep new UI decisions traceable to the IA.
 
 ## Guardrails for the target
 

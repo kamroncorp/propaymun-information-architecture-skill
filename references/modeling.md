@@ -19,6 +19,14 @@ This is a reasoning order, not a mandatory conversation order.
 
 ## Model the information universe
 
+First recognize the dominant IA problem:
+
+- **content/taxonomy:** content types, topics, audience vocabulary, metadata, classification, browse, and search carry most of the architecture;
+- **object/operation:** persistent objects, records, relationships, states, ownership, permissions, and lifecycle carry most of the architecture;
+- **hybrid:** both are consequential and must meet in one model.
+
+This is an internal modeling choice, not a mode the user must select. Do not force roles, permissions, lifecycle, or object-style detail into a content-led problem unless it improves a real decision.
+
 Before choosing a visual or document structure, distinguish:
 
 - **information domain:** a stable subject or responsibility area;
@@ -29,6 +37,8 @@ Before choosing a visual or document structure, distinguish:
 - **task step:** an action or state transition that belongs in a user flow.
 
 Use one canonical item registry. Every item must reference exactly one information domain; do not maintain separate `objects` and `nodes` lists that can drift. Build a parent-child hierarchy only where containment, scope, or classification is real. Add typed relationships for association, dependency, reference, membership, ownership, lifecycle, visibility, or derivation. Name the relationship in product language so a non-specialist can understand its consequence.
+
+Exactly one `domain_id` means one canonical home in the model. It does not prevent facets, tags, related-content links, contextual exposure, search results, or alternate findability paths.
 
 Model a relationship record such as membership, assignment, payment, or application as its own item when it has attributes, lifecycle, permissions, history, or findability. Do not collapse distinct objects only to make a diagram smaller.
 
@@ -112,6 +122,14 @@ Specify each navigation system's purpose, audience, content scope, ordering rule
 
 Specify searchable objects/content, metadata and facets, synonyms, ranking signals, permission filtering, result types, empty-state behavior, and recovery. Never expose restricted content through labels, counts, snippets, or suggestions.
 
+## Priority information-need trace
+
+For each priority need, verify this chain without turning it into a screen-by-screen flow:
+
+`audience/context → information sought → entry point → organizing cue or label → canonical item/content → access rule → recovery`
+
+Use the trace to catch orphaned content, misleading labels, missing entry points, inaccessible search results, and dead ends. Keep only traces that test consequential parts of the architecture.
+
 ## AI product considerations
 
 For products containing agents or generated content, also model:
@@ -123,3 +141,16 @@ For products containing agents or generated content, also model:
 - visibility and retention boundaries;
 - stable canonical locations despite adaptive recommendations;
 - recovery, undo, retry, and escalation.
+
+## Revising an existing architecture
+
+Treat a correction or new requirement as a change to the canonical model, not as a fresh parallel document.
+
+1. classify the input as a new fact, decision, scope change, label change, evidence update, or implementation constraint;
+2. identify the directly affected IDs and then inspect dependent hierarchy, relationships, information-need traces, navigation, search, access, lifecycle, governance, validation, and renderer views;
+3. preserve stable IDs unless the underlying meaning changed; record merges, splits, renames, and deprecations explicitly;
+4. update the canonical model once and regenerate derived views instead of hand-editing each output;
+5. show the user a compact delta, its product consequences, any newly blocking unknown, and the next validation need;
+6. rerun structural validation and handoff-readiness checks before export.
+
+Do not repeat the full architecture when only a small part changed unless the user requests a consolidated artifact.

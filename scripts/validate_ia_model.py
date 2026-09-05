@@ -13,6 +13,8 @@ from typing import Any
 EVIDENCE_STATES = {"Provided", "Observed", "Confirmed", "Inferred", "Proposed", "Unknown"}
 MODEL_STATUSES = {"draft", "proposed", "reviewed", "approved"}
 READINESS_STATES = {"not-ready", "provisional", "reviewable", "approved"}
+ITEM_KINDS = {"object", "content_type", "record", "concept", "classification", "retrieval_system"}
+HANDOFF_PURPOSES = {"conversation", "workshop", "review", "implementation"}
 
 
 def _mapping(value: Any, name: str, errors: list[str]) -> dict[str, Any]:
@@ -69,12 +71,14 @@ def validate_model(data: Any) -> tuple[list[str], list[str]]:
         errors.append(f"meta.status must be one of: {', '.join(sorted(MODEL_STATUSES))}")
     if meta.get("direction") not in {"ltr", "rtl"}:
         errors.append("meta.direction must be 'ltr' or 'rtl'")
+    if meta.get("problem_shape") is not None and meta.get("problem_shape") not in {"content-taxonomy", "object-operation", "hybrid"}:
+        errors.append("meta.problem_shape must be content-taxonomy, object-operation, or hybrid")
 
     handoff = _mapping(meta.get("handoff"), "meta.handoff", errors)
     if handoff.get("readiness") not in READINESS_STATES:
         errors.append(f"meta.handoff.readiness must be one of: {', '.join(sorted(READINESS_STATES))}")
-    if not _nonempty(handoff.get("purpose")):
-        errors.append("meta.handoff.purpose must be a non-empty string")
+    if handoff.get("purpose") not in HANDOFF_PURPOSES:
+        errors.append(f"meta.handoff.purpose must be one of: {', '.join(sorted(HANDOFF_PURPOSES))}")
 
     domains, domain_ids = _unique_records(_list(root.get("domains"), "domains", errors), "domains", errors)
     items, item_ids = _unique_records(_list(root.get("items"), "items", errors), "items", errors)
@@ -83,9 +87,9 @@ def validate_model(data: Any) -> tuple[list[str], list[str]]:
     roles, role_ids = _unique_records(_list(roles_raw, "roles", errors), "roles", errors)
 
     if not domains:
-        warnings.append("model contains no information domains")
+        errors.append("model must contain at least one information domain")
     if not items:
-        warnings.append("model contains no items")
+        errors.append("model must contain at least one item")
 
     for domain in domains:
         domain_id = domain["id"]
@@ -101,6 +105,8 @@ def validate_model(data: Any) -> tuple[list[str], list[str]]:
         for field in ("label", "kind"):
             if not _nonempty(item.get(field)):
                 errors.append(f"item {item_id} {field} must be a non-empty string")
+        if item.get("kind") not in ITEM_KINDS:
+            errors.append(f"item {item_id} kind must be one of: {', '.join(sorted(ITEM_KINDS))}")
         parent = item.get("parent_id")
         if parent is not None and not isinstance(parent, str):
             errors.append(f"item {item_id} parent_id must be a string or null")
@@ -155,9 +161,30 @@ def validate_model(data: Any) -> tuple[list[str], list[str]]:
             errors.append(f"permissions[{index}] references missing role: {permission.get('role_id')!r}")
         if permission.get("item_id") not in item_ids:
             errors.append(f"permissions[{index}] references missing item: {permission.get('item_id')!r}")
-        if not isinstance(permission.get("actions"), list):
-            errors.append(f"permissions[{index}].actions must be an array")
+        if not _nonempty(permission.get("scope")):
+            errors.append(f"permissions[{index}].scope must be a non-empty string")
+        actions = permission.get("actions")
+        if not isinstance(actions, list) or not actions or any(not _nonempty(action) for action in actions):
+            errors.append(f"permissions[{index}].actions must be a non-empty array of strings")
         _evidence(f"permissions[{index}]", permission.get("evidence_status"), errors)
+
+    information_needs, _ = _unique_records(_list(root.get("information_needs", []), "information_needs", errors), "information_needs", errors)
+    for need in information_needs:
+        need_id = need["id"]
+        for field in ("audience_or_context", "information_sought", "access_scope", "recovery"):
+            if not _nonempty(need.get(field)):
+                errors.append(f"information need {need_id} {field} must be a non-empty string")
+        for field in ("entry_points", "item_ids"):
+            values = need.get(field)
+            if not isinstance(values, list) or not values or any(not _nonempty(value) for value in values):
+                errors.append(f"information need {need_id} {field} must be a non-empty array of strings")
+        cues = need.get("organizing_cues", [])
+        if not isinstance(cues, list) or any(not _nonempty(value) for value in cues):
+            errors.append(f"information need {need_id} organizing_cues must be an array of non-empty strings")
+        for item_id in need.get("item_ids", []) if isinstance(need.get("item_ids"), list) else []:
+            if item_id not in item_ids:
+                errors.append(f"information need {need_id} references missing item: {item_id!r}")
+        _evidence(f"information need {need_id}", need.get("evidence_status"), errors)
 
     lifecycles = _list(root.get("lifecycles", []), "lifecycles", errors)
     for index, raw in enumerate(lifecycles):
@@ -185,7 +212,7 @@ def validate_model(data: Any) -> tuple[list[str], list[str]]:
             _evidence(f"lifecycle {item_id} transition", transition.get("evidence_status"), errors)
 
     unknowns = _list(root.get("unknowns", []), "unknowns", errors)
-    if handoff.get("readiness") in {"reviewable", "approved"}:
+    if handoff.get("readiness") in {"provisional", "reviewable", "approved"}:
         for unknown in unknowns:
             if isinstance(unknown, dict) and unknown.get("blocks_handoff") is True:
                 errors.append(f"handoff is {handoff.get('readiness')} but blocking unknown remains: {unknown.get('id', 'unnamed')}")

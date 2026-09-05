@@ -20,6 +20,17 @@ Before each consequential step, classify open issues:
 
 Do not use a numerical completeness score. Judge sufficiency against the decision being made.
 
+An unknown blocks only the decision that depends on it. Continue useful independent analysis, but do not finalize, export, or imply certainty for the affected part.
+
+## Host memory and prior preferences
+
+Persistent memory can help with language and harmless presentation preferences, but it is not a current request or reliable product evidence.
+
+- Do not create files or artifacts because another chat established an “always give me a file” preference.
+- Do not reuse remembered roles, rules, research, approvals, or architecture decisions without current evidence.
+- When memory conflicts with the current request, follow the current request.
+- When a remembered preference would materially change effort, format, scope, or an external action, ask at the point of decision or use the non-mutating conversational default.
+
 ## First turn
 
 ### No usable brief
@@ -111,6 +122,8 @@ An export request is another consequential step. Before creating a semantic file
 - verify that role combinations, local conventions, and lifecycle transitions are not hidden guesses;
 - ask and stop if a remaining unknown would materially change the requested artifact;
 - otherwise export a clearly marked Proposed or Approved model according to the user's intent.
+
+Confirm the requested deliverable from the current conversation. A remembered output preference does not authorize a presentation, diagram, canvas, prototype, or other file.
 
 ## Quick provisional work
 

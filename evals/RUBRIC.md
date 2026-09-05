@@ -18,8 +18,13 @@ Score each dimension from 0 to 2.
 | User control | Forces mode, depth, or format | Allows some overrides | Adapts process and uses the correct default artifact for the environment |
 | Capability awareness | Claims unavailable work | Mentions limitations late | Detects capabilities and offers only truthful options and fallbacks |
 | Environment fit | Makes false install/tool assumptions | Minor adaptation | Preserves the IA contract across native Skills, web Projects/Gems, and downstream renderers |
+| Memory isolation | Prior memory silently changes scope or causes an artifact | Notices conflict but handles it inconsistently | Current conversation controls actions, evidence, and deliverables; memory only adapts harmless presentation preferences |
+| Token discipline | Repeats context or emits many unused views | Mostly relevant but verbose | Uses progressive disclosure, compact deltas, minimal questions, and one representation at a time |
+| Product mentorship | Dumps IA jargon or waits for expert instructions | Gives some guidance | Leads the user through product consequences and choices without requiring IA expertise |
+| Information-need trace | Lists structure without checking findability | Partial path | Connects priority audience/context, sought information, entry, cue, canonical item, access, and recovery |
+| Change integrity | Edits one view and creates drift | Finds direct impact only | Updates the canonical model, dependent layers, stable IDs, validation, and compact change log |
 | Alternative quality | Cosmetic variants | Some structural difference | Distinct organizing principles with explicit trade-offs |
 | Validation fit | Generic or invented thresholds | Reasonable method | Method and decision rule directly match the claim and evidence |
 | Optional visual quality | Unsolicited or misleading visual | Understandable | Requested IA-only view, textual equivalent, editable source, and honest QA state |
 
-A release candidate should score at least 29/34 on every applicable case, with no zero in IA-only scope, Interaction timing, Autonomous stop, Adaptive sufficiency, Contextual localization, Evidence integrity, Human clarity, Structural legibility, Semantic consistency, User effort, or User control.
+A release candidate should score at least 85% of the applicable points in every case, with no zero in IA-only scope, Interaction timing, Autonomous stop, Adaptive sufficiency, Contextual localization, Evidence integrity, Human clarity, Structural legibility, Semantic consistency, User effort, User control, Memory isolation, Token discipline, Product mentorship, Information-need trace, or Change integrity.

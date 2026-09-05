@@ -36,6 +36,7 @@
         "direction": {"enum": ["ltr", "rtl"]},
         "scope": {"type": "string", "minLength": 1},
         "decision_intent": {"type": "string"},
+        "problem_shape": {"enum": ["content-taxonomy", "object-operation", "hybrid"]},
         "locale_context": {
           "type": "object",
           "properties": {
@@ -64,6 +65,25 @@
     "contexts": {"type": "array"},
     "audiences": {"type": "array"},
     "tasks": {"type": "array"},
+    "information_needs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "audience_or_context", "information_sought", "entry_points", "item_ids", "access_scope", "recovery", "evidence_status"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "audience_or_context": {"type": "string", "minLength": 1},
+          "information_sought": {"type": "string", "minLength": 1},
+          "entry_points": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "organizing_cues": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "item_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "access_scope": {"type": "string", "minLength": 1},
+          "recovery": {"type": "string", "minLength": 1},
+          "evidence_status": {"$ref": "#/$defs/evidenceState"}
+        },
+        "additionalProperties": true
+      }
+    },
     "domains": {
       "type": "array",
       "minItems": 1,
@@ -144,7 +164,7 @@
           "role_id": {"type": "string", "minLength": 1},
           "item_id": {"type": "string", "minLength": 1},
           "scope": {"type": "string", "minLength": 1},
-          "actions": {"type": "array", "items": {"type": "string"}},
+          "actions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
           "evidence_status": {"$ref": "#/$defs/evidenceState"}
         },
         "additionalProperties": true

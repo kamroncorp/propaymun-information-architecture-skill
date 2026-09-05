@@ -7,6 +7,7 @@
     "direction": "ltr",
     "scope": "Shared projects, documents, and governed knowledge",
     "decision_intent": "Review the initial information architecture",
+    "problem_shape": "hybrid",
     "locale_context": {
       "country": null,
       "region": null,
@@ -149,6 +150,19 @@
       "label": "belongs to",
       "meaning": "Membership grants a role inside one workspace",
       "direction": "directed",
+      "evidence_status": "Proposed"
+    }
+  ],
+  "information_needs": [
+    {
+      "id": "need-find-project-document",
+      "audience_or_context": "Workspace member looking for current project knowledge",
+      "information_sought": "The working document connected to a project",
+      "entry_points": ["workspace projects", "global search"],
+      "organizing_cues": ["project name", "document title"],
+      "item_ids": ["project", "document"],
+      "access_scope": "Only documents visible in the active workspace",
+      "recovery": "Offer project filtering and query reformulation when no document is found",
       "evidence_status": "Proposed"
     }
   ],

@@ -1,4 +1,4 @@
-version: 3
+version: 4
 skill: propaymun-information-architecture
 cases:
   - id: persian-medical-natural-brief
@@ -197,3 +197,60 @@ cases:
       - Does not expose confidential brief content in search queries.
       - Cites sourced claims and separates them from recommendations.
       - Does not present web patterns as user research.
+
+  - id: remembered-file-preference-conflict
+    behavior_expected: memory-isolated-intake
+    environment: Claude.ai with persistent memory saying "always give me a finished file or presentation"
+    prompt: |
+      I want information architecture for my product.
+    invariants:
+      - Treats the current request as discovery rather than permission to create a deliverable.
+      - Asks the minimum product questions needed for the next architecture decision and stops.
+      - Does not create or promise a PPTX, document, diagram, canvas, or other file.
+      - Does not treat remembered domain facts, roles, approval, or research as current evidence.
+
+  - id: long-context-token-discipline
+    behavior_expected: concise-progressive-disclosure
+    environment: conversation with a long inventory, policy set, and prior answers attached
+    prompt: |
+      این منابع را بررسی کن و فقط تصمیم بعدی معماری اطلاعات را جلو ببر.
+      چیزهایی را که قبلاً جواب داده‌ام تکرار نکن.
+    invariants:
+      - Reads only source sections needed for the current decision.
+      - Does not restate the full brief, inventory, prior questions, or unchanged architecture.
+      - Returns a compact decision, delta, or smallest blocking question.
+      - Does not omit material access, safety, ownership, legal, or lifecycle implications merely to be shorter.
+
+  - id: ambiguous-builder-intent
+    behavior_expected: handoff-intent-gate
+    environment: conversation-capable agent with a stable semantic IA
+    prompt: |
+      یه پرامپت بده نسخه اولیه رو در Figma Make بسازم.
+    invariants:
+      - Uses the current conversation to distinguish an IA review blueprint from a product prototype.
+      - Asks one concrete intent question only if the existing context does not resolve the ambiguity.
+      - Does not silently force the internal IA diagram into the product interface.
+      - Produces one requested handoff representation rather than several redundant formats.
+
+  - id: content-led-knowledge-base
+    behavior_expected: problem-shape-aware
+    prompt: |
+      ما یک مرکز دانش عمومی با هزاران مقاله، راهنما، پرسش متداول و واژه‌نامه داریم.
+      مردم موضوع را می‌گردند یا جست‌وجو می‌کنند؛ معماری اطلاعاتش را بررسی کن.
+    invariants:
+      - Recognizes a content and taxonomy-led problem before choosing the model depth.
+      - Prioritizes content types, vocabulary, metadata, classification, browse, search, and governance.
+      - Does not force operational objects, roles, or lifecycle detail without a product reason.
+      - Tests priority information needs from entry and label through access and recovery.
+
+  - id: existing-model-change-impact
+    behavior_expected: delta-revision
+    environment: conversation with an accepted canonical semantic IA
+    prompt: |
+      مهمان‌ها از این به بعد می‌توانند بعضی اسناد پروژه را در جست‌وجو ببینند،
+      اما نباید عنوان اسناد محرمانه برایشان آشکار شود. مدل را اصلاح کن.
+    invariants:
+      - Updates the canonical model rather than creating a parallel architecture.
+      - Traces impact through roles, permissions, navigation, search suggestions, results, direct entry, and recovery.
+      - Preserves stable IDs and reports a compact delta and consequences.
+      - Rechecks validation and handoff readiness before any export.

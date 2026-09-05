@@ -1,7 +1,7 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-0.3.1-5B4BDB)](CHANGELOG.md)
-[![License](https://img.shields.io/badge/license-Apache--2.0-2F855A)](LICENSE)
+[![Version](https://img.shields.io/badge/version-0.4.0-5B4BDB)](CHANGELOG.md)
+[![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
 Turn ordinary product context into clear, evidence-aware information architecture—even when the user does not know IA terminology.
@@ -74,7 +74,7 @@ package_manifest: packages/manifest.json
 semantic_schema: schema/semantic-ia.schema.json
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v0.3.1-published
+release_state: v0.4.0-published
 ```
 
 An AI installer should select exactly one host-appropriate package, preserve the package contents, and avoid claiming native installation when it only attached a knowledge file.
@@ -84,7 +84,11 @@ An AI installer should select exactly one host-appropriate package, preserve the
 - inspects the brief, attachments, conversation, and authorized sources before asking;
 - reassesses sufficiency throughout the work instead of asking a fixed first-round questionnaire;
 - asks only questions whose answers can change the next architecture decision, then stops by itself;
+- acts as a product-lead mentor, translating IA choices into product consequences for non-specialists;
+- keeps persistent memory from silently changing the current scope, evidence, or deliverable;
+- manages context with compact deltas, progressive disclosure, and one representation at a time;
 - separates language from locale, jurisdiction, culture, and operating model;
+- recognizes content/taxonomy, object/operation, and hybrid IA problems before choosing model depth;
 - models information domains, canonical items, hierarchy, typed relationships, taxonomy, labels, metadata, findability, access, lifecycle, and governance;
 - separates provided facts, observations, confirmation, inference, proposals, conflicts, and unknowns;
 - uses current public research when it can materially improve the IA and browsing is available;
@@ -107,7 +111,7 @@ If the user does not know, the skill can explain a few plausible patterns and re
 
 ## Visual Builder Handoff
 
-Figma Make, Lovable, and similar prompt-to-build tools are downstream renderers, not the place where IA decisions are made.
+Figma Make, Lovable, and similar prompt-to-build tools are downstream environments, not the place where IA decisions are made. A handoff has one explicit intent: an **IA review blueprint** or a **product prototype constrained by the IA**.
 
 After the IA is ready for its intended purpose, ask:
 
@@ -125,8 +129,8 @@ This matters because long attached prompts may be treated as files while the Gen
 Deterministic export:
 
 ```bash
-python scripts/export_builder_handoff.py path/to/ia.json --target figma-make -o build-spec.md
-python scripts/export_builder_handoff.py path/to/ia.json --target lovable -o build-spec.md
+python scripts/export_builder_handoff.py path/to/ia.json --target figma-make --intent ia-blueprint -o build-spec.md
+python scripts/export_builder_handoff.py path/to/ia.json --target lovable --intent product-prototype -o prototype-spec.md
 ```
 
 The primary view must show domain containers, mapped items, hierarchy, and labeled cross-domain relationships. It must not become a dashboard, sitemap, user flow, wireframe, product UI, API, or database schema.
@@ -141,6 +145,7 @@ The renderer-independent model lives at [`schema/semantic-ia.schema.json`](schem
 - separate roles and item-scoped permissions;
 - structured lifecycle states and transitions;
 - locale context with evidence state;
+- explicit problem shape and priority information-need traces;
 - handoff readiness and blocking unknowns.
 
 Validate or render a model:
@@ -176,6 +181,6 @@ GitHub Actions rebuilds the packages, verifies byte-for-byte parity, validates t
 
 ## Versioning and compatibility
 
-The project uses Semantic Versioning and Apache License 2.0. Current changes remain under [Unreleased](CHANGELOG.md); no new tag or release is created until cross-platform testing is accepted.
+The project uses Semantic Versioning and the [MIT No Attribution license](LICENSE). Version 0.4.0 strengthens current-turn authority, product mentorship, token discipline, content-led IA, change-impact handling, and builder handoffs.
 
 Previously shared `install/claude-ai` and `install/universal-web` URLs remain synchronized compatibility aliases. New documentation uses the professional package names above.

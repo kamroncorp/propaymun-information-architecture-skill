@@ -4,6 +4,23 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-09-05
+
+### Changed
+
+- Reframed the skill as a product-lead IA mentor that carries the method for non-specialists and explains product consequences instead of dumping specialist structure.
+- Added current-turn authority and memory isolation: persistent preferences may adjust harmless presentation choices but cannot authorize artifacts, establish domain evidence, or convert discovery into delivery.
+- Added token discipline through selective source loading, compact question groups, progressive disclosure, delta updates, and one representation at a time.
+- Replaced the universal hard stop with a decision-scoped sufficiency gate: a blocking unknown pauses only the affected consequential decision while independent reversible analysis may continue.
+- Added problem-shape recognition for content/taxonomy, object/operation, and hybrid IA so content-led products are not forced into an object-heavy model.
+- Added priority information-need traces from audience and entry point through labels, canonical information, access, and recovery.
+- Added a change-impact workflow that preserves stable IDs, updates the canonical model once, checks dependent layers, reports a compact delta, and revalidates before export.
+- Split Visual Builder Handoff into explicit `ia-blueprint` and `product-prototype` intents while preserving one Markdown specification plus one short launch instruction.
+- Strengthened Semantic IA validation for empty models, item kinds, handoff purposes, permission scopes/actions, information needs, and provisional handoffs with blocking unknowns.
+- Expanded the HTML renderer with information needs, roles/access, lifecycles, navigation/search, decisions, localized headings, and readable structured values.
+- Added behavioral cases and deterministic regression tests for memory conflict, token discipline, content-led IA, handoff intent, change impact, invalid semantic models, prototype exports, and relationship direction.
+- Aligned repository and package licensing with MIT No Attribution (`MIT-0`).
+
 ## [0.3.1] - 2026-08-31
 
 ### Changed
@@ -66,7 +83,8 @@ All notable changes to this project are documented here. The project follows Sem
 - English and Persian documentation.
 - Three behavioral evaluation scenarios and deterministic script tests.
 
-[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.3.0
 [0.2.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.2.0

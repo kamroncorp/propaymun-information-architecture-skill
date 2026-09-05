@@ -55,12 +55,15 @@ Renderers select views of this model. They do not become the model.
 - **Cross-functional team:** add object relationships, vocabulary, ownership, and retrieval behavior.
 - **Design or research:** emphasize audience language, organization hypotheses, findability, and validation.
 - **Engineering or data:** add stable identifiers, relationships, cardinality, states, permissions, and lifecycle rules.
+- **Content or operations:** emphasize ownership, vocabulary, metadata, publishing or service lifecycle, retrieval, and governance.
 
 When no audience is specified and it does not affect the decision, use a cross-functional professional baseline.
 
+Translate the same canonical model for each audience. Do not create separate architecture truths for leadership, design, engineering, or operations.
+
 ## Format selection
 
-In a conversation-capable environment, use chat text by default and ask before producing a file or heavy artifact. Prompt-to-app builders are downstream renderers: prepare their handoff only after the canonical IA is stable enough for the intended decision.
+In a conversation-capable environment, use chat text by default. Produce a file or heavy artifact only when the current conversation requests it or the user accepts a concrete format after the IA is ready enough. Persistent memory or a preference from another chat is not deliverable authorization. Prompt-to-app builders are downstream renderers: prepare their handoff only after the canonical IA is stable enough for the intended decision.
 
 Offer only formats supported by the current environment and distinguish:
 
@@ -107,6 +110,7 @@ Use this portable shape only when structured reuse, validation, rendering, or ha
     "language": "en",
     "direction": "ltr",
     "scope": "Product area",
+    "problem_shape": "hybrid",
     "locale_context": {
       "country": null,
       "operating_model": null,
@@ -120,6 +124,7 @@ Use this portable shape only when structured reuse, validation, rendering, or ha
   "contexts": [],
   "audiences": [],
   "tasks": [],
+  "information_needs": [],
   "domains": [],
   "items": [],
   "relationships": [],

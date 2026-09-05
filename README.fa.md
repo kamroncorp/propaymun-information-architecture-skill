@@ -1,7 +1,7 @@
 # معماری اطلاعات پروپیمان
 
-[![Version](https://img.shields.io/badge/version-0.3.1-5B4BDB)](CHANGELOG.md)
-[![License](https://img.shields.io/badge/license-Apache--2.0-2F855A)](LICENSE)
+[![Version](https://img.shields.io/badge/version-0.4.0-5B4BDB)](CHANGELOG.md)
+[![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
 توضیحات عادی محصول را به یک معماری اطلاعات روشن، شواهدمحور و قابل‌تصمیم‌گیری تبدیل می‌کند؛ حتی اگر کاربر اصطلاحات IA را نداند.
@@ -74,7 +74,7 @@ package_manifest: packages/manifest.json
 semantic_schema: schema/semantic-ia.schema.json
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v0.3.1-published
+release_state: v0.4.0-published
 ```
 
 یک AI Installer باید فقط بسته متناسب با محیط را انتخاب کند، محتویات بسته را حفظ کند و آپلود فایل دانش را نصب Native معرفی نکند.
@@ -84,7 +84,11 @@ release_state: v0.3.1-published
 - قبل از سؤال، بریف، فایل‌ها، گفتگو و منابع مجاز را بررسی می‌کند؛
 - در تمام مسیر کفایت اطلاعات را دوباره می‌سنجد و به یک دور سؤال ابتدایی محدود نیست؛
 - فقط وقتی پاسخ می‌تواند تصمیم بعدی معماری را تغییر دهد سؤال می‌پرسد و خودش متوقف می‌شود؛
+- مثل یک منتور ارشد محصول، تصمیم‌های IA را برای کاربر غیرمتخصص به پیامدهای روشن محصول تبدیل می‌کند؛
+- اجازه نمی‌دهد حافظهٔ میزبان بی‌اجازه Scope، شواهد یا نوع خروجی همین گفتگو را تغییر دهد؛
+- با Deltaهای کوتاه، Progressive Disclosure و یک نمایش در هر مرحله مصرف Context را مدیریت می‌کند؛
 - زبان را از جغرافیا، قوانین، فرهنگ و مدل عملیاتی جدا می‌کند؛
+- پیش از تعیین عمق مدل، تشخیص می‌دهد مسئله Content/Taxonomy، Object/Operation یا Hybrid است؛
 - Domainها، Itemهای اصلی، سلسله‌مراتب، روابط، Taxonomy، برچسب‌ها، Metadata، یافت‌پذیری، دسترسی، چرخه عمر و Governance را مدل می‌کند؛
 - واقعیت، مشاهده، تأیید، استنباط، پیشنهاد، تعارض و مجهول را مخلوط نمی‌کند؛
 - در صورت اثرگذاری و وجود قابلیت، از منابع عمومی جاری استفاده می‌کند؛
@@ -107,7 +111,7 @@ release_state: v0.3.1-published
 
 ## هندآف به ابزارهای سازنده
 
-Figma Make، Lovable و ابزارهای مشابه رندرکننده پایین‌دستی‌اند، نه محل تصمیم‌گیری IA.
+Figma Make، Lovable و ابزارهای مشابه محیط پایین‌دستی‌اند، نه محل تصمیم‌گیری IA. هر Handoff باید یک هدف روشن داشته باشد: **نمای قابل‌بررسی معماری اطلاعات** یا **نمونهٔ اولیه محصول که به IA متعهد است**.
 
 پس از آماده‌شدن معماری برای هدف موردنظر بنویسید:
 
@@ -125,8 +129,8 @@ Figma Make، Lovable و ابزارهای مشابه رندرکننده پایی�
 خروجی قطعی:
 
 ```bash
-python scripts/export_builder_handoff.py path/to/ia.json --target figma-make -o build-spec.md
-python scripts/export_builder_handoff.py path/to/ia.json --target lovable -o build-spec.md
+python scripts/export_builder_handoff.py path/to/ia.json --target figma-make --intent ia-blueprint -o build-spec.md
+python scripts/export_builder_handoff.py path/to/ia.json --target lovable --intent product-prototype -o prototype-spec.md
 ```
 
 نمای اول باید Domainها، Itemهای متصل، سلسله‌مراتب و روابط بین‌دامنه‌ای را نشان دهد و نباید به Dashboard، Sitemap، User Flow، Wireframe، UI، API یا Database Schema تبدیل شود.
@@ -141,6 +145,7 @@ python scripts/export_builder_handoff.py path/to/ia.json --target lovable -o bui
 - نقش‌های مستقل و Permissionهای متصل به Item؛
 - وضعیت‌ها و انتقال‌های چرخه عمر؛
 - Context محلی همراه با وضعیت شواهد؛
+- نوع غالب مسئله و ردگیری نیازهای اطلاعاتی اولویت‌دار؛
 - آمادگی هندآف و مجهولات مسدودکننده.
 
 اعتبارسنجی و رندر:
@@ -176,6 +181,6 @@ GitHub Actions بسته‌ها را بازسازی، برابری بایت‌ب�
 
 ## نسخه‌بندی و سازگاری
 
-پروژه از Semantic Versioning و Apache License 2.0 استفاده می‌کند. تغییرات فعلی زیر [Unreleased](CHANGELOG.md) می‌مانند و تا تأیید تست چندمحیطی Tag یا Release جدید ساخته نمی‌شود.
+پروژه از Semantic Versioning و [مجوز MIT No Attribution](LICENSE) استفاده می‌کند. نسخهٔ ۰.۴.۰ اختیار گفتگوی جاری، نقش منتور محصول، مدیریت توکن، مسائل Content-led، اثر تغییرات و Handoffهای سازنده را تقویت می‌کند.
 
 لینک‌های قبلی `install/claude-ai` و `install/universal-web` به‌عنوان Alias سازگار و همگام حفظ می‌شوند؛ مستندات جدید از نام‌های حرفه‌ای بالا استفاده می‌کنند.

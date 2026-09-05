@@ -17,7 +17,11 @@ TARGET_NAMES = {
 }
 
 
-def launch_text(language: str) -> str:
+def launch_text(language: str, intent: str = "ia-blueprint") -> str:
+    if intent == "product-prototype":
+        if language.lower().startswith("fa"):
+            return "فایل Markdown پیوست‌شده را به‌عنوان قیود معماری اطلاعات محصول بخوان و نمونهٔ اولیه را بر همان اساس بساز؛ ساختار و قواعد تأییدشده را تغییر نده و اطلاعات جدید اختراع نکن."
+        return "Read the attached Markdown file as the product's information-architecture constraints. Build the prototype from them without changing approved structure or inventing information."
     if language.lower().startswith("fa"):
         return "فایل Markdown پیوست‌شده را به‌عنوان مشخصات کامل ساخت بخوان و نسخه اولیه را دقیقاً براساس آن بساز؛ معماری اطلاعات را تغییر نده و اطلاعات جدید اختراع نکن."
     return "Read the attached Markdown file as the complete build specification. Build the first version exactly from it; do not redesign the information architecture or invent missing information."
@@ -46,12 +50,15 @@ def structural_summary(model: dict) -> str:
             parent = item_by_id.get(alternative, {})
             hierarchy_lines.append(f"{parent.get('label', alternative)} → {item.get('label')} [alternative scope; not a second default parent]")
 
-    relationship_lines = [
-        f"{item_by_id.get(rel.get('from'), {}).get('label', rel.get('from'))} → "
-        f"{item_by_id.get(rel.get('to'), {}).get('label', rel.get('to'))} "
-        f"[{rel.get('type')}] {rel.get('label')}: {rel.get('meaning')}"
-        for rel in model.get("relationships", [])
-    ]
+    relationship_lines = []
+    symbols = {"directed": "→", "bidirectional": "↔", "undirected": "—"}
+    for rel in model.get("relationships", []):
+        symbol = symbols.get(rel.get("direction"), "→")
+        relationship_lines.append(
+            f"{item_by_id.get(rel.get('from'), {}).get('label', rel.get('from'))} {symbol} "
+            f"{item_by_id.get(rel.get('to'), {}).get('label', rel.get('to'))} "
+            f"[{rel.get('type')}] {rel.get('label')}: {rel.get('meaning')}"
+        )
     return f"""### Domain-to-item map
 {bullet(domain_lines)}
 
@@ -62,7 +69,7 @@ def structural_summary(model: dict) -> str:
 {bullet(relationship_lines)}"""
 
 
-def export_specification(model: dict, target: str) -> str:
+def export_specification(model: dict, target: str, intent: str = "ia-blueprint") -> str:
     errors, warnings = validate_model(model)
     if errors:
         raise ValueError("Cannot export invalid Semantic IA:\n- " + "\n- ".join(errors))
@@ -76,6 +83,9 @@ def export_specification(model: dict, target: str) -> str:
     payload = json.dumps(model, ensure_ascii=False, indent=2)
     warning_block = bullet(warnings) if warnings else "- No structural validator warnings"
     locale = json.dumps(meta.get("locale_context", {}), ensure_ascii=False)
+    if intent == "product-prototype":
+        return product_prototype_specification(model, target_name, payload, warning_block, locale)
+
     return f"""# Build a Connected Information Architecture Blueprint
 
 ## Target role
@@ -143,17 +153,75 @@ The connected blueprint must not be replaced by a tabbed dashboard, card catalog
 """
 
 
+def product_prototype_specification(model: dict, target_name: str, payload: str, warning_block: str, locale: str) -> str:
+    meta = model["meta"]
+    return f"""# Build a Product Prototype from an Approved Information Architecture
+
+## Target role
+
+Use {target_name} as the downstream product-design and build environment. Treat the supplied IA as binding product structure. Make interface and interaction decisions that expose it clearly without silently changing its information domains, labels, access rules, or retrieval model.
+
+## Context
+
+- Title: {meta.get('title')}
+- Scope: {meta.get('scope')}
+- Model status: {meta.get('status')}
+- Handoff readiness: {meta.get('handoff', {}).get('readiness')}
+- Language: {meta.get('language')}
+- Writing direction: {meta.get('direction')}
+- Locale context: {locale}
+
+## IA constraints for the product
+
+{structural_summary(model)}
+
+## Canonical Semantic IA
+
+```json
+{payload}
+```
+
+## Product-build requirements
+
+1. Preserve approved domains, labels, hierarchy, typed relationships, navigation, search, access, lifecycle, and governance represented in the model.
+2. Design screens and interactions for the stated audience and priority tasks; keep those UI decisions traceable to the IA.
+3. Enforce visibility and permissions in navigation, search results, counts, suggestions, direct links, and actions.
+4. Support entry, orientation, wrong-turn recovery, and empty or no-result states where the model requires them.
+5. Use {meta.get('language')} for human-facing text and implement a real {meta.get('direction')} layout.
+6. Keep supplied assumptions and unknowns visible in a review note; do not invent product rules to close them.
+
+## Hard exclusions
+
+- Do not add, remove, merge, rename, or re-parent IA elements without marking the change as a design proposal.
+- Do not invent research, approvals, local rules, permissions, relationships, or validation results.
+- Do not present the internal IA diagram as the product interface.
+- Do not generate API or database architecture from this handoff.
+
+## Source warnings
+
+{warning_block}
+
+## Acceptance checks
+
+- Priority information needs can be completed using labels and paths that trace to the supplied IA.
+- Role and scope restrictions remain correct in navigation, search, direct entry, and actions.
+- Product-design additions are identifiable and do not masquerade as approved IA decisions.
+- The prototype remains usable in the target language, writing direction, and viewport.
+"""
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("model", type=Path)
     parser.add_argument("--target", choices=sorted(TARGET_NAMES), default="figma-make")
+    parser.add_argument("--intent", choices=["ia-blueprint", "product-prototype"], default="ia-blueprint")
     parser.add_argument("-o", "--output", type=Path)
     parser.add_argument("--launch-output", type=Path)
     args = parser.parse_args()
 
     model = json.loads(args.model.read_text(encoding="utf-8"))
     try:
-        specification = export_specification(model, args.target)
+        specification = export_specification(model, args.target, args.intent)
     except ValueError as exc:
         raise SystemExit(str(exc)) from exc
 
@@ -161,7 +229,7 @@ def main() -> int:
     launch_output = args.launch_output or output.with_name(f"{output.stem}-launch.txt")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(specification, encoding="utf-8", newline="\n")
-    launch_output.write_text(launch_text(model["meta"].get("language", "en")) + "\n", encoding="utf-8", newline="\n")
+    launch_output.write_text(launch_text(model["meta"].get("language", "en"), args.intent) + "\n", encoding="utf-8", newline="\n")
     print(output)
     print(launch_output)
     return 0

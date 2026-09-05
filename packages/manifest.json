@@ -1,5 +1,6 @@
 {
-  "version": "0.3.1",
+  "version": "0.4.0",
+  "license": "MIT-0",
   "product_name": "ProPaymun Information Architecture",
   "canonical_source": "SKILL.md",
   "semantic_model": "schema/semantic-ia.schema.json",
@@ -23,6 +24,7 @@
     "generator": "scripts/export_builder_handoff.py",
     "targets": ["figma-make", "lovable", "generic"],
     "requires": "semantic-ia-ready-for-intended-purpose",
+    "intents": ["ia-blueprint", "product-prototype"],
     "outputs": ["markdown-specification", "short-launch-text"]
   },
   "legacy_download_aliases": {
