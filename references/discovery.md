@@ -92,6 +92,8 @@ Do not include hints that teach the user how to police the skill. The skill must
 
 ## Handling weak answers
 
+“Everyone” or “all content types” is an incomplete prioritization, not evidence of equal needs or approval for every feature. Ask about the first useful audience outcome or first release when it affects structure. Distinguish accepting a recommendation from authorizing unrelated capabilities. Preserve the decision history so later diagrams and exports do not promote assumptions into confirmed scope.
+
 If the user replies “yes,” “continue,” “I don't know,” or gives no new product detail:
 
 1. do not repeat the same approval request;

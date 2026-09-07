@@ -182,6 +182,8 @@ def main() -> int:
     if errors:
         raise SystemExit("Cannot render invalid model:\n- " + "\n- ".join(errors))
     output = args.output or args.model.with_suffix(".html")
+    if output.resolve() == args.model.resolve() or output.exists():
+        raise SystemExit("Output exists or matches input; choose a new HTML output path")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(render_document(data), encoding="utf-8")
     print(output)

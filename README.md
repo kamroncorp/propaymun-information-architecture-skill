@@ -1,6 +1,6 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-0.4.0-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.1-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
@@ -11,6 +11,10 @@ Turn ordinary product context into clear, evidence-aware information architectur
 [فارسی](README.fa.md)
 
 ## Choose the right package
+
+For one reusable file across file-capable chats, Projects, and Gemini Gems, use the [Workspace Kit Markdown](packages/workspace-kit/propaymun-ia-workspace-kit.md). Its opening section includes a short instruction to paste into the host. Native Claude Skills installation uses the ZIP instead. These distributions share one maintained IA method; the Markdown does not include executable helpers. Do not upload the Agent Skill ZIP to Gemini Knowledge.
+
+The conversational workflow needs no tools. Optional bundled Python helpers validate IA JSON, render HTML, or export builder specifications when requested. They use the standard library and do not access the network or credentials. Host permissions remain in force; installing the skill does not authorize file creation or script execution. Maintainer packaging tools are excluded from the installable ZIP. See [security scope and limitations](SECURITY.md).
 
 | Package | Best for | Download |
 |---|---|---|
@@ -34,7 +38,7 @@ A GitHub repository URL is not a Claude.ai upload package. Use the ZIP above.
 For a workspace that explicitly provides both persistent instructions and file knowledge:
 
 1. add [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) as project knowledge;
-2. paste [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) into the workspace, project, Gem, or custom-agent instructions;
+2. paste the short setup instruction from the Markdown file into the host's Instructions field; the separate [Workspace instructions](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) are an optional fuller alternative;
 3. describe the product naturally.
 
 This is configuration through project knowledge, not a claim of native Skill installation.
@@ -44,7 +48,7 @@ This is configuration through project knowledge, not a claim of native Skill ins
 Gemini web uses a manually created Gem rather than a native Skill installation:
 
 1. choose **Explore Gems → New Gem**;
-2. paste [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) into the Gem instructions;
+2. paste the short setup instruction from the Workspace Kit into the Gem instructions;
 3. add [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) under **Knowledge**;
 4. save the Gem.
 
@@ -74,7 +78,7 @@ package_manifest: packages/manifest.json
 semantic_schema: schema/semantic-ia.schema.json
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v0.4.0-published
+release_state: v0.4.1-published
 ```
 
 An AI installer should select exactly one host-appropriate package, preserve the package contents, and avoid claiming native installation when it only attached a knowledge file.
@@ -133,7 +137,7 @@ python scripts/export_builder_handoff.py path/to/ia.json --target figma-make --i
 python scripts/export_builder_handoff.py path/to/ia.json --target lovable --intent product-prototype -o prototype-spec.md
 ```
 
-The primary view must show domain containers, mapped items, hierarchy, and labeled cross-domain relationships. It must not become a dashboard, sitemap, user flow, wireframe, product UI, API, or database schema.
+For an IA blueprint, the primary view shows domain containers, mapped items, hierarchy, and labeled relationships. A product-prototype handoff instead asks the downstream builder to create an interface constrained by the IA; it does not display the internal IA map as the product.
 
 ## Semantic IA 2.0
 
@@ -181,6 +185,6 @@ GitHub Actions rebuilds the packages, verifies byte-for-byte parity, validates t
 
 ## Versioning and compatibility
 
-The project uses Semantic Versioning and the [MIT No Attribution license](LICENSE). Version 0.4.0 strengthens current-turn authority, product mentorship, token discipline, content-led IA, change-impact handling, and builder handoffs.
+The project uses Semantic Versioning and the [MIT No Attribution license](LICENSE). Version 0.4.1 hardens builder handoffs, clarifies single-file setup, and improves product-scope and diagram consistency while preserving the IA mentoring workflow.
 
 Previously shared `install/claude-ai` and `install/universal-web` URLs remain synchronized compatibility aliases. New documentation uses the professional package names above.

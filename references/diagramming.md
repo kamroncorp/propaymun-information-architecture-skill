@@ -80,6 +80,8 @@ Keep the surrounding explanation in the user's language. For Persian or another 
 
 ## Render and inspect
 
+Before rendering, reconcile the view with the model and accompanying text: domain counts and names agree; each edge has the intended endpoints, direction, and meaning; required versus optional links remain distinguishable where material; facets connect to all relevant item types. A diagram request authorizes a representation, not new architecture. Label an overview as partial when it omits detail and identify the omitted scope. Avoid quantitative claims such as “four domains” unless checked against the displayed view.
+
 When rendering tools are available:
 
 1. generate editable source;

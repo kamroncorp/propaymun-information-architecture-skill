@@ -69,6 +69,8 @@ evidence_status: Proposed
 
 ## Relationship and lifecycle integrity
 
+Test each proposed relationship with one normal example and one valid exception. Specify whether it is optional or required and whether multiple targets are meaningful; do not infer “every item must link” from a useful related-content pattern. For example, a subject-specific review may reference an entity while industry news may reference none or several. Introduce a maintained reference catalog only when a retrieval need justifies its ownership and update cost.
+
 - Use `parent_id` only for a real primary hierarchy.
 - Use typed relationships for additional meaning, including `belongs_to`, `references`, `membership`, `assignment`, `settles`, `owned_by`, and `visible_to`.
 - Give each relationship explicit endpoints, direction, label, meaning, and evidence state.
@@ -77,6 +79,8 @@ evidence_status: Proposed
 - Keep roles distinct until their permissions and authority are confirmed equivalent.
 
 ## Taxonomy design
+
+Keep independent dimensions separate. Format (video/audio/text), editorial purpose (news/review/analysis), topic, audience, and subject attributes may coexist as facets; do not flatten them into mutually exclusive siblings. Define which item types each facet applies to. Use canonical subject references alongside topic classification where needed without forcing all content to reference a catalog item.
 
 Define:
 

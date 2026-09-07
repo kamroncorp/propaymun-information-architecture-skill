@@ -1,6 +1,6 @@
 # معماری اطلاعات پروپیمان
 
-[![Version](https://img.shields.io/badge/version-0.4.0-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.1-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
@@ -11,6 +11,10 @@
 [English](README.md)
 
 ## بسته مناسب را انتخاب کنید
+
+برای یک فایل مشترک در گفت‌وگوهای فایل‌پذیر، Projects و Gemini Gems از [فایل Markdown مهارت](packages/workspace-kit/propaymun-ia-workspace-kit.md) استفاده کنید. ابتدای همین فایل، دستور کوتاه تنظیم محیط آمده است. برای نصب بومی در Claude Skills از ZIP استفاده کنید؛ آن ZIP را در Knowledge جمینای قرار ندهید. روش معماری اطلاعات در هر دو بسته از یک منبع ساخته می‌شود؛ فایل Markdown ابزارهای اجرایی Python را همراه ندارد.
+
+گفت‌وگوی معماری اطلاعات به ابزار نیاز ندارد. ابزارهای اختیاری Python برای اعتبارسنجی JSON، تولید HTML یا خروجی Builder فقط در پاسخ به درخواست استفاده می‌شوند و به شبکه یا اطلاعات ورود دسترسی ندارند. نصب مهارت مجوز اجرای اسکریپت یا ساخت فایل نیست؛ کنترل دسترسی محیط میزبان برقرار می‌ماند. ابزار ساخت بسته در فایل نصب کاربران قرار ندارد. [محدوده و محدودیت‌های امنیتی](SECURITY.md)
 
 | بسته | مناسب برای | دریافت |
 |---|---|---|
@@ -34,7 +38,7 @@
 برای محیطی که صریحاً هم Instructions پایدار و هم فایل Knowledge دارد:
 
 1. فایل [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) را به دانش Workspace اضافه کنید؛
-2. متن [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) را در دستور Project، Gem، Workspace یا Custom Agent قرار دهید؛
+2. دستور کوتاه ابتدای همان فایل را در Instructions محیط قرار دهید؛ [دستور مستقل Workspace](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) فقط جایگزین مفصل‌تر است و فایل دانش دوم لازم نیست؛
 3. محصول را طبیعی توضیح دهید.
 
 این مسیر «تنظیم با دانش پروژه» است و نباید به‌اشتباه نصب Native Skill نامیده شود.
@@ -44,7 +48,7 @@
 Gemini وب این بسته را به‌صورت Native Skill نصب نمی‌کند؛ باید یک Gem دستی بسازید:
 
 1. مسیر **Explore Gems → New Gem** را باز کنید؛
-2. متن [`WORKSPACE_INSTRUCTIONS.md`](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) را در Instructions قرار دهید؛
+2. دستور کوتاه ابتدای فایل Workspace Kit را در Instructions قرار دهید؛
 3. فایل [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) را زیر **Knowledge** اضافه کنید؛
 4. Gem را Save کنید.
 
@@ -74,7 +78,7 @@ package_manifest: packages/manifest.json
 semantic_schema: schema/semantic-ia.schema.json
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v0.4.0-published
+release_state: v0.4.1-published
 ```
 
 یک AI Installer باید فقط بسته متناسب با محیط را انتخاب کند، محتویات بسته را حفظ کند و آپلود فایل دانش را نصب Native معرفی نکند.
@@ -133,7 +137,7 @@ python scripts/export_builder_handoff.py path/to/ia.json --target figma-make --i
 python scripts/export_builder_handoff.py path/to/ia.json --target lovable --intent product-prototype -o prototype-spec.md
 ```
 
-نمای اول باید Domainها، Itemهای متصل، سلسله‌مراتب و روابط بین‌دامنه‌ای را نشان دهد و نباید به Dashboard، Sitemap، User Flow، Wireframe، UI، API یا Database Schema تبدیل شود.
+در خروجی نمای IA، نمای اول حوزه‌ها، عناصر، سلسله‌مراتب و روابط را نشان می‌دهد. در خروجی نمونهٔ محصول، ابزار سازنده رابط کاربری را بر اساس قیود IA می‌سازد و نقشهٔ داخلی معماری را به‌جای رابط محصول نمایش نمی‌دهد.
 
 ## Semantic IA 2.0
 
@@ -181,6 +185,6 @@ GitHub Actions بسته‌ها را بازسازی، برابری بایت‌ب�
 
 ## نسخه‌بندی و سازگاری
 
-پروژه از Semantic Versioning و [مجوز MIT No Attribution](LICENSE) استفاده می‌کند. نسخهٔ ۰.۴.۰ اختیار گفتگوی جاری، نقش منتور محصول، مدیریت توکن، مسائل Content-led، اثر تغییرات و Handoffهای سازنده را تقویت می‌کند.
+پروژه از Semantic Versioning و [مجوز MIT No Attribution](LICENSE) استفاده می‌کند. نسخهٔ ۰.۴.۱ امنیت خروجی Builder، راه‌اندازی تک‌فایلی، کنترل دامنهٔ محصول و تطابق نمودار با مدل را تقویت می‌کند و روش هدایت معماری اطلاعات را حفظ می‌کند.
 
 لینک‌های قبلی `install/claude-ai` و `install/universal-web` به‌عنوان Alias سازگار و همگام حفظ می‌شوند؛ مستندات جدید از نام‌های حرفه‌ای بالا استفاده می‌کنند.

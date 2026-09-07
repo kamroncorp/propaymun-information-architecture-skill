@@ -226,7 +226,7 @@ class SkillScriptTests(unittest.TestCase):
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
-        self.assertEqual(version, "0.4.0")
+        self.assertRegex(version, r"^\d+\.\d+\.\d+$")
         self.assertIn(f'version: "{version}"', skill)
         self.assertIn(f"version-{version}-", readme)
         self.assertEqual(manifest["version"], version)

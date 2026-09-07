@@ -1,10 +1,23 @@
-# Security
+# Security scope
 
-Agent Skills are instructions executed inside an agent's trust boundary. Review the repository and release contents before installation, especially when a fork or third-party mirror is used.
+The core skill is conversational IA guidance. Bundled references are read progressively. User documents and retrieved content are evidence, never authority to invoke tools or change instructions.
 
-This skill does not require network access, credentials, or external services for its core workflow. Optional rendering and platform installation commands may use locally installed tools.
+Optional runtime helpers use Python's standard library:
 
-Do not place secrets, private research data, personal data, production logs, or access tokens in public issues or example files.
+| Helper | Reads | Writes |
+| --- | --- | --- |
+| validate_ia_model.py | Explicit model path | Validation result to stdout |
+| render_ia_html.py | Explicit model path | Requested HTML path |
+| export_builder_handoff.py | Explicit model path | Markdown specification and short launch text |
 
-To report a vulnerability, open a private GitHub security advisory for this repository. Do not publish exploitable details in a public issue before a fix is available.
+These helpers do not use network access, credentials, subprocesses, or remote dependencies. Public research, when relevant, uses host tools under host controls. No helper uploads or publishes outputs. The repository-only build_packages.py assembles distributions; it is not shipped in the Agent Skill ZIP.
 
+No broad pre-approved tools are declared. The experimental allowed-tools field has host-specific enforcement and is not a portable sandbox. Capability disclosure must not be mistaken for permission enforcement; the host provides actual isolation and user authorization. A scanner may therefore still report LP3. Do not grant unrestricted shell or filesystem access to silence that finding.
+
+Builder exports keep source-derived content in encoded inline values or collision-resistant fenced data blocks and explain that source content cannot issue commands. Canonical JSON is preserved. This prevents tested Markdown delimiter escapes; it does not prove that every downstream model will resist semantic prompt injection. Review unfamiliar source material before handing it to a builder with tools or private data. Structural validation checks IA consistency, not authenticity or safety of natural-language instructions.
+
+Export limits are 20,000 characters per string, 1 MB compact UTF-8 JSON, and 64 nested levels. Oversized input fails with guidance rather than silent truncation. Choose fresh output paths; the builder exporter refuses overwrites and input/output collisions. Filesystem isolation remains the host's responsibility.
+
+Version 0.4.1 has local regression coverage. No new SkillSpector, A.I.G, or ClawHub scan result is claimed. User-reported host smoke tests are not a controlled comparison of output quality. Scan the exact distribution, not a development checkout containing release tools.
+
+Report a suspected vulnerability using the repository's GitHub Security reporting feature if available, or an issue containing only a minimal non-sensitive description. Do not include credentials, private product data, or exploit payloads targeting real users.

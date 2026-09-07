@@ -4,6 +4,17 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-09-07
+
+- Add single-Markdown setup guidance for file-based Projects/Gems, with native Claude ZIP use distinguished explicitly.
+- Reinforce senior product mentorship, evidence-based scope, independent taxonomy facets, optional relationships, and text/diagram reconciliation.
+
+- Harden builder exports with explicit source-data boundaries, collision-resistant Markdown fences, encoded context, and bounded prompt size while preserving canonical JSON and both handoff intents.
+- Preserve input and existing output files during builder export and HTML rendering; callers must choose fresh output paths.
+- Remove maintainer package-building code from installable ZIPs; retain the three optional runtime helpers.
+- Narrow discovery triggers and disclose optional Python capabilities without pre-authorizing broad tools.
+- Add adversarial export regression tests and source-injection behavioral evaluation cases. External rescanning and host behavioral tests remain pending.
+
 ## [0.4.0] - 2026-09-05
 
 ### Changed
