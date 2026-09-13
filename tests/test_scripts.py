@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import importlib.util
 import re
 import subprocess
 import sys
@@ -41,6 +42,32 @@ class SkillScriptTests(unittest.TestCase):
         self.assertTrue(any("model_version" in error for error in payload["errors"]))
         self.assertTrue(any("missing domain" in error for error in payload["errors"]))
         self.assertTrue(any("blocking unknown" in error for error in payload["errors"]))
+
+    def test_valid_companion_models_pass(self) -> None:
+        for filename in ("valid-product-sitemap.json", "valid-user-flow.json"):
+            with self.subTest(filename=filename):
+                result = self.run_script("validate_companion_model.py", str(FIXTURES / filename), "--json")
+                self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
+                payload = json.loads(result.stdout)
+                self.assertTrue(payload["valid"])
+                self.assertEqual(payload["errors"], [])
+
+    def test_invalid_companion_models_fail_with_semantic_errors(self) -> None:
+        sitemap = self.run_script("validate_companion_model.py", str(FIXTURES / "invalid-product-sitemap.json"), "--json")
+        self.assertEqual(sitemap.returncode, 1)
+        sitemap_payload = json.loads(sitemap.stdout)
+        self.assertTrue(any("cycle" in error for error in sitemap_payload["errors"]))
+        self.assertTrue(any("missing to destination" in error for error in sitemap_payload["errors"]))
+        self.assertTrue(any("semantic_refs" in error for error in sitemap_payload["errors"]))
+        self.assertTrue(any("destination_kind" in error for error in sitemap_payload["errors"]))
+
+        flow = self.run_script("validate_companion_model.py", str(FIXTURES / "invalid-user-flow.json"), "--json")
+        self.assertEqual(flow.returncode, 1)
+        flow_payload = json.loads(flow.stdout)
+        self.assertTrue(any("at least two outgoing" in error for error in flow_payload["errors"]))
+        self.assertTrue(any("recovery transition" in error for error in flow_payload["errors"]))
+        self.assertTrue(any("unreachable" in error for error in flow_payload["errors"]))
+        self.assertTrue(any("label every outgoing condition" in error for error in flow_payload["errors"]))
 
     def test_every_item_requires_an_existing_domain(self) -> None:
         data = json.loads((FIXTURES / "valid-semantic-ia.json").read_text(encoding="utf-8"))
@@ -107,6 +134,8 @@ class SkillScriptTests(unittest.TestCase):
             self.assertIn("ProPaymun IA Workspace Kit", packaged)
             self.assertIn("adaptive sufficiency loop", packaged.lower())
             self.assertIn("source: references/localization.md", packaged)
+            self.assertIn("source: references/sitemap.md", packaged)
+            self.assertIn("source: references/user-flow.md", packaged)
             self.assertIn("source: references/visual-builder-handoff.md", packaged)
             self.assertIn("short copy-ready launch instruction", packaged)
             self.assertNotIn("](references/", packaged)
@@ -142,8 +171,13 @@ class SkillScriptTests(unittest.TestCase):
             self.assertIn(base + "SKILL.md", names)
             self.assertIn(base + "references/discovery.md", names)
             self.assertIn(base + "references/localization.md", names)
+            self.assertIn(base + "references/sitemap.md", names)
+            self.assertIn(base + "references/user-flow.md", names)
             self.assertIn(base + "references/visual-builder-handoff.md", names)
             self.assertIn(base + "schema/semantic-ia.schema.json", names)
+            self.assertIn(base + "schema/product-sitemap.schema.json", names)
+            self.assertIn(base + "schema/user-flow.schema.json", names)
+            self.assertIn(base + "scripts/validate_companion_model.py", names)
             self.assertIn(base + "scripts/export_builder_handoff.py", names)
             self.assertNotIn(base + "tests/test_scripts.py", names)
 
@@ -162,6 +196,8 @@ class SkillScriptTests(unittest.TestCase):
             prompt = specification.read_text(encoding="utf-8")
             launch_text = launch.read_text(encoding="utf-8")
             self.assertIn("Build a Connected Information Architecture Blueprint", prompt)
+            self.assertIn("IA Reference Lock", prompt)
+            self.assertIn("semantic drift", prompt)
             self.assertIn("Domain-to-item map", prompt)
             self.assertIn("Projects reference working documents", prompt)
             self.assertIn("at least about two-thirds", prompt)
@@ -206,6 +242,7 @@ class SkillScriptTests(unittest.TestCase):
             prompt = specification.read_text(encoding="utf-8")
             launch_text = launch.read_text(encoding="utf-8")
             self.assertIn("Product Prototype from an Approved Information Architecture", prompt)
+            self.assertIn("IA Reference Lock", prompt)
             self.assertIn("Do not present the internal IA diagram as the product interface", prompt)
             self.assertIn("product's information-architecture constraints", launch_text)
 
@@ -233,20 +270,53 @@ class SkillScriptTests(unittest.TestCase):
         self.assertEqual(manifest["packages"]["agent_skill"]["display_name"], "Agent Skill Package")
         self.assertEqual(manifest["packages"]["workspace_kit"]["display_name"], "Workspace Kit")
 
-    def test_core_scope_routes_neighboring_maps_without_producing_them(self) -> None:
+    def test_core_scope_preserves_ia_while_composing_requested_derivatives(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         self.assertRegex(skill, re.compile(r"sitemap.*page/destination", flags=re.IGNORECASE))
-        self.assertRegex(skill, re.compile(r"user flow.*action/state", flags=re.IGNORECASE))
-        self.assertIn("do not create either one", skill)
-        self.assertIn("hierarchical, connected structural view", skill)
+        self.assertRegex(skill, re.compile(r"user flow.*goal-directed action", flags=re.IGNORECASE))
+        self.assertIn("minimum semantic substrate", skill)
+        self.assertIn("IA Reference Lock", skill)
+        self.assertIn("XML/SEO", skill)
+
+    def test_decision_kernel_supports_novices_without_serial_questions(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        workspace = (PACKAGES / "workspace-kit" / "propaymun-ia-workspace-kit.md").read_text(encoding="utf-8")
+        for content in (skill, workspace):
+            self.assertIn("reversible", content.lower())
+            self.assertIn("serial", content.lower())
+            self.assertIn("ProPaymun", content)
+
+    def test_high_priority_core_hides_internal_labels_and_adjacent_commitments(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        instructions = (PACKAGES / "workspace-kit" / "WORKSPACE_INSTRUCTIONS.md").read_text(encoding="utf-8")
+        for content in (skill, instructions):
+            lowered = content.lower()
+            self.assertIn("ordinary conversation", lowered)
+            self.assertIn("recommendation is not a", lowered)
+            self.assertIn("registration", lowered)
+            self.assertIn("growth", lowered)
+        self.assertNotIn("recommend a clear Proposed starting point", instructions)
+
+    def test_sitemap_contract_separates_destinations_from_neighboring_concepts(self) -> None:
+        sitemap = (ROOT / "references" / "sitemap.md").read_text(encoding="utf-8")
+        schema = json.loads((ROOT / "schema" / "product-sitemap.schema.json").read_text(encoding="utf-8"))
+        self.assertIn("view or filter", sitemap)
+        self.assertIn("capability", sitemap)
+        self.assertIn("action/control", sitemap)
+        destination = schema["properties"]["destinations"]["items"]
+        self.assertIn("destination_kind", destination["required"])
+        self.assertIn("views", schema["properties"])
+        self.assertIn("states", schema["properties"])
+        self.assertIn("capabilities", schema["properties"])
 
     def test_adaptive_stop_and_localization_are_in_both_packages(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         workspace = (PACKAGES / "workspace-kit" / "propaymun-ia-workspace-kit.md").read_text(encoding="utf-8")
         for content in (skill, workspace):
-            self.assertIn("Adaptive sufficiency loop", content)
-            self.assertIn("Repeat this sufficiency check", content)
-            self.assertIn("Never infer a country", content)
+            lowered = content.lower()
+            self.assertIn("adaptive sufficiency", lowered)
+            self.assertIn("repeat this sufficiency check", lowered)
+            self.assertIn("never infer a country", lowered)
             self.assertIn("short copy-ready launch instruction", content)
 
     def test_memory_isolation_and_token_discipline_are_in_both_packages(self) -> None:
@@ -255,6 +325,10 @@ class SkillScriptTests(unittest.TestCase):
         for content in (skill, workspace):
             self.assertIn("Current-turn authority and memory isolation", content)
             self.assertIn("Never create a file, presentation, diagram", content)
+            self.assertIn("Do not proactively retrieve, search, read, create, or update persistent memory", content)
+            self.assertIn("portable continuation note", content)
+            self.assertIn("Project Knowledge", content)
+            self.assertIn("Gem Knowledge", content)
             self.assertIn("Relevance and token discipline", content)
             self.assertIn("one representation at a time", content)
 
@@ -290,6 +364,122 @@ class SkillScriptTests(unittest.TestCase):
         self.assertIn("Route by capability, not brand", routing)
         self.assertIn("complete fallback", routing)
         self.assertIn("Do not require either companion", routing)
+
+    def test_companion_activation_and_portable_contract_are_explicit(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        instructions = (PACKAGES / "workspace-kit" / "WORKSPACE_INSTRUCTIONS.md").read_text(encoding="utf-8")
+        manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
+        for content in (skill, instructions):
+            self.assertIn("product/UX sitemap", content)
+            self.assertIn("user flow", content.lower())
+            self.assertIn("minimum semantic substrate", content.lower())
+        self.assertEqual(manifest["capabilities"]["companions"], ["product-sitemap", "user-flow"])
+        self.assertEqual(manifest["companion_models"]["product_sitemap"], "schema/product-sitemap.schema.json")
+
+    def test_behavioral_eval_has_critical_companion_and_memory_cases(self) -> None:
+        cases = (ROOT / "evals" / "cases.yaml").read_text(encoding="utf-8")
+        self.assertIn("version: 5", cases)
+        self.assertIn("evaluation_contract:", cases)
+        self.assertIn("journeys:", cases)
+        for case_id in (
+            "salon-coherent-provisional-pass",
+            "explicit-persistent-memory-mutation",
+            "standalone-product-sitemap",
+            "xml-sitemap-ambiguity",
+            "standalone-stateful-user-flow",
+            "compound-ia-sitemap-flow",
+            "workspace-kit-file-only-companions",
+            "novice-status-language",
+            "no-growth-commitment-drift",
+            "sitemap-abstraction-separation",
+            "rendered-flow-branch-legibility",
+            "stage-complete-pause",
+            "continue-later-without-persistence",
+            "explicit-memory-continuation",
+            "cross-project-memory-collision",
+            "detailed-sitemap-destination-completeness",
+            "preserve-explicit-product-direction",
+            "social-commerce-from-idea-to-sitemap",
+            "contaminated-memory-new-project",
+            "pause-resume-portable-note",
+            "explicit-memory-save-capability-split",
+            "same-brief-cross-package-parity",
+            "external-payment-stateful-flow",
+        ):
+            self.assertIn(f"id: {case_id}", cases)
+
+    def test_eval_validator_requires_deep_journey_fields(self) -> None:
+        validator = (ROOT / "scripts" / "validate_eval_cases.py").read_text(encoding="utf-8")
+        requirements = (ROOT / "evals" / "requirements.txt").read_text(encoding="utf-8")
+        for field in (
+            "rubric_dimensions",
+            "critical_failures",
+            "unmeasured_layers",
+            "multi_turn_journey_count",
+            "package_routes",
+        ):
+            self.assertIn(field, validator)
+        self.assertIn("PyYAML==", requirements)
+
+    def test_eval_validator_rejects_shallow_or_malformed_catalogs_without_yaml_dependency(self) -> None:
+        path = ROOT / "scripts" / "validate_eval_cases.py"
+        spec = importlib.util.spec_from_file_location("validate_eval_cases", path)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        result = module.validate_data(
+            {
+                "version": 5,
+                "skill": "propaymun-information-architecture",
+                "evaluation_contract": {},
+                "cases": [{"id": "duplicate"}],
+                "journeys": [
+                    {
+                        "id": "duplicate",
+                        "purpose": "Too shallow",
+                        "priority": "critical",
+                        "package_routes": ["agent-skill"],
+                        "environment": {},
+                        "turns": [{"user": "Test", "observe": {"must": [], "must_not": []}}],
+                        "rubric_dimensions": [],
+                        "critical_failures": [],
+                        "unmeasured_layers": [],
+                    }
+                ],
+            }
+        )
+        self.assertFalse(result["valid"])
+        joined = "\n".join(result["errors"])
+        self.assertIn("duplicate case or journey ids", joined)
+        self.assertIn("at least three journeys", joined)
+        self.assertIn("rubric_dimensions", joined)
+
+    def test_phase_closure_and_portable_continuation_are_in_both_packages(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        workspace = (PACKAGES / "workspace-kit" / "propaymun-ia-workspace-kit.md").read_text(encoding="utf-8")
+        discovery = (ROOT / "references" / "discovery.md").read_text(encoding="utf-8")
+        for content in (skill, workspace):
+            self.assertIn("stage-complete summary", content)
+            self.assertIn("confirmed choices", content)
+            self.assertIn("reversible assumptions", content)
+            self.assertIn("optional continuations", content)
+        self.assertIn("Phase closure and continuation", discovery)
+        self.assertIn("project name or disambiguating identifier", discovery)
+
+    def test_marketplace_modeling_and_sitemap_edge_cases_are_documented(self) -> None:
+        modeling = (ROOT / "references" / "modeling.md").read_text(encoding="utf-8")
+        sitemap = (ROOT / "references" / "sitemap.md").read_text(encoding="utf-8")
+        self.assertIn("person or account distinct from the roles", modeling)
+        self.assertIn("minimum trust and safety structure", modeling)
+        self.assertIn("access gate is not the structural parent", sitemap)
+        self.assertIn("cart is transient pre-purchase", sitemap)
+        self.assertIn("must not replace the requested sitemap", sitemap)
+
+    def test_release_gate_does_not_hide_critical_failures_in_aggregate(self) -> None:
+        rubric = (ROOT / "evals" / "RUBRIC.md").read_text(encoding="utf-8")
+        self.assertIn("cannot override a critical failure", rubric)
+        self.assertNotIn("at least 85%", rubric)
 
 
 if __name__ == "__main__":

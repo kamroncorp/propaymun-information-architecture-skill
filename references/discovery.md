@@ -24,29 +24,38 @@ An unknown blocks only the decision that depends on it. Continue useful independ
 
 ## Host memory and prior preferences
 
-Persistent memory can help with language and harmless presentation preferences, but it is not a current request or reliable product evidence.
+Do not proactively retrieve or search persistent memory or prior-chat project records unless the user explicitly asks in the current conversation. Host-supplied memory can help with language and harmless presentation preferences, but it is not a current request or reliable product evidence.
 
 - Do not create files or artifacts because another chat established an “always give me a file” preference.
-- Do not reuse remembered roles, rules, research, approvals, or architecture decisions without current evidence.
+- Without an explicit current request, do not create, update, persist, or claim to update Memory, Project Knowledge, Gem Knowledge, workspace context, or another durable project record.
+- A statement such as “continue later,” “keep this,” or “we will return to it” does not by itself authorize persistence. If “save this” could mean a file, project note, or host memory and the destination changes the action, ask one short clarification.
+- Do not reuse remembered roles, rules, research, approvals, or architecture decisions as confirmed facts. Verify the project identity and reconcile the prior context with the current brief first.
 - When memory conflicts with the current request, follow the current request.
+- Treat stale or same-name project memory as prior context until the user confirms it still applies. Do not merge different projects merely because their domain, title, or actors resemble one another.
 - When a remembered preference would materially change effort, format, scope, or an external action, ask at the point of decision or use the non-mutating conversational default.
+- For cross-session continuity, prefer a compact portable continuation note. If the user explicitly requests persistent storage, show or state the minimal intended payload, exclude secrets, sensitive personal data, raw transcripts, and unsupported assumptions presented as facts, then use only a capability evidenced in the current host.
+- If durable memory is unavailable or success is uncertain, provide the continuation note and say it was not stored. Never invent a successful update. If the host changes memory automatically outside the agent's control, do not treat that event as reliable authorization or evidence.
 
 ## First turn
 
 ### No usable brief
 
-Ask a compact product-language round covering the minimum needed to begin:
+First determine whether the user wants orientation, help shaping an idea, a quick first structure, full IA work, an audit, or a derivative from existing IA. Infer this from their wording whenever possible; never make them choose an internal mode.
+
+For an idea-stage or novice request, provide a small useful frame before asking anything: reflect the product idea, explain the first architecture consequence in ordinary language, and propose a reversible starting point. Then ask the single question with the highest expected effect on the next model decision. Typical starting information includes:
 
 - What product or service is being designed?
 - Who mainly uses it and what are they trying to accomplish?
 - Is it new, a redesign, or an audit of an existing product?
 - What brief, research, inventory, analytics, screenshots, policies, or current structure are available?
 
-Then stop. Do not create a placeholder architecture or artifact.
+Do not demand all four answers at once. Ask a compact group only when the answers are tightly coupled. A visible provisional sketch is allowed when it helps the user recognize the problem and cannot reasonably be mistaken for a completed architecture; do not create a durable artifact yet.
 
 ### Partial or substantial brief
 
-First inspect all provided material. Reflect the product and scope in a few lines. Ask only questions that distinguish plausible architectures, normally no more than five. Then stop.
+First inspect all provided material. Reflect the product and scope in a few lines. Ask only the smallest question or compact interdependent group that distinguishes plausible architectures. Do not use a numeric question quota.
+
+As soon as the available context supports a responsible baseline, prefer one coherent useful pass over asking about each modeling layer in a separate turn. Cover the model slice needed for the user's current outcome with reversible defaults, then ask again only when a newly reached high-impact decision lacks a responsible default. This is an outcome-based sufficiency judgment, not a fixed question or decision count.
 
 ### Sufficient brief
 
@@ -100,10 +109,14 @@ If the user replies “yes,” “continue,” “I don't know,” or gives no n
 2. offer a small set of plausible patterns when the user needs help recognizing the choice;
 3. infer or recommend a defensible default from the brief and domain evidence;
 4. state the default and its user-visible consequence briefly;
-5. mark it Proposed or Inferred;
+5. keep its Proposed or Inferred status in internal state, and describe it naturally to the user;
 6. continue unless the consequence is unsafe, legally sensitive, or difficult to reverse.
 
+Continue through a coherent slice before asking another question. Do not turn one resolved uncertainty into an immediate sequence of increasingly specialist questions.
+
 When two choices are both consequential and no defensible default exists, explain the difference in plain language and ask one decision question.
+
+Do not turn ordinary product mentoring into an implicit growth exercise. Registration, login, synchronization, payment, monetization, promotion, engagement loops, and conversion or retention metrics are separate decisions. Introduce them only when the brief, evidence, or the affected architecture requires them. A user accepting a convenient starting structure does not accept these neighboring commitments.
 
 ## Decision pauses
 
@@ -114,6 +127,32 @@ Pause only for a real decision, not at a fixed number of checkpoints. A useful p
 - at most a few answer options when they genuinely simplify the decision.
 
 Do not lead with internal section names such as “Checkpoint 3,” “Navigation Model,” or “Governance” unless the audience requested technical process detail.
+
+## Phase closure and continuation
+
+A useful phase can end before the whole IA is complete. When the user asks for a summary, signals a pause, wants to decide whether to continue, or the current slice has reached its stated purpose, give the summary before any next-step suggestion. Make it complete for that stage rather than a teaser for another question.
+
+Include only what is relevant:
+
+- current product and problem understanding;
+- choices the user has actually confirmed;
+- reversible assumptions used to make progress;
+- consequential unknowns or risks that remain;
+- what this phase covers and deliberately does not cover;
+- the few most relevant optional continuations.
+
+Do not automatically open the next layer, generate a neighboring artifact, or end every coherent response with a question. If the user explicitly stops, close without a new decision request. When continued work is likely but not requested, an informational sentence is enough: the user may later deepen the IA, request a product sitemap, choose one goal for a user flow, or stop here.
+
+For work that may continue in another session, offer—but do not create or persist without acceptance—a portable continuation note containing:
+
+- project name or disambiguating identifier;
+- current stage and intended outcome;
+- confirmed decisions;
+- reversible assumptions and open questions;
+- produced outputs and their versions or dates;
+- safest next useful action.
+
+The note is a handoff aid, not hidden memory. Keep it small, reviewable, and attachable so the workflow remains portable in hosts without native Skill or memory support.
 
 ## Export request
 
@@ -129,7 +168,11 @@ Confirm the requested deliverable from the current conversation. A remembered ou
 
 ## Quick provisional work
 
-Use only after an explicit request for speed, assumptions, or no questions. Keep the result compact: product understanding, candidate objects/content, initial organization and retrieval direction, material assumptions, and the next best check. Do not imitate a complete report.
+Use after an explicit request for speed, assumptions, or no questions, and also when an idea-stage user cannot yet answer specialist questions but a reversible proposal would teach them what matters. Keep the result compact: product understanding, candidate objects/content, initial organization and retrieval direction, material assumptions, and the next best check. Label it as a proposed starting point and do not imitate a complete report.
+
+## Business and operating-model coupling
+
+Business and IA decisions can shape each other. Inspect monetization, payment, commission, subscription, settlement, promotion, entitlement, ownership, or operational capacity only when they change identities, transactions, visibility, access, lifecycle, labels, or findability. Explain the structural consequence in product language. Do not claim that the business model must be decided before or after IA, and do not expand IA discovery into a complete business-model exercise without a request.
 
 ## Redesign and audit intake
 

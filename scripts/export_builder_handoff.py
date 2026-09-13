@@ -113,6 +113,44 @@ def structural_summary(model: dict) -> str:
 {bullet(relationship_lines)}"""
 
 
+def reference_lock(model: dict) -> dict:
+    """Build a compact, traceable translation contract from the canonical IA."""
+    meta = model.get("meta", {})
+    return {
+        "source": "canonical-semantic-ia",
+        "model_version": meta.get("model_version"),
+        "readiness": meta.get("handoff", {}).get("readiness", "not-ready"),
+        "approved_structure": {
+            "domains": [{"id": entry.get("id"), "label": entry.get("label")} for entry in model.get("domains", [])],
+            "items": [{"id": entry.get("id"), "label": entry.get("label"), "domain_id": entry.get("domain_id"), "parent_id": entry.get("parent_id")} for entry in model.get("items", [])],
+            "relationships": [{"id": entry.get("id"), "from": entry.get("from"), "to": entry.get("to"), "type": entry.get("type"), "label": entry.get("label")} for entry in model.get("relationships", [])],
+            "labels": deepcopy(model.get("labels", [])),
+        },
+        "findability_constraints": {
+            "navigation_systems": deepcopy(model.get("navigation_systems", [])),
+            "search": deepcopy(model.get("search", {})),
+        },
+        "access_privacy_constraints": {
+            "roles": deepcopy(model.get("roles", [])),
+            "permissions": deepcopy(model.get("permissions", [])),
+        },
+        "unresolved": {
+            "assumptions": [entry.get("id") for entry in model.get("assumptions", [])],
+            "unknowns": [entry.get("id") for entry in model.get("unknowns", [])],
+            "conflicts": [entry.get("id") for entry in model.get("conflicts", [])],
+        },
+        "invariants": [
+            "Preserve canonical item identity and domain assignment",
+            "Preserve approved labels, relationship meaning, findability, and access constraints",
+            "Keep unresolved assumptions visible until confirmed",
+        ],
+        "adaptation_boundaries": [
+            "Presentation, layout, and interaction choices may be proposed by the downstream capability",
+            "Structural changes must be identified as proposals",
+        ],
+    }
+
+
 def export_specification(model: dict, target: str, intent: str = "ia-blueprint") -> str:
     check_export_size(model)
     errors, warnings = validate_model(model)
@@ -126,6 +164,7 @@ def export_specification(model: dict, target: str, intent: str = "ia-blueprint")
 
     target_name = TARGET_NAMES[target]
     payload = data_block(json.dumps(model, ensure_ascii=False, indent=2), "json")
+    lock_payload = data_block(json.dumps(reference_lock(model), ensure_ascii=False, indent=2), "json")
     warning_block = data_block(bullet(warnings) if warnings else "No structural validator warnings")
     locale = inline_data(meta.get("locale_context", {}))
     # Preserve the canonical payload; encode only values interpolated into prose.
@@ -135,7 +174,7 @@ def export_specification(model: dict, target: str, intent: str = "ia-blueprint")
         meta[key] = inline_data(meta.get(key))
     meta["handoff"]["purpose"] = inline_data(meta["handoff"].get("purpose"))
     if intent == "product-prototype":
-        return product_prototype_specification(model, target_name, payload, warning_block, locale)
+        return product_prototype_specification(model, target_name, payload, lock_payload, warning_block, locale)
 
     return f"""# Build a Connected Information Architecture Blueprint
 
@@ -165,6 +204,12 @@ You are using {target_name} as a renderer of an already-developed information ar
 This JSON is the source of truth. Every visible domain, item, label, state, permission, and connection must trace to it.
 
 {payload}
+
+## IA Reference Lock
+
+Use this lock to review every translation decision. A difference must be classified as an allowed adaptation, a new proposal, semantic drift, or an implementation defect.
+
+{lock_payload}
 
 ## Primary-view requirements
 
@@ -204,7 +249,7 @@ The connected blueprint must not be replaced by a tabbed dashboard, card catalog
 """
 
 
-def product_prototype_specification(model: dict, target_name: str, payload: str, warning_block: str, locale: str) -> str:
+def product_prototype_specification(model: dict, target_name: str, payload: str, lock_payload: str, warning_block: str, locale: str) -> str:
     meta = model["meta"]
     return f"""# Build a Product Prototype from an Approved Information Architecture
 
@@ -231,6 +276,12 @@ Use {target_name} as the downstream product-design and build environment. Treat 
 ## Canonical Semantic IA
 
 {payload}
+
+## IA Reference Lock
+
+Use this lock as the translation contract. Classify every difference as an allowed adaptation, a new proposal, semantic drift, or an implementation defect.
+
+{lock_payload}
 
 ## Product-build requirements
 

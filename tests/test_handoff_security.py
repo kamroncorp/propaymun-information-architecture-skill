@@ -27,8 +27,9 @@ class HandoffSecurityTests(unittest.TestCase):
                     original = json.dumps(model, ensure_ascii=False)
                     output = export_specification(model, "figma-make", intent)
                     blocks = re.findall(r"^(`{3,})json\n(.*?)\n\1$", output, re.M | re.S)
-                    self.assertEqual(len(blocks), 1)
-                    self.assertEqual(json.loads(blocks[0][1]), model)
+                    decoded = [json.loads(block[1]) for block in blocks]
+                    self.assertEqual(len(blocks), 2)
+                    self.assertEqual(sum(value == model for value in decoded), 1)
                     self.assertEqual(json.dumps(model, ensure_ascii=False), original)
                     # Parse fence state: no attacker-controlled heading escapes.
                     active = None
@@ -69,7 +70,7 @@ class HandoffSecurityTests(unittest.TestCase):
         import zipfile
         with zipfile.ZipFile(ROOT / "packages/agent-skill/propaymun-information-architecture.zip") as archive:
             scripts = {Path(name).name for name in archive.namelist() if "/scripts/" in name}
-        self.assertEqual(scripts, {"validate_ia_model.py", "render_ia_html.py", "export_builder_handoff.py"})
+        self.assertEqual(scripts, {"validate_ia_model.py", "validate_companion_model.py", "render_ia_html.py", "export_builder_handoff.py"})
 
     def test_html_renderer_preserves_existing_files(self):
         from render_ia_html import main as render_main

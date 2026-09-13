@@ -1,10 +1,10 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-0.4.1-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.0-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
-Turn ordinary product context into clear, evidence-aware information architecture—even when the user does not know IA terminology.
+Turn ordinary product context into clear, evidence-aware information architecture, product sitemaps, and user flows—even when the user does not know the terminology.
 
 **ProPaymun** comes from the Persian «پروپیمان»: full and complete. Here, complete means decision-ready, understandable, and honest about uncertainty.
 
@@ -14,7 +14,7 @@ Turn ordinary product context into clear, evidence-aware information architectur
 
 For one reusable file across file-capable chats, Projects, and Gemini Gems, use the [Workspace Kit Markdown](packages/workspace-kit/propaymun-ia-workspace-kit.md). Its opening section includes a short instruction to paste into the host. Native Claude Skills installation uses the ZIP instead. These distributions share one maintained IA method; the Markdown does not include executable helpers. Do not upload the Agent Skill ZIP to Gemini Knowledge.
 
-The conversational workflow needs no tools. Optional bundled Python helpers validate IA JSON, render HTML, or export builder specifications when requested. They use the standard library and do not access the network or credentials. Host permissions remain in force; installing the skill does not authorize file creation or script execution. Maintainer packaging tools are excluded from the installable ZIP. See [security scope and limitations](SECURITY.md).
+The conversational workflow needs no tools. Optional bundled Python helpers validate IA, product-sitemap, or user-flow JSON, render IA HTML, or export builder specifications when requested. They use the standard library and do not access the network or credentials. Host permissions remain in force; installing the skill does not authorize file creation, persistent-memory changes, or script execution. Maintainer packaging tools are excluded from the installable ZIP. See [security scope and limitations](SECURITY.md).
 
 | Package | Best for | Download |
 |---|---|---|
@@ -39,7 +39,7 @@ For a workspace that explicitly provides both persistent instructions and file k
 
 1. add [`propaymun-ia-workspace-kit.md`](packages/workspace-kit/propaymun-ia-workspace-kit.md) as project knowledge;
 2. paste the short setup instruction from the Markdown file into the host's Instructions field; the separate [Workspace instructions](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) are an optional fuller alternative;
-3. describe the product naturally.
+3. ask for information architecture, a product/UX sitemap, or a user flow in ordinary language.
 
 This is configuration through project knowledge, not a claim of native Skill installation.
 
@@ -76,9 +76,10 @@ one_off_file_use: attach-workspace-kit-and-paste-instructions
 do_not_claim: [native-installation, persistent-behavior, automatic-triggering, unverified-cli-support]
 package_manifest: packages/manifest.json
 semantic_schema: schema/semantic-ia.schema.json
+companion_schemas: [schema/product-sitemap.schema.json, schema/user-flow.schema.json]
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v0.4.1-published
+release_state: v1.0.0
 ```
 
 An AI installer should select exactly one host-appropriate package, preserve the package contents, and avoid claiming native installation when it only attached a knowledge file.
@@ -88,15 +89,18 @@ An AI installer should select exactly one host-appropriate package, preserve the
 - inspects the brief, attachments, conversation, and authorized sources before asking;
 - reassesses sufficiency throughout the work instead of asking a fixed first-round questionnaire;
 - asks only questions whose answers can change the next architecture decision, then stops by itself;
-- acts as a product-lead mentor, translating IA choices into product consequences for non-specialists;
-- keeps persistent memory from silently changing the current scope, evidence, or deliverable;
+- infers whether the user needs orientation, idea exploration, a provisional structure, full IA, an audit, a focused product sitemap or user flow, or a downstream transformation;
+- treats “I don’t know” as a mentoring signal: proposes one reversible starting point and continues without serial interrogation;
+- translates structure into user, business, and operational consequences without requiring product or IA expertise;
+- keeps persistent memory from silently changing the current scope, evidence, deliverable, or durable project context;
 - manages context with compact deltas, progressive disclosure, and one representation at a time;
 - separates language from locale, jurisdiction, culture, and operating model;
 - recognizes content/taxonomy, object/operation, and hybrid IA problems before choosing model depth;
 - models information domains, canonical items, hierarchy, typed relationships, taxonomy, labels, metadata, findability, access, lifecycle, and governance;
 - separates provided facts, observations, confirmation, inference, proposals, conflicts, and unknowns;
 - uses current public research when it can materially improve the IA and browsing is available;
-- keeps sitemap, user flow, product UI, API, and database design outside this skill.
+- uses accepted IA as the semantic source for requested downstream work, while allowing a standalone product sitemap or stateful user flow to start from a versioned minimum semantic substrate;
+- distinguishes a product/UX sitemap from an XML/SEO sitemap and chooses the artifact by decision purpose.
 
 ## How the adaptive workflow behaves
 
@@ -106,12 +110,17 @@ The user does not choose a mode or manage checkpoints.
 inspect context
 → model the next consequential layer
 → detect an architecture-changing unknown
-→ ask the smallest useful question and stop
+→ complete safe independent work
+→ ask the smallest useful question for the affected decision and stop
 → continue after the answer
 → verify handoff readiness before creating an artifact
 ```
 
-If the user does not know, the skill can explain a few plausible patterns and recommend a clearly marked provisional default. It never turns language or cultural stereotypes into confirmed product rules.
+As soon as the available context supports a responsible baseline, the skill gives one coherent useful pass instead of asking about every modeling layer separately. If the user does not know, it explains one reversible starting point in ordinary language and continues through a useful slice before asking again. Internal status codes remain in structured handoffs rather than novice-facing conversation. Alternatives appear only when they make the choice easier. It never turns language or cultural stereotypes into confirmed product rules or silently adds growth, registration, payment, or monetization commitments.
+
+## From IA to the output you need
+
+IA remains the source of truth, not the ceiling of the workflow. Once it is ready enough for the intended decision, an explicit request can turn it into a diagram, UI brief or image, prototype/build prompt, product sitemap, user flow, document/presentation, or technical mapping. Internally, the skill captures an **IA Reference Lock** for the approved structure, labels, findability, access/privacy, evidence, unresolved assumptions, and adaptation boundaries; the technical name appears only when a team or machine handoff needs it. A standalone sitemap or flow uses a smaller versioned semantic substrate instead of forcing complete IA discovery. If the current environment cannot directly produce the requested format, it returns a truthful self-contained handoff.
 
 ## Visual Builder Handoff
 
@@ -181,10 +190,10 @@ python -m unittest discover -s tests -v
 python /path/to/skill-creator/scripts/quick_validate.py .
 ```
 
-GitHub Actions rebuilds the packages, verifies byte-for-byte parity, validates the Semantic IA fixture, and runs the deterministic test suite.
+GitHub Actions rebuilds the packages, verifies byte-for-byte parity, validates the semantic and companion-model fixtures, and runs the deterministic test suite. The cross-host evidence and release criteria are documented in [the 1.0 release gate](evals/RELEASE-GATE.md).
 
 ## Versioning and compatibility
 
-The project uses Semantic Versioning and the [MIT No Attribution license](LICENSE). Version 0.4.1 hardens builder handoffs, clarifies single-file setup, and improves product-scope and diagram consistency while preserving the IA mentoring workflow.
+The project uses Semantic Versioning and the [MIT No Attribution license](LICENSE). Version 1.0.0 is the first stable contract: end-to-end IA remains the core, with product-sitemap and stateful user-flow companions, portable file-only guidance, traceable downstream composition, and evidence-aware validation boundaries.
 
 Previously shared `install/claude-ai` and `install/universal-web` URLs remain synchronized compatibility aliases. New documentation uses the professional package names above.

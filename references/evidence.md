@@ -20,6 +20,8 @@ Track material decisions with:
 
 Prefer direct product evidence and representative user evidence over generic best practices. Treat analytics as behavioral evidence, not intent; interviews as reported experience, not frequency; card sorting as grouping evidence, not final IA; and AI output as a hypothesis.
 
+Evidence-status terms belong in internal state and reusable team or machine artifacts. In ordinary conversation, translate them into natural phrases such as “طبق توضیح شما”، “از شواهد فعلی چنین برمی‌آید”، or “فعلاً این فرض قابل تغییر را در نظر می‌گیرم.” Do not make a novice decode `Proposed`, `Provisional`, or similar control labels.
+
 ## Capability-aware research
 
 Search or fetch public sources when current facts, domain rules, terminology, standards, regulations, or a user-provided URL can materially change the IA. Prefer primary and authoritative sources, record the publication or access date when relevance may drift, and cite the source near the supported claim.

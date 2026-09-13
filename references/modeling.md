@@ -42,6 +42,10 @@ Exactly one `domain_id` means one canonical home in the model. It does not preve
 
 Model a relationship record such as membership, assignment, payment, or application as its own item when it has attributes, lifecycle, permissions, history, or findability. Do not collapse distinct objects only to make a diagram smaller.
 
+Keep a person or account distinct from the roles they can assume and from role-scoped profiles, organizations, stores, or workspaces they can own or administer. A low-friction experience may expose these through one account without making them one semantic object. Merge them only when their identity, ownership, lifecycle, visibility, and permissions are genuinely equivalent.
+
+For open contribution, marketplace, community, or multi-party systems, identify the minimum trust and safety structure that changes visibility or lifecycle: reporting, moderation or review ownership, restricted or suspended states, prohibited content or goods, disputes or appeals, and recovery. This does not commit every control to the first release; it prevents the architecture from treating consequential operating states as nonexistent.
+
 For an existing product, derive the candidate model from the content inventory, current structure, search/navigation evidence, policies, and observed failures. For a new product, derive it from audiences, priority tasks, planned capabilities, domain rules, and information that must be created, found, understood, governed, or retained.
 
 ## Canonical item card

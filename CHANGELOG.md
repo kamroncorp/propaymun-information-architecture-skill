@@ -4,10 +4,53 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-13
+
+### Changed
+
+- Replace question-count pacing with outcome-based sufficiency: once current evidence supports a responsible baseline, produce one coherent useful pass and ask again only for a newly reached consequential choice with no safe default.
+- Keep internal status and control vocabulary out of ordinary conversation while retaining exact evidence states and IA Reference Locks in requested team or machine handoffs.
+- Separate product recommendations from commitments so authentication, persistence, synchronization, monetization, promotion, engagement mechanics, and growth metrics are not silently added.
+- Strengthen portable Workspace Kit instructions so file-only and instruction-plus-knowledge environments preserve the same pacing, plain-language, memory-isolation, and product-scope behavior.
+- Make product-sitemap abstraction explicit by separating destinations from views, states, capabilities, controls, and semantic domains; extend the companion schema and validator accordingly.
+- Strengthen user-flow integrity with attributed actions, labeled and distinct decision branches, consequence-proportional failure coverage, and rendered branch-legibility checks.
+- Expand behavioral QA for jargon leakage, bilingual duplication, product-growth drift, sitemap abstraction mixing, and diagram overlap or ambiguous connectors.
+- Add stage-complete closure: summarize confirmed choices, reversible assumptions, open risks, and current scope before offering only relevant optional continuations.
+- Make continuation portable by default and prohibit proactive prior-chat memory retrieval or durable context mutation without a current explicit request and evidenced capability.
+- Preserve explicit product direction, separate accounts from role-scoped profiles or workspaces, and add minimum trust/safety prompts for open multi-party systems.
+- Clarify detailed sitemap completeness, access gates versus hierarchy, role workspaces, pre- versus post-transaction destinations, and external-payment return/recovery states.
+- Upgrade behavioral evaluation from atomic prompt checks alone to a versioned two-layer contract with reproducible multi-turn journeys, observable per-turn signals, critical failures, unmeasured layers, and cross-package semantic parity.
+- Add a deterministic evaluation-catalog validator and isolated QA dependency so malformed or shallow release evidence cannot pass merely because case IDs exist.
+- Promote package metadata and documentation to the 1.0.0 stable contract while retaining evidence limits for cross-host behavior and external security scans.
+
+## [0.6.0] - 2026-09-09
+
+### Changed
+
+- Refactor the native Skill entrypoint into a smaller decision kernel with conditional reference routing, reducing default instruction load while preserving end-to-end IA depth.
+- Calibrate engagement intent and depth before questioning; give idea-stage users useful orientation and treat “I don't know” as a mentoring signal for one reversible Proposed default instead of serial interrogation.
+- Clarify decision-scoped pauses: complete safe independent analysis, defer only the affected branch, then ask the smallest consequential question.
+- Reframe IA as the canonical source for explicitly requested downstream UI, image, prototype, sitemap, user-flow, document, presentation, builder, and technical outputs.
+- Add the IA Reference Lock and Suite Handoff Manifest so downstream adaptations remain traceable to approved structure, labels, findability, access/privacy, evidence, and unresolved assumptions.
+- Add a capability-evidence ladder with portable handoff fallback when production capability is unknown.
+- Redesign the Workspace Kit opening as a high-priority operating core plus module index for file-knowledge hosts, while preserving one-file setup.
+- Preserve the official `ProPaymun` spelling in multilingual behavior and remove internal control jargon from ordinary user-facing progress.
+- Extend the builder exporter with a machine-readable IA Reference Lock protected by the existing source-data boundary.
+- Expand behavioral evaluation for idea-stage novices, repeated uncertainty, downstream UI composition, unknown host capability, brand spelling, jargon leakage, and derivative drift.
+- Add repository line-ending policy so generated package parity is stable across Windows and Unix checkouts.
+- Add first-class, selectively loaded product-sitemap and stateful user-flow companion workflows without forcing complete IA discovery for focused requests.
+- Add versioned minimum semantic substrates for standalone companion work while preserving IA Reference Lock behavior when accepted IA exists.
+- Distinguish product/UX sitemaps from XML/SEO sitemap intent and add destination, branch, failure, recovery, permission, and success integrity rules.
+- Add dependency-free companion JSON schemas, structural validation, and valid/invalid fixtures for product sitemaps and user flows.
+- Strengthen pacing after foundational decisions and after “I don't know,” and prohibit unrequested Memory, Project Knowledge, Gem Knowledge, or workspace-context mutation.
+- Treat business-model and operating choices as IA inputs only when they change identities, transactions, visibility, ownership, access, lifecycle, or findability.
+- Replace role-rank marketing language with observable product-decision behavior across native and portable packages.
+- Expand the portable Workspace Kit activation contract so IA, product sitemaps, and user flows work in instruction-plus-knowledge and file-only environments without naming unverified hosts as supported.
+
 ## [0.4.1] - 2026-09-07
 
 - Add single-Markdown setup guidance for file-based Projects/Gems, with native Claude ZIP use distinguished explicitly.
-- Reinforce senior product mentorship, evidence-based scope, independent taxonomy facets, optional relationships, and text/diagram reconciliation.
+- Reinforce experienced product guidance, evidence-based scope, independent taxonomy facets, optional relationships, and text/diagram reconciliation.
 
 - Harden builder exports with explicit source-data boundaries, collision-resistant Markdown fences, encoded context, and bounded prompt size while preserving canonical JSON and both handoff intents.
 - Preserve input and existing output files during builder export and HTML rendering; callers must choose fresh output paths.
@@ -94,7 +137,10 @@ All notable changes to this project are documented here. The project follows Sem
 - English and Persian documentation.
 - Three behavioral evaluation scenarios and deterministic script tests.
 
-[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.6.0...v1.0.0
+[0.6.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.4.1...v0.6.0
+[0.4.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/releases/tag/v0.3.0

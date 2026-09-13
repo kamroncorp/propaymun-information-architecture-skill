@@ -23,6 +23,8 @@ If “build a first version” could mean either outcome, ask one concrete quest
 - If the user explicitly wants a provisional workshop artifact, export it with `Proposed` status and keep consequential unknowns visible.
 - Never ask the builder to discover, infer, localize, or repair the IA.
 
+Create an IA Reference Lock before export. For a provisional handoff, distinguish locked constraints from unresolved assumptions. For an approved handoff, require every structural change to return as a proposal rather than silently altering the IA.
+
 ## Deliver two artifacts
 
 Always give the user both:
@@ -74,7 +76,7 @@ The connected architecture is the first view. A tabbed dashboard, card catalogue
 
 When the user wants the product rather than an IA review artifact, pass the approved domains, labels, navigation, search, entry and recovery behavior, roles, permissions, lifecycle, locale, assumptions, and unresolved constraints as binding inputs. Let the downstream product-design capability decide screens and interactions. Require it to mark any structural change as a proposal and keep new UI decisions traceable to the IA.
 
-## Guardrails for the target
+## Guardrails for an IA review blueprint
 
 Tell the builder:
 
@@ -85,6 +87,8 @@ Tell the builder:
 - show supplied uncertainty as review notes rather than noisy badges on every item;
 - show a concise conflict notice instead of silently repairing inconsistent source data;
 - do not ask product-discovery questions inside the built artifact.
+
+For a product-prototype handoff, replace blueprint-only exclusions with the product-build contract above: UI and interaction decisions are expected, but changes to locked IA structure remain explicit proposals.
 
 ## Acceptance checks
 

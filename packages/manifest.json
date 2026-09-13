@@ -1,10 +1,24 @@
 {
-  "version": "0.4.1",
+  "version": "1.0.0",
   "license": "MIT-0",
   "product_name": "ProPaymun Information Architecture",
   "canonical_source": "SKILL.md",
   "semantic_model": "schema/semantic-ia.schema.json",
+  "companion_models": {
+    "product_sitemap": "schema/product-sitemap.schema.json",
+    "user_flow": "schema/user-flow.schema.json"
+  },
   "routing": "capability-first",
+  "interaction": "intent-calibrated-adaptive-sufficiency-with-stage-complete-closure",
+  "conversation_presentation": "plain-language-with-internal-status-labels-hidden",
+  "recommendation_boundary": "adjacent-product-and-growth-commitments-require-current-evidence-or-acceptance",
+  "continuation": "portable-note-default-explicit-persistence-only",
+  "canonical_handoff": "ia-reference-lock",
+  "capabilities": {
+    "core": "information-architecture",
+    "companions": ["product-sitemap", "user-flow"],
+    "standalone_companion_source": "versioned-minimum-semantic-substrate"
+  },
   "packages": {
     "agent_skill": {
       "display_name": "Agent Skill Package",
@@ -26,6 +40,13 @@
     "requires": "semantic-ia-ready-for-intended-purpose",
     "intents": ["ia-blueprint", "product-prototype"],
     "outputs": ["markdown-specification", "short-launch-text"]
+  },
+  "derived_outputs": {
+    "principle": "explicit-request-only",
+    "source": "canonical-semantic-ia",
+    "requires": "ia-reference-lock-and-readiness-check",
+    "examples": ["diagram", "ui", "prototype", "document", "presentation", "technical-mapping"],
+    "unknown_capability_fallback": "portable-self-contained-handoff"
   },
   "legacy_download_aliases": {
     "install/claude-ai/propaymun-information-architecture.zip": "packages/agent-skill/propaymun-information-architecture.zip",

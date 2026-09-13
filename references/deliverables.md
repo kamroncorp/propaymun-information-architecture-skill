@@ -49,6 +49,73 @@ The canonical model should capture, where relevant:
 
 Renderers select views of this model. They do not become the model.
 
+## IA Reference Lock
+
+Before translating the IA into a downstream artifact, record the smallest stable contract needed to prevent semantic drift:
+
+```yaml
+ia_reference_lock:
+  source: canonical semantic IA
+  model_version: "2.0"
+  readiness: provisional | reviewable | approved
+  approved_structure: [domains, items, hierarchy, typed relationships]
+  approved_language: [labels, preferred terms, synonyms]
+  findability_constraints: [navigation, search, entry, orientation, recovery]
+  access_privacy_constraints: [visibility, permissions, consent, retention]
+  unresolved: [assumptions, unknowns, conflicts]
+  invariants: [meaning that must survive translation]
+  adaptation_boundaries: [decisions delegated to the downstream capability]
+```
+
+Use a compact human-readable form in chat and a structured form in reusable handoffs. This lock is a translation contract, not a claim that every field is approved. Readiness controls how assertively the derivative may be presented:
+
+- **not-ready:** continue IA work; no consequential derivative;
+- **provisional:** create an explicitly exploratory derivative with visible assumptions;
+- **reviewable:** create a decision-ready derivative and identify remaining review points;
+- **approved:** preserve approved constraints and treat changes as proposals.
+
+Review differences as one of: allowed adaptation, new proposal, semantic drift, or implementation defect.
+
+For a standalone product sitemap or user flow with no accepted IA, use the same discipline through a **minimum semantic substrate** rather than pretending a complete IA exists:
+
+```yaml
+semantic_substrate:
+  id: substrate-001
+  version: "1.0"
+  artifact: product-sitemap | user-flow
+  purpose: "decision this artifact must support"
+  relevant_audiences_or_actors: []
+  canonical_items_or_content: []
+  labels_and_states: []
+  access_and_business_rules: []
+  evidence_status: Proposed
+  unresolved: []
+  invariants: []
+```
+
+The substrate is deliberately smaller than full IA, but it is versioned and traceable so later IA work can reconcile it.
+
+## Suite handoff manifest
+
+For transfer to a dedicated Sitemap, User Flow, design, engineering, or future ProPaymun Product Suite component, include only stable shared context:
+
+```yaml
+suite_handoff:
+  contract_version: "1"
+  source_skill: propaymun-information-architecture
+  source_model_version: "2.0"
+  intended_consumer: sitemap | user-flow | product-design | engineering | other
+  requested_outcome: "..."
+  ia_reference_lock: "embedded or linked"
+  open_decisions: []
+  evidence_limits: []
+  requested_return: [proposals, drift-report, artifact]
+```
+
+For a product sitemap or user-flow consumer, include the owning artifact type, its decision purpose, source lock or substrate ID, readiness, stable IDs, unresolved decisions, and permitted downstream adaptations. Do not require UI, prototype, code, or multiple diagrams unless the user asks for them.
+
+Do not transfer full conversation history when the lock and evidence limits are sufficient. The receiving component may propose adaptations but must return structural changes for IA review.
+
 ## Audience adaptation
 
 - **Product or leadership:** lead with decisions, risks, scope, and consequences.
@@ -63,7 +130,7 @@ Translate the same canonical model for each audience. Do not create separate arc
 
 ## Format selection
 
-In a conversation-capable environment, use chat text by default. Produce a file or heavy artifact only when the current conversation requests it or the user accepts a concrete format after the IA is ready enough. Persistent memory or a preference from another chat is not deliverable authorization. Prompt-to-app builders are downstream renderers: prepare their handoff only after the canonical IA is stable enough for the intended decision.
+In a conversation-capable environment, use chat text by default. Produce a file or heavy artifact only when the current conversation requests it or the user accepts a concrete format after the semantic source is ready enough. Persistent memory or a preference from another chat is not deliverable authorization, and no current request means no Memory, Project Knowledge, Gem Knowledge, or workspace-context mutation. Prompt-to-app builders are downstream renderers: prepare their handoff only after the canonical IA or minimum semantic substrate is stable enough for the intended decision.
 
 Offer only formats supported by the current environment and distinguish:
 
@@ -95,7 +162,7 @@ Reveal relevant detail through selection, expansion, filtering, or focused subvi
 
 Do not make a collection of tabs, tables, or cards the primary IA. Use them only to explain the structure. Avoid rendering internal evidence labels as unexplained badges on every node.
 
-The blueprint is a review view of the architecture. It is not the product interface, wireframe, prototype, sitemap, user flow, API, or database schema. Prefer visible domain containers, clear hierarchy, labeled connections, progressive disclosure, accessibility, and the user's language and writing direction over decorative UI.
+The blueprint is a review view of the architecture, distinct from a product interface, sitemap, user flow, API, or database schema. If the user requests one of those derivatives, create it from the IA Reference Lock through the relevant capability rather than turning the blueprint itself into that deliverable.
 
 ## Semantic IA JSON
 

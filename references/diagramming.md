@@ -1,6 +1,6 @@
 # Optional IA diagramming
 
-Read this reference only when the user requests or accepts an IA diagram.
+Read this reference only when the user requests or accepts an IA, product-sitemap, or user-flow diagram. Read the owning semantic reference first.
 
 ## Start from semantics
 
@@ -21,9 +21,9 @@ The recognizable quality of the output comes from consistent meaning, not a fixe
 - **Details on demand:** attributes, states, rules, permissions, evidence, and decisions belong in contextual detail or focused views unless they are essential to interpreting the map.
 - **Findability cues:** communicate relevant browse, search, entry, orientation, and recovery systems without drawing a page-level sitemap.
 
-A connected hierarchical IA map is not automatically a sitemap. It becomes a sitemap when its nodes and containment primarily represent pages or destinations. It becomes a user flow when its edges primarily represent action order, states, or decisions.
+A connected hierarchical IA map is not automatically a sitemap. It becomes a sitemap when its nodes and containment primarily represent pages or destinations. It becomes a user flow when its edges primarily represent goal-directed actions, system responses, states, decisions, failures, or recovery. Visual similarity does not make these artifact types interchangeable.
 
-## One IA question per view
+## One decision question per view
 
 Useful IA views include:
 
@@ -34,7 +34,7 @@ Useful IA views include:
 - roles, visibility, and permissions;
 - current-versus-proposed architecture.
 
-Do not include neighboring mapping deliverables. Keep the view focused on the IA decision.
+Do not include neighboring mapping deliverables unless the user requests a coordinated set. Keep each view focused on one decision and share stable source IDs across related views.
 
 For complex IA, coordinate several views from the same model:
 
@@ -78,6 +78,8 @@ Keep the surrounding explanation in the user's language. For Persian or another 
 - Use whitespace and scale to establish hierarchy.
 - Encode evidence status only when it changes interpretation. Explain it in plain language and redundantly when it matters, such as border style plus a text label. Do not turn internal evidence metadata into unexplained badge noise.
 
+For a sitemap, distinguish hierarchy, cross-link, contextual entry, external boundary, and access-limited destination. For a user flow, distinguish action, system response, decision, state, failure, recovery, success, and actor handoff when present. Do not rely on color alone for these meanings.
+
 ## Render and inspect
 
 Before rendering, reconcile the view with the model and accompanying text: domain counts and names agree; each edge has the intended endpoints, direction, and meaning; required versus optional links remain distinguishable where material; facets connect to all relevant item types. A diagram request authorizes a representation, not new architecture. Label an overview as partial when it omits detail and identify the omitted scope. Avoid quantitative claims such as “four domains” unless checked against the displayed view.
@@ -89,6 +91,8 @@ When rendering tools are available:
 3. inspect the actual result;
 4. fix clipping, overlap, crossings, ambiguity, imbalance, and unreadable text;
 5. preserve the source beside the final export.
+
+For a decision node, inspect every outgoing branch at the rendered size: each connector must visibly leave the decision, carry an unambiguous condition label, and reach the intended node without label or edge collisions. If the renderer cannot make that reliable, simplify the layout or deliver the exact textual flow instead of presenting a misleading visual.
 
 If rendering is unavailable, say that the source was reviewed or syntax-checked but not visually verified. Never claim visual QA without inspecting the render.
 
