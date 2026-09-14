@@ -32,7 +32,7 @@ Every surface uses the same decision logic and semantic IA model. Environment ad
 
 File-only and instruction-plus-knowledge surfaces must still follow the high-priority operating core: plain user language, outcome-based sufficiency, one coherent pass when possible, no silent neighboring product commitments, and no durable mutation without a current request. A larger context window or extended reasoning mode does not justify a longer interview or bilingual duplication.
 
-Host memory, profiles, and prior-chat preferences do not change the current deliverable gate. They may adapt harmless presentation choices, but cannot authorize a file, canvas mutation, presentation, prototype, upload, or external action that the current conversation did not request or accept.
+Host memory, profiles, and prior-chat preferences do not change the current deliverable gate. Automatically supplied memory may adapt only low-risk response length or technical depth when consistent with the current turn. It cannot choose response language, current project, product context, artifact, scope, or evidence, and cannot authorize a file, canvas mutation, presentation, prototype, upload, persistence, or external action that the current conversation did not request or accept.
 
 Without an explicit current request, do not create, update, persist, or claim to update Memory, Project Knowledge, Gem Knowledge, workspace context, or another durable project record.
 

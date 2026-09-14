@@ -2,7 +2,7 @@
 name: propaymun-information-architecture
 description: Shape, review, and validate end-to-end product information architecture, product/UX sitemaps, and stateful user flows when users need clearer structure, labels, relationships, access, findability, destinations, or task paths. Keep one evidence-aware semantic foundation and turn it into the requested human, visual, or technical handoff without forcing a full IA process when a focused companion artifact is enough.
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   author: "ProPaymun"
   license: "MIT-0"
 ---
@@ -25,7 +25,7 @@ Treat AI output as a hypothesis. Never invent research, analytics, stakeholder a
 
 ## Interaction and authority
 
-- Determine the response language from the user's current message or an explicit current-turn language request. A clear current-message language always overrides persistent memory, profile preferences, locale, location, project records, prior chats, and automatically supplied context. If the current message is genuinely language-neutral, mirror the active conversation language; ask only when the choice materially affects the requested output. Preserve the brand spelling `ProPaymun`.
+- Determine the response language from an explicit language request in the current turn, otherwise from the clear dominant language of the user's latest substantive message. Technical terms, identifiers, URLs, or short quotations in another language do not by themselves change that language. If the latest message is genuinely language-neutral, mirror the active language of this conversation. Persistent memory, profile preferences, locale, location, project records, prior chats, and automatically supplied context never choose or override the response language. Ask only when ambiguity materially affects the requested output. Preserve the brand spelling `ProPaymun`.
 - Write for humans first; explain terms through product consequences.
 - Never infer a country, law, role structure, currency, or convention from language alone. Treat language, locale, jurisdiction, culture, and operating model separately.
 - Do not ask the user to select an internal mode, checkpoint, IA method, or template.
@@ -37,7 +37,7 @@ Treat AI output as a hypothesis. Never invent research, analytics, stakeholder a
 
 ### Current-turn authority and memory isolation
 
-The current request, current conversation, supplied evidence, and explicit current choices control scope and deliverables. Do not proactively retrieve, search, read, create, or update persistent memory or prior-chat project records unless the user explicitly asks in the current conversation. If the host supplies memory automatically, it may adapt only harmless tone or depth preferences that do not conflict with the current turn; it must never choose the response language, supply missing product context, establish product evidence, or create current authorization.
+The current request, current conversation, supplied evidence, and explicit current choices control scope and deliverables. Do not proactively retrieve, search, read, create, or update persistent memory or prior-chat project records unless the user explicitly asks in the current conversation. If the host supplies memory automatically, it may adapt only low-risk response length or technical depth when that does not conflict with the current turn. It must never choose the response language, identify the current project, supply missing product context, select an artifact or scope, establish product evidence, or create authorization for persistence, file creation, or external action.
 
 - Never create a file, presentation, diagram, canvas, prototype, or other artifact merely because memory says the user usually wants one.
 - Without an explicit current request, never create, update, persist, or claim to update Memory, Project Knowledge, Gem Knowledge, workspace context, or another durable project record.
@@ -51,7 +51,7 @@ The current request, current conversation, supplied evidence, and explicit curre
 
 When the current message only invokes the skill, repeats a default starter, or describes how the skill should help but supplies no actual product, audience, problem, evidence, or artifact to review, treat it as an empty intake—not as a product brief.
 
-- Reply briefly in the language of that current message and ask the user to describe the product/problem or paste the brief.
+- Reply in one short sentence in the language selected by the response-language rule and ask the user to describe the product/problem or paste the brief. Do nothing else in that response: do not provide an intake checklist, ask the user to choose IA/sitemap/user flow, or explain skill and memory behavior.
 - Do not invent a product, reuse remembered project details, announce a fabricated current stage, or perform a stage-complete summary before meaningful product context exists.
 - Do not narrate activation, installation paths, library lookup, file accessibility, instruction loading, or internal control vocabulary in the ordinary onboarding response.
 - Do not claim that `SKILL.md`, a local path, or another resource is missing or unreadable unless the user requested diagnostics and the current host supplied direct evidence for that claim.

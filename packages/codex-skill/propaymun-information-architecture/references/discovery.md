@@ -24,7 +24,7 @@ An unknown blocks only the decision that depends on it. Continue useful independ
 
 ## Host memory and prior preferences
 
-Do not proactively retrieve or search persistent memory or prior-chat project records unless the user explicitly asks in the current conversation. Host-supplied memory can help with language and harmless presentation preferences, but it is not a current request or reliable product evidence.
+Do not proactively retrieve or search persistent memory or prior-chat project records unless the user explicitly asks in the current conversation. Host-supplied memory may adapt only low-risk response length or technical depth when consistent with the current turn. It never determines response language, current project identity, product context, artifact choice, scope, evidence, or authorization.
 
 - Do not create files or artifacts because another chat established an “always give me a file” preference.
 - Without an explicit current request, do not create, update, persist, or claim to update Memory, Project Knowledge, Gem Knowledge, workspace context, or another durable project record.
@@ -40,7 +40,11 @@ Do not proactively retrieve or search persistent memory or prior-chat project re
 
 ### No usable brief
 
-First determine whether the user wants orientation, help shaping an idea, a quick first structure, full IA work, an audit, or a derivative from existing IA. Infer this from their wording whenever possible; never make them choose an internal mode.
+Separate an empty invocation from an early but real product brief.
+
+If the message only invokes the skill, repeats its starter, or describes the skill's purpose without actual product, audience, problem, evidence, or artifact context, ask in one short sentence for the product/problem or brief and stop. Do not provide a checklist, offer an artifact menu, explain memory or activation, or infer a project from prior context.
+
+If the user has supplied any meaningful product idea or problem—even if incomplete—first determine whether they want orientation, help shaping the idea, a quick first structure, full IA work, an audit, or a derivative from existing IA. Infer this from their wording whenever possible; never make them choose an internal mode.
 
 For an idea-stage or novice request, provide a small useful frame before asking anything: reflect the product idea, explain the first architecture consequence in ordinary language, and propose a reversible starting point. Then ask the single question with the highest expected effect on the next model decision. Typical starting information includes:
 

@@ -365,18 +365,48 @@ class SkillScriptTests(unittest.TestCase):
         instructions = (PACKAGES / "workspace-kit" / "WORKSPACE_INSTRUCTIONS.md").read_text(encoding="utf-8")
         for content in (skill, workspace, instructions):
             lowered = content.lower()
-            self.assertIn("current message", lowered)
+            self.assertIn("latest substantive", lowered)
             self.assertIn("response language", lowered)
             self.assertIn("persistent memory", lowered)
             self.assertIn("product context", lowered)
             self.assertIn("installation paths", lowered)
             self.assertIn("current stage", lowered)
+            self.assertIn("one short sentence", lowered)
+            self.assertTrue(
+                "artifact menu" in lowered or "choose ia/sitemap/user flow" in lowered,
+                "empty-intake guidance must forbid artifact selection",
+            )
 
         openai_yaml = (ROOT / "agents" / "openai.yaml").read_text(encoding="utf-8")
-        self.assertIn("language and context of my current message", openai_yaml)
-        self.assertIn("do not read or update persistent memory", openai_yaml)
-        self.assertIn("if no product brief is present", openai_yaml)
+        self.assertIn("language of my latest substantive message", openai_yaml)
+        self.assertIn("unless I explicitly request another language", openai_yaml)
+        self.assertIn("one short sentence", openai_yaml)
+        self.assertIn("then do nothing else", openai_yaml)
+        self.assertNotIn("persistent memory", openai_yaml)
         self.assertNotIn("summarize the current stage", openai_yaml)
+
+    def test_language_and_memory_contract_has_no_known_semantic_regressions(self) -> None:
+        paths = [
+            ROOT / "SKILL.md",
+            ROOT / "references" / "discovery.md",
+            ROOT / "references" / "localization.md",
+            ROOT / "references" / "capability-routing.md",
+            ROOT / "evals" / "RUBRIC.md",
+            PACKAGES / "workspace-kit" / "WORKSPACE_INSTRUCTIONS.md",
+        ]
+        combined = "\n".join(path.read_text(encoding="utf-8") for path in paths).lower()
+        forbidden = (
+            "memory can help with language",
+            "memory may help with language",
+            "harmless presentation preferences",
+            "harmless presentation choices",
+        )
+        for phrase in forbidden:
+            self.assertNotIn(phrase, combined)
+        self.assertIn("technical terms", combined)
+        self.assertIn("language-neutral", combined)
+        self.assertIn("never choose or override", combined)
+        self.assertIn("low-risk response length or technical depth", combined)
 
     def test_visual_builder_is_downstream_and_not_a_runtime(self) -> None:
         manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
@@ -433,7 +463,7 @@ class SkillScriptTests(unittest.TestCase):
 
     def test_behavioral_eval_has_critical_companion_and_memory_cases(self) -> None:
         cases = (ROOT / "evals" / "cases.yaml").read_text(encoding="utf-8")
-        self.assertIn("version: 6", cases)
+        self.assertIn("version: 7", cases)
         self.assertIn("evaluation_contract:", cases)
         self.assertIn("journeys:", cases)
         for case_id in (
@@ -463,6 +493,11 @@ class SkillScriptTests(unittest.TestCase):
             "try-in-chat-empty-english-starter",
             "current-message-language-overrides-memory",
             "host-diagnostic-claims-require-evidence",
+            "empty-starter-then-persian-brief",
+            "persian-with-english-ia-terms",
+            "explicit-language-request-overrides-message-language",
+            "third-language-follows-current-message",
+            "language-neutral-follow-up-keeps-active-conversation-language",
         ):
             self.assertIn(f"id: {case_id}", cases)
 
@@ -482,7 +517,7 @@ class SkillScriptTests(unittest.TestCase):
     def test_eval_validator_rejects_shallow_or_malformed_catalogs_without_yaml_dependency(self) -> None:
         result = validate_data(
             {
-                "version": 6,
+                "version": 7,
                 "skill": "propaymun-information-architecture",
                 "evaluation_contract": {},
                 "cases": [{"id": "duplicate"}],

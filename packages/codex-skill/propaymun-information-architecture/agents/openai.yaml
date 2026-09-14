@@ -2,6 +2,6 @@ interface:
   display_name: "ProPaymun IA Architect"
   short_description: "Product-led IA, sitemaps, and user flows"
   brand_color: "#5B4BDB"
-  default_prompt: "Use $propaymun-information-architecture for my product architecture, sitemap, or user flow. Follow the language and context of my current message; do not read or update persistent memory unless I explicitly ask here, and if no product brief is present, briefly ask me for it."
+  default_prompt: "Use $propaymun-information-architecture to help structure the product described in my message; reply in the language of my latest substantive message unless I explicitly request another language, and if I supplied no actual product context, ask me in one short sentence to describe the product or paste its brief, then do nothing else."
 policy:
   allow_implicit_invocation: true

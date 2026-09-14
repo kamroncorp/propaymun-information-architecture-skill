@@ -4,6 +4,20 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-09-14
+
+### Fixed
+
+- Make the latest substantive user message—not persistent memory, profile preferences, locale, or prior chats—the default response-language authority, while preserving explicit current-turn language requests and conversation-language fallback for neutral messages.
+- Keep mixed-language technical terms from incorrectly switching the response language.
+- Separate an empty skill invocation from an incomplete but real product brief, and require a single-sentence brief request with no activation, memory-policy, intake-checklist, or artifact-menu narration.
+- Remove contradictory memory-language guidance and narrow automatically supplied memory adaptation to low-risk response length or technical depth.
+
+### Changed
+
+- Replace the Codex default starter with a shorter behavior-oriented prompt that does not expose persistent-memory policy to the user.
+- Expand the behavioral catalog and deterministic regression checks for cross-turn language switching, explicit language overrides, third-language input, mixed-language terminology, neutral-message fallback, and empty-to-real-brief transition.
+
 ## [1.0.2] - 2026-09-14
 
 ### Fixed
@@ -159,7 +173,8 @@ All notable changes to this project are documented here. The project follows Sem
 - English and Persian documentation.
 - Three behavioral evaluation scenarios and deterministic script tests.
 
-[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.6.0...v1.0.0
