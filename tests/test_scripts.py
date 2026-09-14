@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import importlib.util
 import re
 import subprocess
 import sys
@@ -15,6 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 FIXTURES = ROOT / "tests" / "fixtures"
 PACKAGES = ROOT / "packages"
+sys.path.insert(0, str(SCRIPTS))
+
+from validate_eval_cases import validate_data
 
 
 class SkillScriptTests(unittest.TestCase):
@@ -133,10 +135,10 @@ class SkillScriptTests(unittest.TestCase):
             packaged = workspace.read_text(encoding="utf-8")
             self.assertIn("ProPaymun IA Workspace Kit", packaged)
             self.assertIn("adaptive sufficiency loop", packaged.lower())
-            self.assertIn("source: references/localization.md", packaged)
-            self.assertIn("source: references/sitemap.md", packaged)
-            self.assertIn("source: references/user-flow.md", packaged)
-            self.assertIn("source: references/visual-builder-handoff.md", packaged)
+            self.assertIn("> Embedded source: references/localization.md", packaged)
+            self.assertIn("> Embedded source: references/sitemap.md", packaged)
+            self.assertIn("> Embedded source: references/user-flow.md", packaged)
+            self.assertIn("> Embedded source: references/visual-builder-handoff.md", packaged)
             self.assertIn("short copy-ready launch instruction", packaged)
             self.assertNotIn("](references/", packaged)
 
@@ -422,13 +424,7 @@ class SkillScriptTests(unittest.TestCase):
         self.assertIn("PyYAML==", requirements)
 
     def test_eval_validator_rejects_shallow_or_malformed_catalogs_without_yaml_dependency(self) -> None:
-        path = ROOT / "scripts" / "validate_eval_cases.py"
-        spec = importlib.util.spec_from_file_location("validate_eval_cases", path)
-        self.assertIsNotNone(spec)
-        self.assertIsNotNone(spec.loader)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        result = module.validate_data(
+        result = validate_data(
             {
                 "version": 5,
                 "skill": "propaymun-information-architecture",

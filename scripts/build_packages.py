@@ -79,7 +79,7 @@ The operating method and conditional references are embedded below. Optional Pyt
     sections = [intro.strip(), "\n---\n", skill, "\n---\n\n# Embedded operating references\n"]
     for name in REFERENCE_ORDER:
         source = (root / "references" / name).read_text(encoding="utf-8")
-        sections.append(f"\n<!-- source: references/{name} -->\n\n{demote_headings(source)}\n")
+        sections.append(f"\n> Embedded source: references/{name}\n\n{demote_headings(source)}\n")
     sections.append("\n---\n\nCanonical source: https://github.com/kamroncorp/propaymun-information-architecture-skill\n")
     return "\n".join(sections).replace("\r\n", "\n")
 

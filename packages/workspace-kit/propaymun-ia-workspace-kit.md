@@ -174,7 +174,7 @@ Do not load every reference merely because it exists.
 # Embedded operating references
 
 
-<!-- source: references/ia-foundations.md -->
+> Embedded source: references/ia-foundations.md
 
 ### IA foundations and decision rules
 
@@ -266,7 +266,7 @@ Record owners, change authority, review cadence, naming rules, lifecycle, versio
 Use the principles of objects, choices, disclosure, exemplars, front doors, multiple classification, focused navigation, and growth as review prompts. Do not turn them into rigid requirements.
 
 
-<!-- source: references/discovery.md -->
+> Embedded source: references/discovery.md
 
 ### Discovery and low-effort interaction
 
@@ -453,7 +453,7 @@ Inspect current navigation, content inventory, analytics, search logs, user rese
 The user may skip questions, change sequence, request more or less depth, or focus on one IA component. Follow that direction. If skipped discovery weakens a high-impact claim, provide provisional work and make that limitation visible rather than silently claiming certainty.
 
 
-<!-- source: references/localization.md -->
+> Embedded source: references/localization.md
 
 ### Contextual localization
 
@@ -520,7 +520,7 @@ Do not combine roles merely because they are commonly mentioned together. `owner
 When local law, regulation, or current public infrastructure materially changes the IA, verify it with current authoritative sources if browsing is available. Generic market patterns are hypotheses, not confirmed local requirements. Never turn a cultural generalization into a product rule.
 
 
-<!-- source: references/modeling.md -->
+> Embedded source: references/modeling.md
 
 ### Modeling and option generation
 
@@ -688,7 +688,7 @@ Treat a correction or new requirement as a change to the canonical model, not as
 Do not repeat the full architecture when only a small part changed unless the user requests a consolidated artifact.
 
 
-<!-- source: references/capability-routing.md -->
+> Embedded source: references/capability-routing.md
 
 ### Capability-aware execution and output routing
 
@@ -807,7 +807,7 @@ Do not call file upload or prompt pasting a native Skill installation. The behav
 The repository may document verified examples, but the portable contract must not name unverified services as supported. A file-capable environment can use the Workspace Kit when the user designates it as operating guidance; that is session-scoped use, not proof of installation, persistence, automatic activation, or full capability parity.
 
 
-<!-- source: references/evidence.md -->
+> Embedded source: references/evidence.md
 
 ### Evidence and uncertainty
 
@@ -857,7 +857,7 @@ Do not collapse differing participant structures into a fictional single mental 
 AI may extract, normalize, cluster, compare, and critique. It must not invent research participants, analytics, search logs, stakeholder approvals, or observed relationships. Synthetic user simulation can identify edge cases but is not user research.
 
 
-<!-- source: references/validation.md -->
+> Embedded source: references/validation.md
 
 ### IA validation and measurement
 
@@ -956,7 +956,7 @@ Compare representative cases with the last stable release. A deterministic pass 
 For conversational tests, record jargon leakage, number and utility of user turns, whether a coherent result arrived before another nonessential question, unsupported product commitments, bilingual duplication, proactive memory retrieval or mutation, whether a pause produced a stage-complete summary, whether continuation remained portable without host memory, and whether an optional next step was presented as optional. Score automatically supplied memory separately from agent-initiated retrieval and mutation so host behavior does not hide or excuse skill behavior. For visual flows, inspect the rendered result at the intended size for overlap, clipped text, mislabeled branches, and ambiguous connector endpoints; source or syntax checks alone do not establish visual legibility.
 
 
-<!-- source: references/deliverables.md -->
+> Embedded source: references/deliverables.md
 
 ### IA deliverables and semantic model
 
@@ -1204,7 +1204,7 @@ Use `parent_id` only for real hierarchy, containment, or classification. Represe
 ```
 
 
-<!-- source: references/sitemap.md -->
+> Embedded source: references/sitemap.md
 
 ### Product and UX sitemap
 
@@ -1291,7 +1291,7 @@ Report structural correctness separately from findability. Use tree testing, fir
 Use the smallest representation that answers the request: indented tree, destination table, Mermaid, editable diagram, or structured JSON. A request for a detailed sitemap requires a destination-complete view for the agreed scope, not a domain list, capability inventory, conceptual relationship map, or one task flow. A companion flow may clarify navigation but must not replace the requested sitemap. In ordinary conversation, lead with the destination structure and explain only distinctions that affect the decision; keep schema field names and evidence codes for a requested structured handoff. A diagram must preserve a textual equivalent and the same destination IDs. Create a durable file only when the current conversation requests or accepts it.
 
 
-<!-- source: references/user-flow.md -->
+> Embedded source: references/user-flow.md
 
 ### Stateful user flow
 
@@ -1359,7 +1359,7 @@ Do not call a flow validated merely because it is complete or visually polished.
 Choose direction and notation for the audience and task. Persian flows may use RTL or vertical direction when clearer. Use distinguishable action, decision, state, failure, recovery, and success nodes; concise labels; labeled decision branches; controlled crossings; and a textual equivalent. Do not allow labels, nodes, arrows, or branch annotations to overlap. Mermaid, a native diagram, table, or structured JSON are delivery formats, not sources of truth. Create a file only when the current conversation requests or accepts one.
 
 
-<!-- source: references/diagramming.md -->
+> Embedded source: references/diagramming.md
 
 ### Optional IA diagramming
 
@@ -1464,7 +1464,7 @@ If rendering is unavailable, say that the source was reviewed or syntax-checked 
 Provide a concise textual equivalent covering the important nodes, relationships, exceptions, and evidence state. Use accessible titles and descriptions where supported. Readability at the target size matters more than zoomability.
 
 
-<!-- source: references/visual-builder-handoff.md -->
+> Embedded source: references/visual-builder-handoff.md
 
 ### Visual Builder Handoff
 

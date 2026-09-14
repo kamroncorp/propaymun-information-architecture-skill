@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-09-14
+
+### Security
+
+- Replace test-only dynamic module execution with a normal import so repository scanners no longer classify the evaluation regression test as runtime dynamic-code execution.
+- Replace invisible HTML provenance comments in generated Workspace Kit files with visible Markdown source markers while preserving embedded-reference traceability.
+- Preserve standard Persian zero-width non-joiners; scanner heuristics may report these legitimate orthographic characters as low-confidence hidden-instruction findings.
+
 ## [1.0.0] - 2026-09-13
 
 ### Changed
@@ -137,7 +145,8 @@ All notable changes to this project are documented here. The project follows Sem
 - English and Persian documentation.
 - Three behavioral evaluation scenarios and deterministic script tests.
 
-[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.6.0...v1.0.0
 [0.6.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.4.1...v0.6.0
 [0.4.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.4.0...v0.4.1

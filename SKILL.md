@@ -2,7 +2,7 @@
 name: propaymun-information-architecture
 description: Shape, review, and validate end-to-end product information architecture, product/UX sitemaps, and stateful user flows when users need clearer structure, labels, relationships, access, findability, destinations, or task paths. Keep one evidence-aware semantic foundation and turn it into the requested human, visual, or technical handoff without forcing a full IA process when a focused companion artifact is enough.
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   author: "ProPaymun"
   license: "MIT-0"
 ---
