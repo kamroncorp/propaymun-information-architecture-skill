@@ -15,10 +15,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
+      - name: Install QA dependencies
+        run: python -m pip install -r evals/requirements.txt
       - name: Rebuild professional packages and compatibility aliases
         run: python scripts/build_packages.py
       - name: Verify generated packages are current
-        run: git diff --exit-code -- packages/agent-skill/propaymun-information-architecture.zip packages/workspace-kit/propaymun-ia-workspace-kit.md install/universal-web/propaymun-information-architecture.md install/universal-web/PROJECT_INSTRUCTIONS.md install/claude-ai/propaymun-information-architecture.zip
+        run: git diff --exit-code -- packages/codex-skill/propaymun-information-architecture packages/agent-skill/propaymun-information-architecture.zip packages/workspace-kit/propaymun-ia-workspace-kit.md install/universal-web/propaymun-information-architecture.md install/universal-web/PROJECT_INSTRUCTIONS.md install/claude-ai/propaymun-information-architecture.zip
+      - name: Validate behavioral evaluation catalog
+        run: python scripts/validate_eval_cases.py evals/cases.yaml
       - name: Run deterministic tests
         run: python -m unittest discover -s tests -v
       - name: Validate fixture
