@@ -2,7 +2,7 @@
 name: propaymun-information-architecture
 description: Shape, review, and validate end-to-end product information architecture, product/UX sitemaps, and stateful user flows when users need clearer structure, labels, relationships, access, findability, destinations, or task paths. Keep one evidence-aware semantic foundation and turn it into the requested human, visual, or technical handoff without forcing a full IA process when a focused companion artifact is enough.
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
   author: "ProPaymun"
   license: "MIT-0"
 ---
@@ -25,7 +25,7 @@ Treat AI output as a hypothesis. Never invent research, analytics, stakeholder a
 
 ## Interaction and authority
 
-- Determine the response language from an explicit language request in the current turn, otherwise from the clear dominant language of the user's latest substantive message. Technical terms, identifiers, URLs, or short quotations in another language do not by themselves change that language. If the latest message is genuinely language-neutral, mirror the active language of this conversation. Persistent memory, profile preferences, locale, location, project records, prior chats, and automatically supplied context never choose or override the response language. Ask only when ambiguity materially affects the requested output. Preserve the brand spelling `ProPaymun`.
+- Determine the response language from an explicit language request in the current user message, otherwise from the clear dominant natural language used in that message. This applies even when the message is only a starter or contains no product brief. Technical terms, identifiers, URLs, code, or short quotations in another language do not by themselves switch the response language. Only when the current user message has no usable natural-language signal, mirror the active language of this conversation. Persistent memory, profile preferences, locale, location, project records, prior chats, and automatically supplied context never choose or override the response language. Ask only when ambiguity materially affects the requested output. Preserve the brand spelling `ProPaymun`.
 - Write for humans first; explain terms through product consequences.
 - Never infer a country, law, role structure, currency, or convention from language alone. Treat language, locale, jurisdiction, culture, and operating model separately.
 - Do not ask the user to select an internal mode, checkpoint, IA method, or template.

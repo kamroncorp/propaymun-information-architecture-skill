@@ -293,7 +293,7 @@ class SkillScriptTests(unittest.TestCase):
         self.assertIn(f'version: "{version}"', skill)
         self.assertIn(f"version-{version}-", readme)
         self.assertEqual(manifest["version"], version)
-        self.assertEqual(manifest["packages"]["agent_skill"]["display_name"], "Agent Skill Package")
+        self.assertEqual(manifest["packages"]["agent_skill"]["display_name"], "Portable Agent Skill ZIP")
         self.assertEqual(manifest["packages"]["workspace_kit"]["display_name"], "Workspace Kit")
         self.assertEqual(manifest["packages"]["codex_skill"]["display_name"], "Codex Skill Directory")
 
@@ -365,7 +365,7 @@ class SkillScriptTests(unittest.TestCase):
         instructions = (PACKAGES / "workspace-kit" / "WORKSPACE_INSTRUCTIONS.md").read_text(encoding="utf-8")
         for content in (skill, workspace, instructions):
             lowered = content.lower()
-            self.assertIn("latest substantive", lowered)
+            self.assertIn("current user message", lowered)
             self.assertIn("response language", lowered)
             self.assertIn("persistent memory", lowered)
             self.assertIn("product context", lowered)
@@ -378,10 +378,11 @@ class SkillScriptTests(unittest.TestCase):
             )
 
         openai_yaml = (ROOT / "agents" / "openai.yaml").read_text(encoding="utf-8")
-        self.assertIn("language of my latest substantive message", openai_yaml)
+        self.assertIn("language used in this message", openai_yaml)
         self.assertIn("unless I explicitly request another language", openai_yaml)
         self.assertIn("one short sentence", openai_yaml)
-        self.assertIn("then do nothing else", openai_yaml)
+        self.assertIn("then stop", openai_yaml)
+        self.assertNotIn("latest substantive", openai_yaml)
         self.assertNotIn("persistent memory", openai_yaml)
         self.assertNotIn("summarize the current stage", openai_yaml)
 
@@ -404,7 +405,7 @@ class SkillScriptTests(unittest.TestCase):
         for phrase in forbidden:
             self.assertNotIn(phrase, combined)
         self.assertIn("technical terms", combined)
-        self.assertIn("language-neutral", combined)
+        self.assertIn("no usable natural-language signal", combined)
         self.assertIn("never choose or override", combined)
         self.assertIn("low-risk response length or technical depth", combined)
 
@@ -418,7 +419,7 @@ class SkillScriptTests(unittest.TestCase):
 
     def test_repository_uses_professional_package_names(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        self.assertIn("Agent Skill Package", readme)
+        self.assertIn("Portable Agent Skill ZIP", readme)
         self.assertIn("Workspace Kit", readme)
         self.assertIn("Machine-scannable install map", readme)
         self.assertNotIn("## Two supported distributions", readme)
@@ -463,7 +464,7 @@ class SkillScriptTests(unittest.TestCase):
 
     def test_behavioral_eval_has_critical_companion_and_memory_cases(self) -> None:
         cases = (ROOT / "evals" / "cases.yaml").read_text(encoding="utf-8")
-        self.assertIn("version: 7", cases)
+        self.assertIn("version: 8", cases)
         self.assertIn("evaluation_contract:", cases)
         self.assertIn("journeys:", cases)
         for case_id in (
@@ -517,7 +518,7 @@ class SkillScriptTests(unittest.TestCase):
     def test_eval_validator_rejects_shallow_or_malformed_catalogs_without_yaml_dependency(self) -> None:
         result = validate_data(
             {
-                "version": 7,
+                "version": 8,
                 "skill": "propaymun-information-architecture",
                 "evaluation_contract": {},
                 "cases": [{"id": "duplicate"}],

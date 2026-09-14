@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT-0",
   "product_name": "ProPaymun Information Architecture",
   "canonical_source": "SKILL.md",
@@ -27,9 +27,9 @@
       "use_when": "Codex Skill Installer accepts a GitHub repository subdirectory URL."
     },
     "agent_skill": {
-      "display_name": "Agent Skill Package",
+      "display_name": "Portable Agent Skill ZIP",
       "path": "packages/agent-skill/propaymun-information-architecture.zip",
-      "use_when": "The host can install a native Agent Skill ZIP or skill directory."
+      "use_when": "The host or skill registry accepts a folder-based Agent Skill or ZIP containing one skill folder with SKILL.md."
     },
     "workspace_kit": {
       "display_name": "Workspace Kit",

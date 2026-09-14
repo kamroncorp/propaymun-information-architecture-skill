@@ -4,6 +4,17 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-09-14
+
+### Fixed
+
+- Resolve the remaining empty-starter language regression by using the dominant natural language of the current user message even when it contains no product brief; fall back to conversation language only when the current message has no usable language signal.
+- Remove the ambiguous `latest substantive message` wording that allowed a host to skip an English starter and reuse a Persian profile or prior-chat language.
+
+### Changed
+
+- Clarify that the canonical ZIP is a portable folder-based Agent Skill package suitable for Claude.ai upload and registries such as LocalSkills and ClawHub, while host-specific installation and capability behavior remains the host's responsibility.
+
 ## [1.0.3] - 2026-09-14
 
 ### Fixed
@@ -173,7 +184,8 @@ All notable changes to this project are documented here. The project follows Sem
 - English and Persian documentation.
 - Three behavioral evaluation scenarios and deterministic script tests.
 
-[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.4...HEAD
+[1.0.4]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.0...v1.0.1

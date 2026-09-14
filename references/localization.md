@@ -20,11 +20,11 @@ Never infer a country or a binding local rule from language alone. Persian may b
 Choose the response language in this order:
 
 1. an explicit language request in the current turn;
-2. the clear dominant language of the user's latest substantive message;
-3. when that message is language-neutral, the active language of this conversation;
+2. the clear dominant natural language used in the current user message, including a starter with no product brief;
+3. only when the current user message has no usable natural-language signal, the active language of this conversation;
 4. a brief clarification only when the choice materially affects the deliverable.
 
-Persistent memory, profile preferences, locale, location, prior chats, project records, and automatically supplied context never choose or override steps 1–3. They also do not supply a country, jurisdiction, current project, or product brief. Technical terms, stable identifiers, URLs, code, or short quotations in another language do not by themselves change the dominant language. A message written in English receives an English response even when memory says the user usually prefers Persian; a Persian message containing English terms such as `Sitemap` or `User Flow` still receives Persian unless it explicitly requests another language.
+Persistent memory, profile preferences, locale, location, prior chats, project records, and automatically supplied context never choose or override steps 1–3. They also do not supply a country, jurisdiction, current project, or product brief. Do not discard a starter's language merely because the starter lacks product context: an English empty starter receives an English brief request. Technical terms, stable identifiers, URLs, code, or short quotations in another language do not by themselves change the dominant language. A Persian message containing English terms such as `Sitemap` or `User Flow` still receives Persian unless it explicitly requests another language.
 
 ## When to ask
 

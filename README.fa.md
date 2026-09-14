@@ -1,6 +1,6 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-1.0.3-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.4-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
@@ -19,7 +19,7 @@
 | بسته | مناسب برای | دریافت |
 |---|---|---|
 | **دایرکتوری مهارت Codex** | نصب با Skill Installer از زیرمسیر GitHub | [دایرکتوری نصب](packages/codex-skill/propaymun-information-architecture) |
-| **بسته Agent Skill** | Claude.ai Skills و فقط محیط‌هایی که مستندات خودشان سازگاری با بستهٔ Agent Skill را تأیید کرده‌اند | [دانلود ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
+| **ZIP قابل‌حمل Agent Skill** | Claude.ai Skills، LocalSkills، ClawHub و محیط‌هایی که پشتیبانی از Agent Skill پوشه‌ای را اعلام کرده‌اند | [دانلود ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
 | **کیت Workspace** | ChatGPT Projects، Claude Projects، Gemini Gemهایی که دستی ساخته می‌شوند و محیط‌هایی با Instructions پایدار و فایل Knowledge | [فایل دانش](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [دستور Workspace](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
 همهٔ بسته‌ها از یک رفتار اصلی ساخته می‌شوند. فعال‌شدن خودکار، ماندگاری، ابزارها و محدودیت Context به سرویس میزبان وابسته است.
@@ -34,7 +34,7 @@
 
 ## نصب در Claude.ai
 
-1. **[بسته Agent Skill](packages/agent-skill/propaymun-information-architecture.zip)** را دانلود کنید.
+1. **[ZIP قابل‌حمل Agent Skill](packages/agent-skill/propaymun-information-architecture.zip)** را دانلود کنید.
 2. در Claude.ai، قابلیت **Settings → Capabilities → Code execution and file creation** را فعال کنید.
 3. وارد **Customize → Skills** شوید.
 4. مسیر **+ → Create skill → Upload a skill** را انتخاب کنید.
@@ -67,7 +67,11 @@ Gemini وب این بسته را به‌صورت Native Skill نصب نمی‌ک
 
 ## محیط‌های دیگرِ Agent Skill
 
-فقط وقتی از بستهٔ Agent Skill استفاده کنید که مستندات خود همان سرویس، فرمت بسته و روش نصب آن را تأیید کرده باشد. این مخزن عمداً دستور نصب CLI تأییدنشده ارائه نمی‌دهد.
+فقط وقتی از ZIP قابل‌حمل Agent Skill استفاده کنید که سرویس یا Registry از بسته‌های پوشه‌ای Agent Skill پشتیبانی کند. این مخزن عمداً دستور نصب تأییدنشده ارائه نمی‌دهد.
+
+### انتشار در LocalSkills یا ClawHub
+
+اگر داشبورد Registry آپلود ZIP می‌پذیرد، فایل [`packages/agent-skill/propaymun-information-architecture.zip`](packages/agent-skill/propaymun-information-architecture.zip) را مستقیماً آپلود کنید و کل مخزن را دوباره ZIP نکنید. این آرشیو فقط یک پوشهٔ اصلی Skill شامل `SKILL.md`، `LICENSE`، `agents/`، `references/`، `schema/` و `scripts/` استاندارد دارد و تست‌ها، ابزار انتشار یا بستهٔ تودرتو داخل آن نیست. برای انتشار با CLI، پوشهٔ Extractشدهٔ Skill را مطابق مستندات [LocalSkills](https://docs.localskills.sh/cli/) یا [ClawHub](https://github.com/openclaw/clawhub/blob/main/docs/clawhub.md) بدهید.
 
 ## نقشه نصب قابل‌اسکن برای AI
 
@@ -90,7 +94,7 @@ semantic_schema: schema/semantic-ia.schema.json
 companion_schemas: [schema/product-sitemap.schema.json, schema/user-flow.schema.json]
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v1.0.3-local-candidate
+release_state: v1.0.4-local-candidate
 ```
 
 یک AI Installer باید فقط بسته متناسب با محیط را انتخاب کند، محتویات بسته را حفظ کند و آپلود فایل دانش را نصب Native معرفی نکند.

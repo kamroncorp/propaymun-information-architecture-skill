@@ -1,6 +1,6 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-1.0.3-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.4-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
@@ -19,7 +19,7 @@ The conversational workflow needs no tools. Optional bundled Python helpers vali
 | Package | Best for | Download |
 |---|---|---|
 | **Codex Skill Directory** | Codex Skill Installer from a GitHub subdirectory | [Install directory](packages/codex-skill/propaymun-information-architecture) |
-| **Agent Skill Package** | Claude.ai Skills and only runtimes whose own documentation confirms compatible Agent Skill package support | [Download ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
+| **Portable Agent Skill ZIP** | Claude.ai Skills, LocalSkills, ClawHub, and runtimes whose documentation confirms folder-based Agent Skill support | [Download ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
 | **Workspace Kit** | ChatGPT Projects, Claude Projects, manually created Gemini Gems, and surfaces that provide persistent instructions plus file knowledge | [Knowledge file](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [Workspace instructions](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
 All distributions share the same canonical behavior. Automatic triggering, persistence, tools, and context limits still depend on the host product.
@@ -34,7 +34,7 @@ Using the repository root may also copy maintainer tests, evaluation files, rele
 
 ## Install in Claude.ai
 
-1. Download the **[Agent Skill Package](packages/agent-skill/propaymun-information-architecture.zip)**.
+1. Download the **[Portable Agent Skill ZIP](packages/agent-skill/propaymun-information-architecture.zip)**.
 2. In Claude.ai, enable **Settings → Capabilities → Code execution and file creation**.
 3. Open **Customize → Skills**.
 4. Choose **+ → Create skill → Upload a skill**.
@@ -67,7 +67,11 @@ If a service only accepts files in a chat, attach the Workspace Kit and paste th
 
 ## Other Agent Skill runtimes
 
-Use the Agent Skill Package only when the host's own documentation confirms this package format and installation route. This repository intentionally does not provide unverified CLI installation commands.
+Use the Portable Agent Skill ZIP only when the host or registry documents folder-based Agent Skill packages. This repository intentionally does not provide unverified installation commands.
+
+### Publish to LocalSkills or ClawHub
+
+Upload [`packages/agent-skill/propaymun-information-architecture.zip`](packages/agent-skill/propaymun-information-architecture.zip) directly when the registry dashboard accepts ZIP uploads; do not ZIP the repository root. The archive contains one top-level skill folder with `SKILL.md`, `LICENSE`, `agents/`, `references/`, `schema/`, and standard-library `scripts/`, with no tests, release tooling, or nested packages. For CLI publishing, use the extracted skill folder as documented by [LocalSkills](https://docs.localskills.sh/cli/) or [ClawHub](https://github.com/openclaw/clawhub/blob/main/docs/clawhub.md).
 
 ## Machine-scannable install map
 
@@ -90,7 +94,7 @@ semantic_schema: schema/semantic-ia.schema.json
 companion_schemas: [schema/product-sitemap.schema.json, schema/user-flow.schema.json]
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v1.0.3-local-candidate
+release_state: v1.0.4-local-candidate
 ```
 
 An AI installer should select exactly one host-appropriate package, preserve the package contents, and avoid claiming native installation when it only attached a knowledge file.

@@ -1,4 +1,4 @@
-version: 7
+version: 8
 skill: propaymun-information-architecture
 evaluation_contract:
   purpose: |
@@ -8,7 +8,7 @@ evaluation_contract:
   execution:
     - Run each atomic case as an isolated conversation unless it defines a follow-up.
     - Run every journey from a fresh conversation and preserve only the declared seed context.
-    - Run parity journeys once with the Agent Skill Package and once with the Workspace Kit.
+    - Run parity journeys once with the Portable Agent Skill ZIP and once with the Workspace Kit.
     - Record actual output and tool or memory events; do not score from a summary of the run.
   result_record_required:
     - artifact_revision
@@ -569,10 +569,9 @@ cases:
     behavior_expected: empty-intake-onboarding
     environment: Codex Try in chat; Persian preference and unrelated Persian product memory are supplied automatically by the host
     prompt: |
-      Use $propaymun-information-architecture to help structure the product described in my message;
-      reply in the language of my latest substantive message unless I explicitly request another language,
-      and if I supplied no actual product context, ask me in one short sentence to describe the product
-      or paste its brief, then do nothing else.
+      Use $propaymun-information-architecture to help structure my product. Reply in the language used
+      in this message unless I explicitly request another language; if I have not included product context,
+      ask me in one short sentence to describe the product or paste its brief, then stop.
     invariants:
       - Responds briefly in English because the current message is English.
       - Uses exactly one short sentence to ask for the product/problem or brief.
@@ -586,17 +585,16 @@ cases:
     behavior_expected: per-message-language-and-real-brief-transition
     environment: Codex Try in chat; unrelated English and Persian memories are supplied automatically
     prompt: |
-      Use $propaymun-information-architecture to help structure the product described in my message;
-      reply in the language of my latest substantive message unless I explicitly request another language,
-      and if I supplied no actual product context, ask me in one short sentence to describe the product
-      or paste its brief, then do nothing else.
+      Use $propaymun-information-architecture to help structure my product. Reply in the language used
+      in this message unless I explicitly request another language; if I have not included product context,
+      ask me in one short sentence to describe the product or paste its brief, then stop.
     invariants:
       - Responds with one short English sentence asking for the product/problem or brief.
       - Does not mention memory, activation, internal files, or artifact choices.
     follow_up: |
       یک اپلیکیشن برای رزرو نوبت سالن زیبایی می‌سازم و می‌خواهم با بودجه کم از یک شهر شروع کنم.
     follow_up_invariants:
-      - Switches to Persian because the latest substantive user message is Persian.
+      - Switches to Persian because the current user message is Persian.
       - Treats the Persian message as a real early brief and gives a useful initial frame before any necessary high-impact question.
       - Does not fall back to another generic request for a brief or an IA/sitemap/user-flow menu.
 
@@ -625,7 +623,7 @@ cases:
     prompt: |
       Necesito organizar la arquitectura de información de una plataforma pequeña de cursos en línea.
     invariants:
-      - Responds in Spanish because Spanish is the dominant language of the current substantive message.
+      - Responds in Spanish because Spanish is the dominant natural language of the current user message.
       - Does not switch to English or Persian because of profile preferences or memory.
       - Does not infer a country or jurisdiction from Spanish.
 
