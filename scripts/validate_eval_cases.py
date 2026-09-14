@@ -33,8 +33,8 @@ def validate_data(data: Any) -> dict[str, Any]:
             "errors": ["root must be a mapping"],
         }
 
-    if data.get("version") != 5:
-        errors.append("version must be 5")
+    if data.get("version") != 6:
+        errors.append("version must be 6")
     if not nonempty_string(data.get("skill")):
         errors.append("skill must be a non-empty string")
 

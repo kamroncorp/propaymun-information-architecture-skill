@@ -27,6 +27,12 @@ REFERENCE_ORDER = [
 
 PACKAGE_FOLDER = "propaymun-information-architecture"
 FIXED_ZIP_TIME = (2026, 1, 1, 0, 0, 0)
+RUNTIME_HELPERS = (
+    "validate_ia_model.py",
+    "validate_companion_model.py",
+    "render_ia_html.py",
+    "export_builder_handoff.py",
+)
 
 
 def strip_frontmatter(text: str) -> str:
@@ -41,17 +47,21 @@ def rewrite_reference_links(text: str) -> str:
     return re.sub(r"\[([^\]]+)\]\(references/[^)]+\)", r"\1 (embedded below)", text)
 
 
+def normalized_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8").replace("\r\n", "\n").rstrip() + "\n"
+
+
 def build_workspace_kit(root: Path) -> str:
     skill = rewrite_reference_links(strip_frontmatter((root / "SKILL.md").read_text(encoding="utf-8")).strip())
     intro = """# ProPaymun IA Workspace Kit
 
 ## High-priority operating core
 
-When the user asks for information architecture, a product/UX sitemap, or a user flow, follow this file as operating instructions rather than background reading. Act as a product and IA decision partner: let the user describe the product naturally, infer the depth they need, connect user value with business and operational consequences, and give useful orientation before asking them to make specialist decisions. Ask only when an answer materially changes the next consequential choice and no responsible reversible default exists. As soon as the available context supports a responsible baseline, provide one coherent useful pass instead of a serial interview; this is not a question quota. If the user does not know, explain one reversible starting point in ordinary language and continue through a useful slice before asking again. At a useful pause, summarize current understanding, confirmed choices, reversible assumptions, open risks, and scope before mentioning only relevant optional continuations; do not force the next layer or end every pass with a question. Keep internal labels such as Proposed, Provisional, Reference Lock, and validation-layer names out of ordinary conversation. Use English beside the user's language only when requested, for stable identifiers, or for a specialist handoff. Keep one canonical IA or a versioned minimum semantic substrate, localize only from evidence, answer in the user's language, and preserve the spelling ProPaymun.
+When the user asks for information architecture, a product/UX sitemap, or a user flow, follow this file as operating instructions rather than background reading. Act as a product and IA decision partner: let the user describe the product naturally, infer the depth they need, connect user value with business and operational consequences, and give useful orientation before asking them to make specialist decisions. Determine response language from an explicit current-turn request or the clear language of the current message; persistent memory, profile preferences, locale, prior chats, project records, and automatically supplied context never override it. If the current message only invokes the skill or repeats a starter without actual product context, reply briefly in that message's language and ask for the product/problem or brief. Do not reuse remembered product details, invent a current stage, summarize a nonexistent phase, or narrate activation, installation paths, library access, file loading, or internal controls. Ask only when an answer materially changes the next consequential choice and no responsible reversible default exists. As soon as real context supports a responsible baseline, provide one coherent useful pass instead of a serial interview; this is not a question quota. If the user does not know, explain one reversible starting point in ordinary language and continue through a useful slice before asking again. At a useful pause, summarize current understanding, confirmed choices, reversible assumptions, open risks, and scope before mentioning only relevant optional continuations; do not force the next layer or end every pass with a question. Keep internal labels such as Proposed, Provisional, Reference Lock, and validation-layer names out of ordinary conversation. Use English beside the user's language only when requested, for stable identifiers, or for a specialist handoff. Keep one canonical IA or a versioned minimum semantic substrate, localize only from evidence, and preserve the spelling ProPaymun.
 
 A recommendation is not a product commitment. Authentication, persistent accounts, synchronization, payment, monetization, promotion, engagement loops, and growth metrics remain optional until current evidence or explicit user acceptance puts them in scope. Optimize first for the user's stated outcome, trust, and task success.
 
-The current conversation controls actions and deliverables. Do not proactively retrieve, search, read, create, or update persistent memory or prior-chat project records unless the user explicitly asks in the current conversation. Automatically supplied memory may adapt harmless presentation preferences but never authorizes a file, image, presentation, diagram, prototype, upload, publication, or persistent context change. “Continue later” is not permission to persist. Prefer a small portable continuation note, and never claim storage succeeded without an evidenced capability and result. An explicit downstream request may derive UI, image, prototype, sitemap, user-flow, document, presentation, builder, or technical output from an IA Reference Lock. A standalone product sitemap or user flow uses only the minimum semantic substrate it needs. If production capability is not evidenced, provide a truthful self-contained handoff.
+The current conversation controls actions and deliverables. Do not proactively retrieve, search, read, create, or update persistent memory or prior-chat project records unless the user explicitly asks in the current conversation. Automatically supplied memory may adapt harmless tone or depth preferences that do not conflict with the current turn, but it is not language authority, missing product context, evidence, or authorization for a file, image, presentation, diagram, prototype, upload, publication, or persistent context change. “Continue later” is not permission to persist. Prefer a small portable continuation note, and never claim storage succeeded without an evidenced capability and result. An explicit downstream request may derive UI, image, prototype, sitemap, user-flow, document, presentation, builder, or technical output from an IA Reference Lock. A standalone product sitemap or user flow uses only the minimum semantic substrate it needs. If production capability is not evidenced, provide a truthful self-contained handoff.
 
 “Sitemap” means a product destination structure when the context is product, UX, pages, navigation, or hierarchy. XML, URL, crawl, robots.txt, index, or Search Console language indicates an SEO sitemap. Ask one short disambiguation question only when the distinction remains material and unresolved.
 
@@ -93,20 +103,39 @@ def zip_write(archive: zipfile.ZipFile, arcname: str, data: bytes) -> None:
 
 
 def build_agent_skill(root: Path, output: Path) -> None:
-    files = [root / "SKILL.md", root / "LICENSE"]
+    files = [root / "SKILL.md", root / "LICENSE", root / "agents" / "openai.yaml"]
     files.extend(sorted((root / "references").glob("*.md")))
     files.extend(sorted((root / "schema").glob("*")))
     # Ship runtime helpers only; package/release tooling belongs in the repository.
-    files.extend(root / "scripts" / name for name in (
-        "validate_ia_model.py", "validate_companion_model.py", "render_ia_html.py", "export_builder_handoff.py",
-    ))
+    files.extend(root / "scripts" / name for name in RUNTIME_HELPERS)
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w") as archive:
         for path in files:
             if path.is_file():
                 relative = path.relative_to(root).as_posix()
-                normalized = path.read_text(encoding="utf-8").replace("\r\n", "\n").encode("utf-8")
+                normalized = normalized_text(path).encode("utf-8")
                 zip_write(archive, f"{PACKAGE_FOLDER}/{relative}", normalized)
+
+
+def build_codex_skill_directory(root: Path, output: Path) -> None:
+    expected_parent = (root / "packages" / "codex-skill").resolve()
+    resolved_output = output.resolve()
+    if resolved_output.parent != expected_parent or resolved_output.name != PACKAGE_FOLDER:
+        raise ValueError("Codex skill output must be the canonical packages/codex-skill directory")
+
+    if resolved_output.exists():
+        shutil.rmtree(resolved_output)
+
+    files = [root / "SKILL.md", root / "LICENSE", root / "agents" / "openai.yaml"]
+    files.extend(sorted((root / "references").glob("*.md")))
+    files.extend(sorted((root / "schema").glob("*")))
+    files.extend(root / "scripts" / name for name in RUNTIME_HELPERS)
+    for source in files:
+        if source.is_file():
+            destination = resolved_output / source.relative_to(root)
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            normalized = normalized_text(source)
+            destination.write_text(normalized, encoding="utf-8", newline="\n")
 
 
 def copy_alias(source: Path, destination: Path) -> None:
@@ -125,10 +154,12 @@ def main() -> int:
     root = args.root.resolve()
     workspace_output = args.workspace_output or root / "packages" / "workspace-kit" / "propaymun-ia-workspace-kit.md"
     agent_output = args.agent_output or root / "packages" / "agent-skill" / "propaymun-information-architecture.zip"
+    codex_output = root / "packages" / "codex-skill" / PACKAGE_FOLDER
 
     workspace_output.parent.mkdir(parents=True, exist_ok=True)
     workspace_output.write_text(build_workspace_kit(root), encoding="utf-8", newline="\n")
     build_agent_skill(root, agent_output)
+    build_codex_skill_directory(root, codex_output)
 
     if not args.skip_legacy_aliases:
         copy_alias(workspace_output, root / "install" / "universal-web" / "propaymun-information-architecture.md")
@@ -137,6 +168,7 @@ def main() -> int:
 
     print(workspace_output)
     print(agent_output)
+    print(codex_output)
     return 0
 
 

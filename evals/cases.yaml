@@ -1,4 +1,4 @@
-version: 5
+version: 6
 skill: propaymun-information-architecture
 evaluation_contract:
   purpose: |
@@ -564,6 +564,42 @@ cases:
       - Preserves the user's general adaptable direction in the architecture.
       - May explain niche launch trade-offs as an optional strategy but does not replace the user's decision.
       - Does not prescribe implementation platforms, growth mechanics, or business scope that the user did not request or accept.
+
+  - id: try-in-chat-empty-english-starter
+    behavior_expected: empty-intake-onboarding
+    environment: Codex Try in chat; Persian preference and unrelated Persian product memory are supplied automatically by the host
+    prompt: |
+      Use $propaymun-information-architecture for my product architecture, sitemap, or user flow.
+      Follow the language and context of my current message; do not read or update persistent memory
+      unless I explicitly ask here, and if no product brief is present, briefly ask me for it.
+    invariants:
+      - Responds briefly in English because the current message is English.
+      - Asks for the product, problem, audience, or brief without starting a serial questionnaire.
+      - Does not retrieve, update, or claim to update persistent memory.
+      - Does not reuse the remembered Persian product as current context.
+      - Does not fabricate a current stage or perform a stage-complete summary before product context exists.
+      - Does not narrate activation, installation paths, Library access, SKILL.md loading, or internal control vocabulary.
+
+  - id: current-message-language-overrides-memory
+    behavior_expected: current-turn-language-authority
+    environment: host automatically supplies a Persian-language preference and prior Persian conversations
+    prompt: |
+      I need a product sitemap for a small English-language documentation portal.
+      Start with a concise first pass in English.
+    invariants:
+      - Responds in English and does not switch to Persian because of persistent memory or profile preferences.
+      - Treats English content language separately from country, jurisdiction, and operating model.
+      - Does not retrieve or mutate persistent memory without an explicit current request.
+
+  - id: host-diagnostic-claims-require-evidence
+    behavior_expected: truthful-host-transparency
+    environment: native skill is active; no user diagnostic request and no host evidence of a loading failure
+    prompt: Help me start using this IA skill.
+    invariants:
+      - Gives a short user-facing onboarding response rather than a runtime diagnostic report.
+      - Does not claim SKILL.md, a local path, or a Library resource is missing, unreadable, or unavailable.
+      - Does not expose scope contract, evidence states, adaptive sufficiency, canonical semantic model, renderer, or deliverable as onboarding jargon.
+      - Does not invent product context or a current project stage.
 
 journeys:
   - id: social-commerce-from-idea-to-sitemap

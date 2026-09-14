@@ -171,6 +171,7 @@ class SkillScriptTests(unittest.TestCase):
             names = set(archive.namelist())
             base = "propaymun-information-architecture/"
             self.assertIn(base + "SKILL.md", names)
+            self.assertIn(base + "agents/openai.yaml", names)
             self.assertIn(base + "references/discovery.md", names)
             self.assertIn(base + "references/localization.md", names)
             self.assertIn(base + "references/sitemap.md", names)
@@ -182,6 +183,29 @@ class SkillScriptTests(unittest.TestCase):
             self.assertIn(base + "scripts/validate_companion_model.py", names)
             self.assertIn(base + "scripts/export_builder_handoff.py", names)
             self.assertNotIn(base + "tests/test_scripts.py", names)
+
+    def test_codex_skill_directory_is_clean_and_matches_agent_package(self) -> None:
+        codex_directory = PACKAGES / "codex-skill" / "propaymun-information-architecture"
+        archive_path = PACKAGES / "agent-skill" / "propaymun-information-architecture.zip"
+        directory_names = {
+            path.relative_to(codex_directory).as_posix()
+            for path in codex_directory.rglob("*")
+            if path.is_file()
+        }
+        with zipfile.ZipFile(archive_path) as archive:
+            prefix = "propaymun-information-architecture/"
+            archive_names = {
+                name.removeprefix(prefix)
+                for name in archive.namelist()
+                if name.startswith(prefix) and not name.endswith("/")
+            }
+        self.assertEqual(directory_names, archive_names)
+        self.assertIn("SKILL.md", directory_names)
+        self.assertIn("agents/openai.yaml", directory_names)
+        self.assertNotIn("tests/test_scripts.py", directory_names)
+        self.assertNotIn("evals/cases.yaml", directory_names)
+        self.assertNotIn("scripts/build_packages.py", directory_names)
+        self.assertFalse(any(name.startswith("packages/") for name in directory_names))
 
     def test_visual_builder_handoff_outputs_spec_and_launch_text(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -271,6 +295,7 @@ class SkillScriptTests(unittest.TestCase):
         self.assertEqual(manifest["version"], version)
         self.assertEqual(manifest["packages"]["agent_skill"]["display_name"], "Agent Skill Package")
         self.assertEqual(manifest["packages"]["workspace_kit"]["display_name"], "Workspace Kit")
+        self.assertEqual(manifest["packages"]["codex_skill"]["display_name"], "Codex Skill Directory")
 
     def test_core_scope_preserves_ia_while_composing_requested_derivatives(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
@@ -334,6 +359,25 @@ class SkillScriptTests(unittest.TestCase):
             self.assertIn("Relevance and token discipline", content)
             self.assertIn("one representation at a time", content)
 
+    def test_current_message_controls_language_and_empty_starter_behavior(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        workspace = (PACKAGES / "workspace-kit" / "propaymun-ia-workspace-kit.md").read_text(encoding="utf-8")
+        instructions = (PACKAGES / "workspace-kit" / "WORKSPACE_INSTRUCTIONS.md").read_text(encoding="utf-8")
+        for content in (skill, workspace, instructions):
+            lowered = content.lower()
+            self.assertIn("current message", lowered)
+            self.assertIn("response language", lowered)
+            self.assertIn("persistent memory", lowered)
+            self.assertIn("product context", lowered)
+            self.assertIn("installation paths", lowered)
+            self.assertIn("current stage", lowered)
+
+        openai_yaml = (ROOT / "agents" / "openai.yaml").read_text(encoding="utf-8")
+        self.assertIn("language and context of my current message", openai_yaml)
+        self.assertIn("do not read or update persistent memory", openai_yaml)
+        self.assertIn("if no product brief is present", openai_yaml)
+        self.assertNotIn("summarize the current stage", openai_yaml)
+
     def test_visual_builder_is_downstream_and_not_a_runtime(self) -> None:
         manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
@@ -361,6 +405,15 @@ class SkillScriptTests(unittest.TestCase):
         self.assertIn("unverified", (ROOT / "README.md").read_text(encoding="utf-8").lower())
         self.assertIn("تأییدنشده", (ROOT / "README.fa.md").read_text(encoding="utf-8"))
 
+    def test_codex_installation_guidance_uses_clean_subdirectory(self) -> None:
+        expected = "packages/codex-skill/propaymun-information-architecture"
+        for filename in ("README.md", "README.fa.md"):
+            content = (ROOT / filename).read_text(encoding="utf-8")
+            self.assertIn(expected, content)
+            self.assertIn("tree/main/" + expected, content)
+        manifest = json.loads((PACKAGES / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["packages"]["codex_skill"]["path"], expected)
+
     def test_capability_routing_does_not_require_diagram_companions(self) -> None:
         routing = (ROOT / "references" / "capability-routing.md").read_text(encoding="utf-8")
         self.assertIn("Route by capability, not brand", routing)
@@ -380,7 +433,7 @@ class SkillScriptTests(unittest.TestCase):
 
     def test_behavioral_eval_has_critical_companion_and_memory_cases(self) -> None:
         cases = (ROOT / "evals" / "cases.yaml").read_text(encoding="utf-8")
-        self.assertIn("version: 5", cases)
+        self.assertIn("version: 6", cases)
         self.assertIn("evaluation_contract:", cases)
         self.assertIn("journeys:", cases)
         for case_id in (
@@ -407,6 +460,9 @@ class SkillScriptTests(unittest.TestCase):
             "explicit-memory-save-capability-split",
             "same-brief-cross-package-parity",
             "external-payment-stateful-flow",
+            "try-in-chat-empty-english-starter",
+            "current-message-language-overrides-memory",
+            "host-diagnostic-claims-require-evidence",
         ):
             self.assertIn(f"id: {case_id}", cases)
 
@@ -426,7 +482,7 @@ class SkillScriptTests(unittest.TestCase):
     def test_eval_validator_rejects_shallow_or_malformed_catalogs_without_yaml_dependency(self) -> None:
         result = validate_data(
             {
-                "version": 5,
+                "version": 6,
                 "skill": "propaymun-information-architecture",
                 "evaluation_contract": {},
                 "cases": [{"id": "duplicate"}],

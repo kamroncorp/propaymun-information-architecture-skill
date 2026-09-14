@@ -1,6 +1,6 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-1.0.1-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.2-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
@@ -18,10 +18,19 @@ The conversational workflow needs no tools. Optional bundled Python helpers vali
 
 | Package | Best for | Download |
 |---|---|---|
+| **Codex Skill Directory** | Codex Skill Installer from a GitHub subdirectory | [Install directory](packages/codex-skill/propaymun-information-architecture) |
 | **Agent Skill Package** | Claude.ai Skills and only runtimes whose own documentation confirms compatible Agent Skill package support | [Download ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
 | **Workspace Kit** | ChatGPT Projects, Claude Projects, manually created Gemini Gems, and surfaces that provide persistent instructions plus file knowledge | [Knowledge file](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [Workspace instructions](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
-The two packages share the same canonical behavior. Automatic triggering, persistence, tools, and context limits still depend on the host product.
+All distributions share the same canonical behavior. Automatic triggering, persistence, tools, and context limits still depend on the host product.
+
+## Install in Codex
+
+Give Skill Installer this exact subdirectory URL:
+
+`https://github.com/kamroncorp/propaymun-information-architecture-skill/tree/main/packages/codex-skill/propaymun-information-architecture`
+
+Using the repository root may also copy maintainer tests, evaluation files, release scripts, and nested packages. The dedicated directory contains only the runtime skill files.
 
 ## Install in Claude.ai
 
@@ -66,6 +75,8 @@ Use the Agent Skill Package only when the host's own documentation confirms this
 product: ProPaymun Information Architecture
 skill_id: propaymun-information-architecture
 canonical_entrypoint: SKILL.md
+codex_skill_directory: packages/codex-skill/propaymun-information-architecture
+codex_installer_url: https://github.com/kamroncorp/propaymun-information-architecture-skill/tree/main/packages/codex-skill/propaymun-information-architecture
 native_package: packages/agent-skill/propaymun-information-architecture.zip
 native_package_verified_for: [claude.ai-skills]
 workspace_knowledge: packages/workspace-kit/propaymun-ia-workspace-kit.md
@@ -79,7 +90,7 @@ semantic_schema: schema/semantic-ia.schema.json
 companion_schemas: [schema/product-sitemap.schema.json, schema/user-flow.schema.json]
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v1.0.1
+release_state: v1.0.2-local-candidate
 ```
 
 An AI installer should select exactly one host-appropriate package, preserve the package contents, and avoid claiming native installation when it only attached a knowledge file.

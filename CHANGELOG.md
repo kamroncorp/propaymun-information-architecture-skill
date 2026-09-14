@@ -4,6 +4,20 @@ All notable changes to this project are documented here. The project follows Sem
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-09-14
+
+### Fixed
+
+- Make the language of the current user message authoritative so persistent memory, profile preferences, locale, and prior chats cannot silently switch the response language.
+- Treat a default “Try in chat” invocation without product context as empty intake: ask briefly for the product brief instead of inventing a stage, reusing remembered project details, or exposing installation and skill-loading internals.
+- Prevent automatically supplied memory from acting as missing product context or triggering an unrequested durable memory update.
+
+### Changed
+
+- Shorten the Codex default prompt and encode the language, memory, and empty-intake safeguards directly in it.
+- Add a clean Codex Skill Installer subdirectory that excludes maintainer tests, evaluation catalogs, release tooling, and nested distribution packages.
+- Add regression cases and deterministic package checks for cross-language memory contamination, empty starter behavior, diagnostic-claim restraint, and clean Codex installation.
+
 ## [1.0.1] - 2026-09-14
 
 ### Security
@@ -145,7 +159,8 @@ All notable changes to this project are documented here. The project follows Sem
 - English and Persian documentation.
 - Three behavioral evaluation scenarios and deterministic script tests.
 
-[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.6.0...v1.0.0
 [0.6.0]: https://github.com/kamroncorp/propaymun-information-architecture-skill/compare/v0.4.1...v0.6.0

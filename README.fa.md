@@ -1,6 +1,6 @@
 # ProPaymun Information Architecture
 
-[![Version](https://img.shields.io/badge/version-1.0.1-5B4BDB)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.2-5B4BDB)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT--0-2F855A)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-ready-111827)](SKILL.md)
 
@@ -18,10 +18,19 @@
 
 | بسته | مناسب برای | دریافت |
 |---|---|---|
+| **دایرکتوری مهارت Codex** | نصب با Skill Installer از زیرمسیر GitHub | [دایرکتوری نصب](packages/codex-skill/propaymun-information-architecture) |
 | **بسته Agent Skill** | Claude.ai Skills و فقط محیط‌هایی که مستندات خودشان سازگاری با بستهٔ Agent Skill را تأیید کرده‌اند | [دانلود ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
 | **کیت Workspace** | ChatGPT Projects، Claude Projects، Gemini Gemهایی که دستی ساخته می‌شوند و محیط‌هایی با Instructions پایدار و فایل Knowledge | [فایل دانش](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [دستور Workspace](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
-هر دو بسته از یک رفتار اصلی ساخته می‌شوند. فعال‌شدن خودکار، ماندگاری، ابزارها و محدودیت Context به سرویس میزبان وابسته است.
+همهٔ بسته‌ها از یک رفتار اصلی ساخته می‌شوند. فعال‌شدن خودکار، ماندگاری، ابزارها و محدودیت Context به سرویس میزبان وابسته است.
+
+## نصب در Codex
+
+این لینک دقیق زیرمسیر را به Skill Installer بدهید:
+
+`https://github.com/kamroncorp/propaymun-information-architecture-skill/tree/main/packages/codex-skill/propaymun-information-architecture`
+
+دادن لینک ریشهٔ مخزن ممکن است تست‌ها، فایل‌های ارزیابی، ابزارهای انتشار و بسته‌های تودرتو را هم کپی کند. دایرکتوری اختصاصی فقط فایل‌های لازم برای اجرای مهارت را دارد.
 
 ## نصب در Claude.ai
 
@@ -66,6 +75,8 @@ Gemini وب این بسته را به‌صورت Native Skill نصب نمی‌ک
 product: ProPaymun Information Architecture
 skill_id: propaymun-information-architecture
 canonical_entrypoint: SKILL.md
+codex_skill_directory: packages/codex-skill/propaymun-information-architecture
+codex_installer_url: https://github.com/kamroncorp/propaymun-information-architecture-skill/tree/main/packages/codex-skill/propaymun-information-architecture
 native_package: packages/agent-skill/propaymun-information-architecture.zip
 native_package_verified_for: [claude.ai-skills]
 workspace_knowledge: packages/workspace-kit/propaymun-ia-workspace-kit.md
@@ -79,7 +90,7 @@ semantic_schema: schema/semantic-ia.schema.json
 companion_schemas: [schema/product-sitemap.schema.json, schema/user-flow.schema.json]
 visual_builder_exporter: scripts/export_builder_handoff.py
 legacy_download_paths: preserved
-release_state: v1.0.1
+release_state: v1.0.2-local-candidate
 ```
 
 یک AI Installer باید فقط بسته متناسب با محیط را انتخاب کند، محتویات بسته را حفظ کند و آپلود فایل دانش را نصب Native معرفی نکند.

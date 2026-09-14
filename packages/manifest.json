@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT-0",
   "product_name": "ProPaymun Information Architecture",
   "canonical_source": "SKILL.md",
@@ -20,6 +20,12 @@
     "standalone_companion_source": "versioned-minimum-semantic-substrate"
   },
   "packages": {
+    "codex_skill": {
+      "display_name": "Codex Skill Directory",
+      "path": "packages/codex-skill/propaymun-information-architecture",
+      "install_url": "https://github.com/kamroncorp/propaymun-information-architecture-skill/tree/main/packages/codex-skill/propaymun-information-architecture",
+      "use_when": "Codex Skill Installer accepts a GitHub repository subdirectory URL."
+    },
     "agent_skill": {
       "display_name": "Agent Skill Package",
       "path": "packages/agent-skill/propaymun-information-architecture.zip",
