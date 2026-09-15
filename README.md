@@ -19,7 +19,7 @@ The conversational workflow needs no tools. Optional bundled Python helpers vali
 | Package | Best for | Download |
 |---|---|---|
 | **Codex Skill Directory** | Codex Skill Installer from a GitHub subdirectory | [Install directory](packages/codex-skill/propaymun-information-architecture) |
-| **Portable Agent Skill ZIP** | Claude.ai Skills, LocalSkills, ClawHub, and runtimes whose documentation confirms folder-based Agent Skill support | [Download ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
+| **Portable Agent Skill ZIP** | Claude.ai Skills and runtimes whose own documentation confirms folder-based Agent Skill support | [Download ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
 | **Workspace Kit** | ChatGPT Projects, Claude Projects, manually created Gemini Gems, and surfaces that provide persistent instructions plus file knowledge | [Knowledge file](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [Workspace instructions](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
 All distributions share the same canonical behavior. Automatic triggering, persistence, tools, and context limits still depend on the host product.
@@ -67,11 +67,7 @@ If a service only accepts files in a chat, attach the Workspace Kit and paste th
 
 ## Other Agent Skill runtimes
 
-Use the Portable Agent Skill ZIP only when the host or registry documents folder-based Agent Skill packages. This repository intentionally does not provide unverified installation commands.
-
-### Publish to LocalSkills or ClawHub
-
-Upload [`packages/agent-skill/propaymun-information-architecture.zip`](packages/agent-skill/propaymun-information-architecture.zip) directly when the registry dashboard accepts ZIP uploads; do not ZIP the repository root. The archive contains one top-level skill folder with `SKILL.md`, `LICENSE`, `agents/`, `references/`, `schema/`, and standard-library `scripts/`, with no tests, release tooling, or nested packages. For CLI publishing, use the extracted skill folder as documented by [LocalSkills](https://docs.localskills.sh/cli/) or [ClawHub](https://github.com/openclaw/clawhub/blob/main/docs/clawhub.md).
+Use the Portable Agent Skill ZIP only when the runtime's own documentation confirms support for folder-based Agent Skill packages. This repository intentionally does not provide unverified installation commands.
 
 ## Machine-scannable install map
 

@@ -19,6 +19,4 @@ Builder exports keep source-derived content—including the derived IA Reference
 
 Export limits are 20,000 characters per string, 1 MB compact UTF-8 JSON, and 64 nested levels. Oversized input fails with guidance rather than silent truncation. Choose fresh output paths; the builder exporter refuses overwrites and input/output collisions. Filesystem isolation remains the host's responsibility.
 
-The ClawHub audit of version 1.0.0 returned `Review` while its overview found no evidence of hidden harmful behavior. Its critical static finding traced to test-only dynamic module loading, not shipped runtime code; version 1.0.1 replaces that pattern with a normal import and replaces invisible HTML provenance comments with visible source markers. Standard Persian zero-width non-joiners remain legitimate orthography and may still trigger low-confidence hidden-instruction heuristics. No improved scanner outcome is claimed until the exact 1.0.1 distribution is rescanned. Scan the distribution separately from a development checkout containing release tools.
-
 Report a suspected vulnerability using the repository's GitHub Security reporting feature if available, or an issue containing only a minimal non-sensitive description. Do not include credentials, private product data, or exploit payloads targeting real users.

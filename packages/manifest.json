@@ -29,7 +29,7 @@
     "agent_skill": {
       "display_name": "Portable Agent Skill ZIP",
       "path": "packages/agent-skill/propaymun-information-architecture.zip",
-      "use_when": "The host or skill registry accepts a folder-based Agent Skill or ZIP containing one skill folder with SKILL.md."
+      "use_when": "The runtime accepts a folder-based Agent Skill ZIP containing one top-level skill folder with SKILL.md."
     },
     "workspace_kit": {
       "display_name": "Workspace Kit",

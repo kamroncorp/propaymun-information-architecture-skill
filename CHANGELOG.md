@@ -13,7 +13,7 @@ All notable changes to this project are documented here. The project follows Sem
 
 ### Changed
 
-- Clarify that the canonical ZIP is a portable folder-based Agent Skill package suitable for Claude.ai upload and registries such as LocalSkills and ClawHub, while host-specific installation and capability behavior remains the host's responsibility.
+- Clarify that the canonical ZIP is a portable folder-based Agent Skill package while installation and capability behavior remain the responsibility of each host runtime.
 
 ## [1.0.3] - 2026-09-14
 

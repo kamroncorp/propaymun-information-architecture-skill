@@ -19,7 +19,7 @@
 | بسته | مناسب برای | دریافت |
 |---|---|---|
 | **دایرکتوری مهارت Codex** | نصب با Skill Installer از زیرمسیر GitHub | [دایرکتوری نصب](packages/codex-skill/propaymun-information-architecture) |
-| **ZIP قابل‌حمل Agent Skill** | Claude.ai Skills، LocalSkills، ClawHub و محیط‌هایی که پشتیبانی از Agent Skill پوشه‌ای را اعلام کرده‌اند | [دانلود ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
+| **ZIP قابل‌حمل Agent Skill** | Claude.ai Skills و محیط‌هایی که مستندات خودشان پشتیبانی از Agent Skill پوشه‌ای را تأیید کرده‌اند | [دانلود ZIP](packages/agent-skill/propaymun-information-architecture.zip) |
 | **کیت Workspace** | ChatGPT Projects، Claude Projects، Gemini Gemهایی که دستی ساخته می‌شوند و محیط‌هایی با Instructions پایدار و فایل Knowledge | [فایل دانش](packages/workspace-kit/propaymun-ia-workspace-kit.md) + [دستور Workspace](packages/workspace-kit/WORKSPACE_INSTRUCTIONS.md) |
 
 همهٔ بسته‌ها از یک رفتار اصلی ساخته می‌شوند. فعال‌شدن خودکار، ماندگاری، ابزارها و محدودیت Context به سرویس میزبان وابسته است.
@@ -67,11 +67,7 @@ Gemini وب این بسته را به‌صورت Native Skill نصب نمی‌ک
 
 ## محیط‌های دیگرِ Agent Skill
 
-فقط وقتی از ZIP قابل‌حمل Agent Skill استفاده کنید که سرویس یا Registry از بسته‌های پوشه‌ای Agent Skill پشتیبانی کند. این مخزن عمداً دستور نصب تأییدنشده ارائه نمی‌دهد.
-
-### انتشار در LocalSkills یا ClawHub
-
-اگر داشبورد Registry آپلود ZIP می‌پذیرد، فایل [`packages/agent-skill/propaymun-information-architecture.zip`](packages/agent-skill/propaymun-information-architecture.zip) را مستقیماً آپلود کنید و کل مخزن را دوباره ZIP نکنید. این آرشیو فقط یک پوشهٔ اصلی Skill شامل `SKILL.md`، `LICENSE`، `agents/`، `references/`، `schema/` و `scripts/` استاندارد دارد و تست‌ها، ابزار انتشار یا بستهٔ تودرتو داخل آن نیست. برای انتشار با CLI، پوشهٔ Extractشدهٔ Skill را مطابق مستندات [LocalSkills](https://docs.localskills.sh/cli/) یا [ClawHub](https://github.com/openclaw/clawhub/blob/main/docs/clawhub.md) بدهید.
+فقط وقتی از ZIP قابل‌حمل Agent Skill استفاده کنید که مستندات خود محیط، پشتیبانی از بسته‌های پوشه‌ای Agent Skill را تأیید کند. این مخزن عمداً دستور نصب تأییدنشده ارائه نمی‌دهد.
 
 ## نقشه نصب قابل‌اسکن برای AI
 
